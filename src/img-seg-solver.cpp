@@ -1,9 +1,9 @@
 /*
 	@brief Demonstrates the ability to solve the image segmentation problem
 		using the Ford-Fulkerson algorithm.
-	@author Drew Guarnera & Heather Michaud
+	@author Drew Guarnera, Bharath Bogadamidi, Heather Michaud
 	@version 0.9
-	@copyright Copyright 2014 Guarnera & Michaud. All rights reserved.
+	@copyright Copyright 2014 Guarnera, Bogadamidi, Michaud. All rights reserved.
 */
 
 #include <stdio.h>	
@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 
 //! @brief Entry point to execute the img-seg-solver program
 //! @param argc Number of arguments
@@ -72,9 +73,6 @@ int main(int argc, char* argv[])
 			std::string inputImageFileB = argv[optind+1];
 		}
 	}		
-	
-	// Store the graph in adjacency-list representation
-	//std::vector<std::list<vertex>> graph;
 
 	return 0;
 }
