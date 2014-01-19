@@ -7,10 +7,10 @@
 */
 
 #include <stdio.h>	
-#import <unistd.h>
-#import <iostream>
-#import <string>
-#import <vector>
+#include <unistd.h>
+#include <iostream>
+#include <string>
+#include <vector>
 
 //! @brief Entry point to execute the img-seg-solver program
 //! @param argc Number of arguments
