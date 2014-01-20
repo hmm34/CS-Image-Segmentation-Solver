@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Graph.h"
 
 
 //! @brief Entry point to execute the img-seg-solver program
@@ -44,6 +45,9 @@ int main(int argc, char* argv[])
 			std::string bfsInputGraphFileName = argv[optind];
 			int startVertex = atoi(argv[optind+1]);
 			int endVertex = atoi(argv[optind+2]);
+
+			Graph g(bfsInputGraphFileName);
+			g.print();
 		}
 
 		// Ford-Fulkerson Option
