@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <string>
-#include "Graph.h"
+#include "graph.hpp"
 
 //! @brief Entry point to execute the img-seg-solver program
 //! @param argc Number of arguments
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 			int startVertex = atoi(argv[optind+1]);
 			int endVertex = atoi(argv[optind+2]);
 
-			Graph g(bfsInputGraphFileName);
+			graph g(bfsInputGraphFileName);
 			g.print();
 		}
 
