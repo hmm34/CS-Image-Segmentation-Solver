@@ -23,7 +23,7 @@ Graph::Graph(std::string fileName)
 {
 	// Open the file containing the graph information
 	std::ifstream input;
-	input.open(fileName);
+	input.open(fileName.c_str());
 	if (!input)
 	{
 		std::cerr << "Could not open " << fileName << "!\n";
