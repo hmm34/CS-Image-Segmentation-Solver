@@ -7,21 +7,20 @@
 #include <fstream>
 #include <sstream>
 
+/* 
+	@note The file should be in the format of an adjacency list.
+	For example:
+		1 3 2 6 3 8
+		2 2
+		3 1
+	Here, we have four vertices 0-3. The first line represents the vertices
+	that vertex 0 is connected to, with their edge weights. Line 2 shows the
+	vertices that vertex 1 is conected to, with their weights - and so on.
+	The first line shows that vertex 0 is connected to vertex 1 with edge
+	weight 3, vertex 2 with edge weight 6, and vertex 3 with edge weight 8.
+*/
 Graph::Graph(std::string fileName)
 {
-	/* 
-		@note The file should be in the format of an adjacency list.
-		For example:
-			1 3 2 6 3 8
-			2 2
-			3 1
-		Here, we have four vertices 0-3. The first line represents the vertices
-		that vertex 0 is connected to, with their edge weights. Line 2 shows the
-		vertices that vertex 1 is conected to, with their weights - and so on.
-		The first line shows that vertex 0 is connected to vertex 1 with edge
-		weight 3, vertex 2 with edge weight 6, and vertex 3 with edge weight 8.
-	*/
-
 	// Open the file containing the graph information
 	std::ifstream input;
 	input.open(fileName);
@@ -47,8 +46,6 @@ Graph::Graph(std::string fileName)
 		}
 		adjacencyList.push_back(connectedVertices);
 	}
-
-	// Clean up
 	input.close();
 }
 

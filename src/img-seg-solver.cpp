@@ -6,13 +6,10 @@
 	@copyright Copyright 2014 Guarnera, Bogadamidi, Michaud. All rights reserved.
 */
 
-#include <stdio.h>	
 #include <unistd.h>
 #include <iostream>
 #include <string>
-#include <vector>
 #include "Graph.h"
-
 
 //! @brief Entry point to execute the img-seg-solver program
 //! @param argc Number of arguments
