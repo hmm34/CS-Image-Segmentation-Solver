@@ -32,17 +32,23 @@ int main(int argc, char* argv[])
 
 		// BFS Option
 		if (option == 'b') {     
-			// Check for at most three additional options
+			// Check for at least three additional options
 			if (optind + 2 >= argc) {
 				std::cerr << "Invalid use of option -b\n";
-				std::cerr << "Usage: -b [input file] [start vertex] [end vertex]\n";
+				std::cerr << "Usage: -b [input file] [start vertex] [end vertex 1] [end vertex 2] ...\n";
 				return 1;
 			}
 		
 			// This will go to BFS Function
 			std::string bfsInputGraphFileName = argv[optind];
-			int startVertex = atoi(argv[optind+1]);
-			int endVertex = atoi(argv[optind+2]);
+			int startVertex = atoi(argv[optind + 1]);
+
+			int optOffset = 2;
+			std::vector<int> endPoints;
+			while((optind + optOffset) < argc) {
+				endPoints.push_back(atoi(argv[optind + optOffset]));
+				++optOffset;
+			}
 
 			graph g(bfsInputGraphFileName);
 			g.print();
