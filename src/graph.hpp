@@ -10,7 +10,6 @@
 
 #include <string>
 #include <vector>
-#include <list>
 
 //! @brief The graph is a list of connected vertices
 struct vertex
@@ -34,7 +33,12 @@ public:
 	//! @brief Prints the graph out in adjacency list format
 	void print();
 
+	//! @brief Performs a breadth first search on a graph provided in adjacency
+	//!	list form within a text file
+	//! @retval The number of edges within the shortest path
+	int breathFirstSearch();
+
 private:
 	//! @brief Adjacency list representation of the directed graph.
-	std::vector< std::list<vertex> > adjacencyList;
+	std::vector< std::vector<vertex> > adjacencyList;
 };

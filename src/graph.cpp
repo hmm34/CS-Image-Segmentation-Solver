@@ -34,7 +34,7 @@ graph::graph(std::string fileName)
 	while (getline(input, line))
 	{
 		// Obtain the list of connected vertices and their edge weights
-		std::list<vertex> connectedVertices = std::list<vertex>();
+		std::vector<vertex> connectedVertices = std::vector<vertex>();
 		std::stringstream ss(line);
 		while (ss)
 		{
@@ -60,8 +60,8 @@ void graph::print()
 	for (int u=0; u < adjacencyList.size(); ++u)
 	{
 		std::cout << u; // Current vertex
-		std::list<vertex>::iterator current = adjacencyList.at(u).begin();
-		std::list<vertex>::iterator end     = adjacencyList.at(u).end();
+		std::vector<vertex>::iterator current = adjacencyList.at(u).begin();
+		std::vector<vertex>::iterator end     = adjacencyList.at(u).end();
 		
 		// Traverse each vertex v to which u is connected
 		while (current != end)
@@ -73,3 +73,11 @@ void graph::print()
 		std::cout << std::endl;
 	}
 }
+
+int breathFirstSearch()
+{
+	int numEdges;
+
+	return numEdges;	
+}
+
