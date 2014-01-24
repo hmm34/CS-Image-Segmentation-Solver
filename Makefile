@@ -5,5 +5,13 @@ bin/iseg: src/img-seg-solver.cpp
 	g++ -o bin/iseg bin/graph.o bin/iseg.o
 
 .PHONY: clean
+	ifdef SystemRoot
+		RM = del /Q /S
+	else
+		RM = rm -f
+	endif
+
 clean:
-	rm -rf bin/iseg
+	$(RM) bin/iseg
+	$(RM) bin/iseg.o
+	$(RM) bin/graph.o
