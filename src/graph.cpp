@@ -102,8 +102,6 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 
 	// Use breadth first search to find the end vertex with the shortest path
 	//! @note Chose a queue for the nodes that still need visited in order to use the FIFO behavior of BFS.
-	//! @note Chose a set for the nodes that still need visited in order to quickly find and check, for each neighboring
-	//!		node, if it's already been visited. Sets have a find time of O(log N).
 	//! @note Chose a vector for the return value (path from shortest to end) in order to easily reverse the order
 	//!		once the computation is complete.
 	std::queue<int> nodesToVisit;		// Nodes that need visited in the BFS
