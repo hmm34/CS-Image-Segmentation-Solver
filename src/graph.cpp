@@ -128,19 +128,17 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 			// OVER-WRITE if it's already been found! This preserves the minimal path in terms of
 			// number of edges. 
 			if (paths[neighbor] == INFINITY) {
-
+				
 				// Set the neighbor with the node that
 				paths[neighbor] = currentNode;
-
+				
 				// Add the neighbors to the bottom of the queue to visit later
 				nodesToVisit.push(neighbor);
 			}
 		}
 	}
 
-	// Iterate over our list of all nodes up until the given end node with their stored previous
-	// node. Find the last node and back-track through the list to find the reverse path of how
-	// we got there. Continue searching until we find the given start node.
+	// Find path to the end node by back-track through the paths list until we find the given start node.
 	int currentNode = end;
 	while (true)
 	{
