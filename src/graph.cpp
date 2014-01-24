@@ -121,7 +121,7 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 			break;
 
 		// Obtain all of the current node's neighbors. If it has no neighbors, skip to the next node in the queue
-		if (currentNode >= adjacencyList.size())
+		if ((unsigned int)currentNode >= adjacencyList.size())
 			continue;
 		std::vector<vertex> neighbors = adjacencyList.at(currentNode);
 		for (unsigned int i = 0; i < neighbors.size(); ++i)
