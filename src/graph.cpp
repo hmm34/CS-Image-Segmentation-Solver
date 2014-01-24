@@ -65,7 +65,7 @@ graph::~graph()
 void graph::print()
 {
 	// Traverse each vertex u in the graph
-	for (int u=0; u < adjacencyList.size(); ++u)
+	for (unsigned int u=0; u < adjacencyList.size(); ++u)
 	{
 		std::cout << u; // Current vertex
 		std::vector<vertex>::iterator current = adjacencyList.at(u).begin();
@@ -124,7 +124,7 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 		if (currentNode >= adjacencyList.size())
 			continue;
 		std::vector<vertex> neighbors = adjacencyList.at(currentNode);
-		for (int i = 0; i < neighbors.size(); ++i)
+		for (unsigned int i = 0; i < neighbors.size(); ++i)
 		{
 			int neighbor = neighbors.at(i).number;
 
@@ -156,7 +156,7 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 	//! @note Used this for testing just to make sure it was correct :) This can be removed after we add test cases
 	
 	std::cout << "Shortest path obtained:" << std::endl;
-	for (int i = 0; i < shortestPath.size(); ++i)
+	for (unsigned int i = 0; i < shortestPath.size(); ++i)
 	{
 		if (i == shortestPath.size() - 1)
 			std::cout << shortestPath.at(i) << std::endl;
