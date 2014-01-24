@@ -94,10 +94,7 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 	// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity.
 	const int INFINITY = std::numeric_limits<int>::max();
 	int paths[adjacencyList.size()+1];
-	for (int i = 0; i <= adjacencyList.size(); ++i)
-	{
-		paths[i] = INFINITY;
-	}
+	std::fill_n(paths, adjacencyList.size()+1, INFINITY);
 	paths[start] = -1;
 
 	// Use breadth first search to find the end vertex with the shortest path
