@@ -42,6 +42,6 @@ public:
 	std::vector<int> breadthFirstSearch(int start, int end);
 
 private:
-	//! @brief Adjacency list representation of the directed graph.
-	std::vector< std::vector<vertex> > adjacencyList;
+	std::vector< std::vector<vertex> > adjacencyList; //!< Adjacency list representation of the directed graph
+	int numNodes;									  //!< Number of nodes
 };

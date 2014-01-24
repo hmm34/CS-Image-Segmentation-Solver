@@ -33,8 +33,9 @@ graph::graph(std::string fileName)
 		std::cerr << "Could not open " << fileName << "!\n";
 	}
 
-	// For each line in the file
+	std::set<int> totalNodes;	// Unique list of all nodes added
 	std::string line;
+	int count = 0;
 	while (getline(input, line))
 	{
 		// Obtain the list of connected vertices and their edge weights
@@ -47,9 +48,12 @@ graph::graph(std::string fileName)
 			if (!ss) break; // If there's no second number, we're finished here
 			ss >> u.weight; // The second # is the capacity/weight from v to u
 			connectedVertices.push_back(u);
+			totalNodes.insert(u.number);
 		}
 		adjacencyList.push_back(connectedVertices);
+		totalNodes.insert(count++);
 	}
+	numNodes = totalNodes.size();
 	input.close();
 }
 
@@ -87,13 +91,13 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 	std::vector<int> shortestPath;		// Nodes from start to end with the shortest path
 
 	// Verify that the start node and end node are within acceptable ranges
-	if ( ((start < 0) || (start > adjacencyList.size())) || ((end < 0) || (end > adjacencyList.size())) )
+	if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
 		return shortestPath;
 
 	// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity.
 	const int INFINITY = std::numeric_limits<int>::max();
-	int paths[adjacencyList.size()+1];
-	std::fill_n(paths, adjacencyList.size()+1, INFINITY);
+	int paths[numNodes];
+	std::fill_n(paths, numNodes, INFINITY);
 	paths[start] = -1;
 
 	// Use breadth first search to find the end vertex with the shortest path
@@ -105,7 +109,7 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 	std::queue<int> nodesToVisit;		// Nodes that need visited in the BFS
 	nodesToVisit.push(start);
 	while (true)
-	{
+	{	
 		// If we can't find the end vertex, return an empty list
 		if (nodesToVisit.empty())
 			return shortestPath;
@@ -118,7 +122,9 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 		if (currentNode == end)
 			break;
 
-		// Obtain all of the current node's neighbors
+		// Obtain all of the current node's neighbors. If it has no neighbors, skip to the next node in the queue
+		if (currentNode >= adjacencyList.size())
+			continue;
 		std::vector<vertex> neighbors = adjacencyList.at(currentNode);
 		for (int i = 0; i < neighbors.size(); ++i)
 		{
@@ -150,7 +156,7 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 	std::reverse(shortestPath.begin(), shortestPath.end());
 
 	//! @note Used this for testing just to make sure it was correct :) This can be removed after we add test cases
-	/*
+	
 	std::cout << "Shortest path obtained:" << std::endl;
 	for (int i = 0; i < shortestPath.size(); ++i)
 	{
@@ -159,6 +165,6 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 		else
 			std::cout << shortestPath.at(i) << " --> ";
 	}
-	*/
+	
 	return shortestPath;	
 }
