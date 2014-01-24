@@ -84,12 +84,11 @@ void graph::print()
 //!		list of a list of the shortest paths to each given end vertex, for each given end vertex.
 std::vector<int> graph::breadthFirstSearch(int start, int end)
 {
+	std::vector<int> shortestPath;		// Nodes from start to end with the shortest path
+
 	// Verify that the start node and end node are within acceptable ranges
 	if ( ((start < 0) || (start > adjacencyList.size())) || ((end < 0) || (end > adjacencyList.size())) )
-	{
-		std::vector<int> invalid;
-		return invalid;
-	}
+		return shortestPath;
 
 	// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity.
 	const int INFINITY = std::numeric_limits<int>::max();
@@ -104,7 +103,6 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 	//! @note Chose a vector for the return value (path from shortest to end) in order to easily reverse the order
 	//!		once the computation is complete.
 	std::queue<int> nodesToVisit;		// Nodes that need visited in the BFS
-	std::vector<int> shortestPath;		// Nodes from start to end with the shortest path
 	nodesToVisit.push(start);
 	while (true)
 	{
@@ -124,14 +122,17 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 		std::vector<vertex> neighbors = adjacencyList.at(currentNode);
 		for (int i = 0; i < neighbors.size(); ++i)
 		{
-			// Add the neighbors to the bottom of the queue to visit later
 			int neighbor = neighbors.at(i).number;
 
 			// Keep track of how we got to these neighbors for the shortest path, but DON'T
 			// OVER-WRITE if it's already been found! This preserves the minimal path in terms of
 			// number of edges. 
 			if (paths[neighbor] == INFINITY) {
+
+				// Set the neighbor with the node that
 				paths[neighbor] = currentNode;
+
+				// Add the neighbors to the bottom of the queue to visit later
 				nodesToVisit.push(neighbor);
 			}
 		}
