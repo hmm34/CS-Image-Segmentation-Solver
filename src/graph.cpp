@@ -3,9 +3,13 @@
 */
 
 #include "graph.hpp"
+#include <queue>
+#include <set>
+#include <limits>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 
 /* 
 	@note The file should be in the format of an adjacency list.
@@ -74,10 +78,93 @@ void graph::print()
 	}
 }
 
-int breathFirstSearch()
+//! @note Right now this is taking only one end vertex. If we want to enable multiple end vertices, we could still
+//!		keep essentially the same algorithm but consider the last vertex to be the maximum of all listed end vertices.
+//!		For each given end vertex, we would reverse iterate through the list of preceding nodes. We would then have a 
+//!		list of a list of the shortest paths to each given end vertex, for each given end vertex.
+std::vector<int> graph::breadthFirstSearch(int start, int end)
 {
-	int numEdges;
+	// Verify that the start node and end node are within acceptable ranges
+	if ( ((start < 0) || (start > adjacencyList.size())) || ((end < 0) || (end > adjacencyList.size())) )
+	{
+		std::vector<int> invalid;
+		return invalid;
+	}
 
-	return numEdges;	
+	// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity.
+	const int INFINITY = std::numeric_limits<int>::max();
+	int paths[adjacencyList.size()+1];
+	for (int i = 0; i <= adjacencyList.size(); ++i)
+	{
+		paths[i] = INFINITY;
+	}
+	paths[start] = -1;
+
+	// Use breadth first search to find the end vertex with the shortest path
+	//! @note Chose a queue for the nodes that still need visited in order to use the FIFO behavior of BFS.
+	//! @note Chose a set for the nodes that still need visited in order to quickly find and check, for each neighboring
+	//!		node, if it's already been visited. Sets have a find time of O(log N).
+	//! @note Chose a vector for the return value (path from shortest to end) in order to easily reverse the order
+	//!		once the computation is complete.
+	std::queue<int> nodesToVisit;		// Nodes that need visited in the BFS
+	std::set<int> visitedNodes;			// Nodes that have already been visited
+	std::vector<int> shortestPath;		// Nodes from start to end with the shortest path
+	nodesToVisit.push(start);
+	while (true)
+	{
+		// If we can't find the end vertex, return an empty list
+		if (nodesToVisit.empty())
+			return shortestPath;
+
+		// Get the top-most element from the queue
+		int currentNode = nodesToVisit.front();
+		nodesToVisit.pop();
+		visitedNodes.insert(currentNode);
+
+		// Stop searching if the desired end vertex has been found
+		if (currentNode == end)
+			break;
+
+		// Obtain all of the current node's neighbors
+		std::vector<vertex> neighbors = adjacencyList.at(currentNode);
+		for (int i = 0; i < neighbors.size(); ++i)
+		{
+			// Add the neighbors to the bottom of the queue to visit later
+			int neighbor = neighbors.at(i).number;
+			if (visitedNodes.find(neighbor) == visitedNodes.end())
+				nodesToVisit.push(neighbor);
+
+			// Keep track of how we got to these neighbors for the shortest path, but DON'T
+			// OVER-WRITE if it's already been found! This preserves the minimal path in terms of
+			// number of edges. 
+			if (paths[neighbor] == INFINITY) 
+				paths[neighbor] = currentNode;
+		}
+	}
+
+	// Iterate over our list of all nodes up until the given end node with their stored previous
+	// node. Find the last node and back-track through the list to find the reverse path of how
+	// we got there. Continue searching until we find the given start node.
+	int currentNode = end;
+	while (true)
+	{
+		shortestPath.push_back(currentNode);
+		if (currentNode == start)	
+			break;
+		currentNode = paths[currentNode];
+	}
+	std::reverse(shortestPath.begin(), shortestPath.end());
+
+	//! @note Used this for testing just to make sure it was correct :) This can be removed after we add test cases
+	/*
+	std::cout << "Shortest path obtained:" << std::endl;
+	for (int i = 0; i < shortestPath.size(); ++i)
+	{
+		if (i == shortestPath.size() - 1)
+			std::cout << shortestPath.at(i) << std::endl;
+		else
+			std::cout << shortestPath.at(i) << " --> ";
+	}
+	*/
+	return shortestPath;	
 }
-

@@ -51,6 +51,14 @@ int main(int argc, char* argv[])
 			}
 
 			graph g(bfsInputGraphFileName);
+			for (int i = 0; i < endPoints.size(); ++i)
+			{
+				std::vector<int> shortestPath;
+				shortestPath = g.breadthFirstSearch(startVertex,endPoints[i]);
+				int numEdges = shortestPath.size() - 1; // Edges = Nodes - 1
+				std::cout << "Found shortest path from " << startVertex << " to "
+					<< endPoints[i] << " to be: " << numEdges << std::endl;
+			}
 			g.print();
 		}
 
