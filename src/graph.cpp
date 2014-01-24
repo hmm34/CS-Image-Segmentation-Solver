@@ -104,7 +104,6 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 	//! @note Chose a vector for the return value (path from shortest to end) in order to easily reverse the order
 	//!		once the computation is complete.
 	std::queue<int> nodesToVisit;		// Nodes that need visited in the BFS
-	std::set<int> visitedNodes;			// Nodes that have already been visited
 	std::vector<int> shortestPath;		// Nodes from start to end with the shortest path
 	nodesToVisit.push(start);
 	while (true)
@@ -116,7 +115,6 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 		// Get the top-most element from the queue
 		int currentNode = nodesToVisit.front();
 		nodesToVisit.pop();
-		visitedNodes.insert(currentNode);
 
 		// Stop searching if the desired end vertex has been found
 		if (currentNode == end)
@@ -128,14 +126,14 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 		{
 			// Add the neighbors to the bottom of the queue to visit later
 			int neighbor = neighbors.at(i).number;
-			if (visitedNodes.find(neighbor) == visitedNodes.end())
-				nodesToVisit.push(neighbor);
 
 			// Keep track of how we got to these neighbors for the shortest path, but DON'T
 			// OVER-WRITE if it's already been found! This preserves the minimal path in terms of
 			// number of edges. 
-			if (paths[neighbor] == INFINITY) 
+			if (paths[neighbor] == INFINITY) {
 				paths[neighbor] = currentNode;
+				nodesToVisit.push(neighbor);
+			}
 		}
 	}
 
