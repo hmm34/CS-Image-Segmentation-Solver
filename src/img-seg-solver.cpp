@@ -1,6 +1,5 @@
 /*
-	@brief Demonstrates the ability to solve the image segmentation problem
-		using the Ford-Fulkerson algorithm.
+	@brief Demonstrates the ability to solve the image segmentation problem using the Ford-Fulkerson algorithm.
 	@author Drew Guarnera, Bharath Bogadamidi, Heather Michaud
 	@version 0.9
 	@copyright Copyright 2014 Guarnera, Bogadamidi, Michaud. All rights reserved.
@@ -43,6 +42,7 @@ int main(int argc, char* argv[])
 			std::string bfsInputGraphFileName = argv[optind];
 			int startVertex = atoi(argv[optind + 1]);
 
+			// Obtain the potential multiple end points specified
 			int optOffset = 2;
 			std::vector<int> endPoints;
 			while((optind + optOffset) < argc) {
@@ -50,6 +50,7 @@ int main(int argc, char* argv[])
 				++optOffset;
 			}
 
+			// Perform the BFS on the graph created from the input file
 			graph g(bfsInputGraphFileName);
 			for (unsigned int i = 0; i < endPoints.size(); ++i)
 			{

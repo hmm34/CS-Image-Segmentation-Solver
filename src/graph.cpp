@@ -12,16 +12,13 @@
 #include <algorithm>
 
 /* 
-	@note The file should be in the format of an adjacency list.
-	For example:
+@note The file should be in the format of an adjacency list. For example:
 		1 3 2 6 3 8
 		2 2
 		3 1
-	Here, we have four vertices 0-3. The first line represents the vertices
-	that vertex 0 is connected to, with their edge weights. Line 2 shows the
-	vertices that vertex 1 is conected to, with their weights - and so on.
-	The first line shows that vertex 0 is connected to vertex 1 with edge
-	weight 3, vertex 2 with edge weight 6, and vertex 3 with edge weight 8.
+ Here, we have four vertices 0-3. The first line represents the vertices that vertex 0 is connected to, with their edge 
+ weights. Line 2 shows the vertices that vertex 1 is conected to, with their weights - and so on. The first line shows 
+ that vertex 0 is connected to vertex 1 with edge weight 3, vertex 2 with weight 6, and vertex 3 with edge weight 8.
 */
 graph::graph(std::string fileName)
 {
@@ -29,11 +26,9 @@ graph::graph(std::string fileName)
 	std::ifstream input;
 	input.open(fileName.c_str());
 	if (!input)
-	{
 		std::cerr << "Could not open " << fileName << "!\n";
-	}
 
-	std::set<int> totalNodes;	// Unique list of all nodes added
+	std::set<int> totalNodes; // Unique list of all nodes added
 	std::string line;
 	int count = 0;
 	while (getline(input, line))
@@ -65,7 +60,7 @@ graph::~graph()
 void graph::print()
 {
 	// Traverse each vertex u in the graph
-	for (unsigned int u=0; u < adjacencyList.size(); ++u)
+	for (unsigned int u = 0; u < adjacencyList.size(); ++u)
 	{
 		std::cout << u; // Current vertex
 		std::vector<vertex>::iterator current = adjacencyList.at(u).begin();
@@ -74,8 +69,7 @@ void graph::print()
 		// Traverse each vertex v to which u is connected
 		while (current != end)
 		{
-			std::cout << " --(" << (*current).weight;
-			std::cout << ")--> " << (*current).id;
+			std::cout << " --(" << (*current).weight << ")--> " << (*current).id;
 			++current;
 		}
 		std::cout << std::endl;
@@ -83,9 +77,9 @@ void graph::print()
 }
 
 //! @note Right now this is taking only one end vertex. If we want to enable multiple end vertices, we could still
-//!		keep essentially the same algorithm but consider the last vertex to be the maximum of all listed end vertices.
-//!		For each given end vertex, we would reverse iterate through the list of preceding nodes. We would then have a 
-//!		list of a list of the shortest paths to each given end vertex, for each given end vertex.
+//!	 keep essentially the same algorithm but consider the last vertex to be the maximum of all listed end vertices.
+//!	 For each given end vertex, we would reverse iterate through the list of preceding nodes. We would then have a 
+//!	 list of a list of the shortest paths to each given end vertex, for each given end vertex.
 std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 {
 	const int INFINITY = std::numeric_limits<int>::max();
@@ -96,8 +90,8 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 	if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
 		return std::make_pair(shortestPath, minCapacity);
 
-	// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity.
-	// The edge weights within the shortest paths is contained within pathWeights.
+	// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity. The 
+	// edge weights within the shortest paths is contained within pathWeights.
 	int paths[numNodes];
 	int pathWeights[numNodes];
 	std::fill_n(paths, numNodes, INFINITY);
@@ -109,7 +103,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 	//! @note Chose a queue for the nodes that still need visited in order to use the FIFO behavior of BFS.
 	//! @note Chose a vector for the return value (path from shortest to end) in order to easily reverse the order
 	//!		once the computation is complete.
-	std::queue<int> nodesToVisit;		// Nodes that need visited in the BFS
+	std::queue<int> nodesToVisit; // Nodes that still need visited in the BFS
 	nodesToVisit.push(start);
 	while (true)
 	{	
@@ -133,12 +127,11 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 		{
 			int neighbor = neighbors.at(i).id;
 
-			// Keep track of how we got to these neighbors for the shortest path, but DON'T
-			// OVER-WRITE if it's already been found! This preserves the minimal path in terms of
-			// number of edges. 
+			// Keep track of how we got to these neighbors for the shortest path, but DON'T OVER-WRITE if it's already 
+			// been found! This preserves the minimal path in terms of number of edges. 
 			if (paths[neighbor] == INFINITY) {
 				
-				// Set the neighbor with the node that
+				// Set the neighbor with the node that connects it, including the edge weight
 				paths[neighbor] = currentNode;
 				pathWeights[neighbor] = neighbors.at(i).weight;
 				
