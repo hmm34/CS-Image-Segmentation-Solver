@@ -86,16 +86,17 @@ void graph::print()
 //!		keep essentially the same algorithm but consider the last vertex to be the maximum of all listed end vertices.
 //!		For each given end vertex, we would reverse iterate through the list of preceding nodes. We would then have a 
 //!		list of a list of the shortest paths to each given end vertex, for each given end vertex.
-std::vector<int> graph::breadthFirstSearch(int start, int end)
+std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 {
-	std::vector<int> shortestPath;		// Nodes from start to end with the shortest path
+	const int INFINITY = std::numeric_limits<int>::max();
+	std::vector<int> shortestPath;	// Nodes from start to end with the shortest path
+	int minCapacity = INFINITY;		// Minimum weight (capacity) along the shortest path
 
 	// Verify that the start node and end node are within acceptable ranges
 	if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
-		return shortestPath;
+		return std::make_pair(shortestPath, minCapacity);
 
 	// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity.
-	const int INFINITY = std::numeric_limits<int>::max();
 	int paths[numNodes];
 	std::fill_n(paths, numNodes, INFINITY);
 	paths[start] = -1;
@@ -110,7 +111,7 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 	{	
 		// If we can't find the end vertex, return an empty list
 		if (nodesToVisit.empty())
-			return shortestPath;
+			return std::make_pair(shortestPath, minCapacity);
 
 		// Get the top-most element from the queue
 		int currentNode = nodesToVisit.front();
@@ -144,17 +145,46 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 
 	// Find path to the end node by back-track through the paths list until we find the given start node.
 	int currentNode = end;
+	int oldNode = currentNode;
 	while (true)
 	{
 		shortestPath.push_back(currentNode);
-		if (currentNode == start)	
+		if (currentNode == start)
+		{
+			// Check if this edge is smaller than our minimum capacity
+			std::vector<vertex> connectedNodes = adjacencyList.at(start);
+			std::vector<vertex>::iterator itr = connectedNodes.begin();
+			while (itr != connectedNodes.end())
+			{
+				if ((itr->number == oldNode) && (itr->weight < minCapacity))
+				{
+					minCapacity = itr->weight;
+					break;
+				}
+				++itr;
+			}
 			break;
+		}
+		oldNode = currentNode;
 		currentNode = paths[currentNode];
+
+		// Check if this edge is smaller than our minimum capacity
+		std::vector<vertex> connectedNodes = adjacencyList.at(currentNode);
+		std::vector<vertex>::iterator itr = connectedNodes.begin();
+		while (itr != connectedNodes.end())
+		{
+			if ((itr->number == oldNode) && (itr->weight < minCapacity))
+			{
+				minCapacity = itr->weight;
+				break;
+			}
+			++itr;
+		}
 	}
 	std::reverse(shortestPath.begin(), shortestPath.end());
 
 	//! @note Used this for testing just to make sure it was correct :) This can be removed after we add test cases
-	
+	/*
 	std::cout << "Shortest path obtained:" << std::endl;
 	for (unsigned int i = 0; i < shortestPath.size(); ++i)
 	{
@@ -163,6 +193,6 @@ std::vector<int> graph::breadthFirstSearch(int start, int end)
 		else
 			std::cout << shortestPath.at(i) << " --> ";
 	}
-	
-	return shortestPath;	
+	*/
+	return std::make_pair(shortestPath, minCapacity);	
 }

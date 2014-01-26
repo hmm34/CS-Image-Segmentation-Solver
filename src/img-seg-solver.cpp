@@ -53,11 +53,15 @@ int main(int argc, char* argv[])
 			graph g(bfsInputGraphFileName);
 			for (unsigned int i = 0; i < endPoints.size(); ++i)
 			{
-				std::vector<int> shortestPath;
-				shortestPath = g.breadthFirstSearch(startVertex,endPoints[i]);
-				unsigned int numEdges = shortestPath.size() - 1; // Edges = Nodes - 1
+				std::pair< std::vector<int>, int > searchResult = g.breadthFirstSearch(startVertex, endPoints[i]);
+				std::vector<int> shortestPath = searchResult.first;	// Shortest path p along graph G
+				int minCapacity = searchResult.second;				// Minimum capacity along p
+				unsigned int numEdges = shortestPath.size() - 1; 	// Edges = Nodes - 1
+
+				//! @note Again - testing purposes!
 				std::cout << "Found shortest path from " << startVertex << " to "
 					<< endPoints[i] << " to be: " << numEdges << std::endl;
+				std::cout << "Minimum capacity is: " << minCapacity << std::endl;
 			}
 			g.print();
 		}

@@ -35,11 +35,11 @@ public:
 	//! @brief Performs a breadth first search on the graph to obtain the shortest path
 	//! @param start Starting node
 	//! @param end Ending node. The search will be stopped once this is reached
-	//! @retval The shortest path (in terms of number of edges - not the weights of the edges) from
-	//!		starting node to ending node
+	//! @retval A pair containing the shortest path (in terms of number of edges - not the weights of the edges) from
+	//!		starting node to ending node, and the minimum capacity (weight) along that path
 	//! @retval An empty vector if the start or end nodes were invalid, or the end node could not be
-	//!		found.
-	std::vector<int> breadthFirstSearch(int start, int end);
+	//!		found, with a negative minimum capacity
+	std::pair< std::vector<int>, int> breadthFirstSearch(int start, int end);
 
 private:
 	std::vector< std::vector<vertex> > adjacencyList; //!< Adjacency list representation of the directed graph
