@@ -44,11 +44,11 @@ graph::graph(std::string fileName)
 		while (ss)
 		{
 			vertex u;
-			ss >> u.number; // The first # is the vertex number for u
+			ss >> u.id; 	// The first # is the vertex id for u
 			if (!ss) break; // If there's no second number, we're finished here
 			ss >> u.weight; // The second # is the capacity/weight from v to u
 			connectedVertices.push_back(u);
-			totalNodes.insert(u.number);
+			totalNodes.insert(u.id);
 		}
 		adjacencyList.push_back(connectedVertices);
 		totalNodes.insert(count++);
@@ -75,7 +75,7 @@ void graph::print()
 		while (current != end)
 		{
 			std::cout << " --(" << (*current).weight;
-			std::cout << ")--> " << (*current).number;
+			std::cout << ")--> " << (*current).id;
 			++current;
 		}
 		std::cout << std::endl;
@@ -127,7 +127,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 		std::vector<vertex> neighbors = adjacencyList.at(currentNode);
 		for (unsigned int i = 0; i < neighbors.size(); ++i)
 		{
-			int neighbor = neighbors.at(i).number;
+			int neighbor = neighbors.at(i).id;
 
 			// Keep track of how we got to these neighbors for the shortest path, but DON'T
 			// OVER-WRITE if it's already been found! This preserves the minimal path in terms of
@@ -156,7 +156,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 			std::vector<vertex>::iterator itr = connectedNodes.begin();
 			while (itr != connectedNodes.end())
 			{
-				if ((itr->number == oldNode) && (itr->weight < minCapacity))
+				if ((itr->id == oldNode) && (itr->weight < minCapacity))
 				{
 					minCapacity = itr->weight;
 					break;
@@ -173,7 +173,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 		std::vector<vertex>::iterator itr = connectedNodes.begin();
 		while (itr != connectedNodes.end())
 		{
-			if ((itr->number == oldNode) && (itr->weight < minCapacity))
+			if ((itr->id == oldNode) && (itr->weight < minCapacity))
 			{
 				minCapacity = itr->weight;
 				break;

@@ -14,7 +14,7 @@
 //! @brief The graph is a list of connected vertices
 struct vertex
 {
-	int number;	//! Represents which vertex is held
+	int id;		//! Represents which vertex is held
 	int weight; //! The capacity or weight of this connected node
 };
 
