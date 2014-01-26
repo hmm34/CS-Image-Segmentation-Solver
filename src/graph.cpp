@@ -97,9 +97,13 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 		return std::make_pair(shortestPath, minCapacity);
 
 	// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity.
+	// The edge weights within the shortest paths is contained within pathWeights.
 	int paths[numNodes];
+	int pathWeights[numNodes];
 	std::fill_n(paths, numNodes, INFINITY);
+	std::fill_n(pathWeights, numNodes, INFINITY);
 	paths[start] = -1;
+	pathWeights[start] = 0;
 
 	// Use breadth first search to find the end vertex with the shortest path
 	//! @note Chose a queue for the nodes that still need visited in order to use the FIFO behavior of BFS.
@@ -136,6 +140,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 				
 				// Set the neighbor with the node that
 				paths[neighbor] = currentNode;
+				pathWeights[neighbor] = neighbors.at(i).weight;
 				
 				// Add the neighbors to the bottom of the queue to visit later
 				nodesToVisit.push(neighbor);
@@ -145,46 +150,23 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 
 	// Find path to the end node by back-track through the paths list until we find the given start node.
 	int currentNode = end;
-	int oldNode = currentNode;
 	while (true)
 	{
+		// Loop has completed if we're back at the starting point
 		shortestPath.push_back(currentNode);
 		if (currentNode == start)
-		{
-			// Check if this edge is smaller than our minimum capacity
-			std::vector<vertex> connectedNodes = adjacencyList.at(start);
-			std::vector<vertex>::iterator itr = connectedNodes.begin();
-			while (itr != connectedNodes.end())
-			{
-				if ((itr->id == oldNode) && (itr->weight < minCapacity))
-				{
-					minCapacity = itr->weight;
-					break;
-				}
-				++itr;
-			}
 			break;
-		}
-		oldNode = currentNode;
-		currentNode = paths[currentNode];
 
 		// Check if this edge is smaller than our minimum capacity
-		std::vector<vertex> connectedNodes = adjacencyList.at(currentNode);
-		std::vector<vertex>::iterator itr = connectedNodes.begin();
-		while (itr != connectedNodes.end())
-		{
-			if ((itr->id == oldNode) && (itr->weight < minCapacity))
-			{
-				minCapacity = itr->weight;
-				break;
-			}
-			++itr;
-		}
+		if (pathWeights[currentNode] < minCapacity)
+			minCapacity = pathWeights[currentNode];
+
+		currentNode = paths[currentNode];
 	}
 	std::reverse(shortestPath.begin(), shortestPath.end());
 
 	//! @note Used this for testing just to make sure it was correct :) This can be removed after we add test cases
-	/*
+	
 	std::cout << "Shortest path obtained:" << std::endl;
 	for (unsigned int i = 0; i < shortestPath.size(); ++i)
 	{
@@ -193,6 +175,6 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 		else
 			std::cout << shortestPath.at(i) << " --> ";
 	}
-	*/
+	
 	return std::make_pair(shortestPath, minCapacity);	
 }
