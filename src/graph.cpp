@@ -166,7 +166,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 	std::reverse(shortestPath.begin(), shortestPath.end());
 
 	//! @note Used this for testing just to make sure it was correct :) This can be removed after we add test cases
-	
+	/*
 	std::cout << "Shortest path obtained:" << std::endl;
 	for (unsigned int i = 0; i < shortestPath.size(); ++i)
 	{
@@ -175,6 +175,6 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 		else
 			std::cout << shortestPath.at(i) << " --> ";
 	}
-	
+	*/
 	return std::make_pair(shortestPath, minCapacity);	
 }
