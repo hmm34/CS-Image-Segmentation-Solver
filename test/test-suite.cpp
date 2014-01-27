@@ -7,6 +7,7 @@
 */
 
 #include <assert.h>
+#include <fstream>
 
 //! @brief Q&D implementation of Marsaglia's xorshift random number generator. Rand() is way too slow to obtain
 //!	 random numbers rapidly and in repetition. See http://en.wikipedia.org/wiki/Xorshift
@@ -22,6 +23,49 @@ uint32_t xorshift()
   	t = x ^ (x << 11);
   	x = y; y = z; z = w;
   	return w = w ^ (w >> 19) ^ (t ^ (t >> 8));
+}
+
+
+//! @brief Generates a random graph with the given number of edges and vertices
+//! @param file Name of the file where the graph will be placed
+//! @param e Number of edges
+//! @param v Number of vertices
+void generateRandomGraph(const char* file, int e, int v)
+{
+	static const int MAX_NODE_WEIGHT = 9; // Arbitrarily chosen for simplicity
+
+	int matrix[v][v];
+	memset(&matrix, 0, sizeof(matrix));
+	for (int i = 0; i <= e; ++i)
+	{
+		int x = 0, y = 0;
+		int nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
+
+		// Brute force until edge meets requirements
+		bool alreadyExists = true, selfReferences = true, isSymmetric = true;		
+		do {
+			x = xorshift() % v;
+			y = xorshift() % v;
+			alreadyExists 	= (matrix[x][y] != 0);	// Don't over-write an existing randomly generated edge
+			selfReferences	= (x == y);				// Prevent edges (u, u)
+			isSymmetric  	= (matrix[y][x] != 0);	// Prevent (u, v) if (v, u) exists
+		} while (alreadyExists || selfReferences || isSymmetric); 
+		matrix[x][y] = nodeWeight;
+	}
+
+	// Write to file
+	std::ofstream temp;
+	temp.open(file);
+	for (int i = 0; i < v; ++i)
+	{
+		for (int j = 0; j < v; ++j)
+		{
+			if (matrix[i][j] != 0)
+				temp << j << " " << matrix[i][j] << " ";
+		}
+		temp << std::endl;
+	}
+	temp.close();
 }
 
 //! @brief Entry point to test suite execution
