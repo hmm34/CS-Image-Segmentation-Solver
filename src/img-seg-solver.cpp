@@ -51,8 +51,8 @@ int main(int argc, char* argv[])
 			}
 
 			// Perform the BFS on the graph created from the input file
-			/*
-			graph g(bfsInputGraphFileName);
+			graph g;
+			tools::graphFromFile( argv[optind], g );
 			for (unsigned int i = 0; i < endPoints.size(); ++i)
 			{
 				std::pair< std::vector<int>, int > searchResult = g.breadthFirstSearch(startVertex, endPoints[i]);
@@ -65,11 +65,7 @@ int main(int argc, char* argv[])
 					<< endPoints[i] << " to be: " << numEdges << std::endl;
 				std::cout << "Minimum capacity is: " << minCapacity << std::endl;
 			}
-			g.print();
-			*/
 
-			graph g;
-			tools::graphFromFile( argv[optind], g );
 			g.print();
 		}
 

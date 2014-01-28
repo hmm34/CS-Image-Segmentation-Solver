@@ -106,7 +106,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 		std::map<int, vertex> neighbors = adjList[currentNode];
 		for (unsigned int i = 0; i < neighbors.size(); ++i)
 		{
-			int neighbor = neighbors.at(i).id;
+			int neighbor = neighbors[i].id;
 
 			// Keep track of how we got to these neighbors for the shortest path, but DON'T OVER-WRITE if it's already 
 			// been found! This preserves the minimal path in terms of number of edges. 
