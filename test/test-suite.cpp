@@ -25,7 +25,6 @@ uint32_t xorshift()
   	return w = w ^ (w >> 19) ^ (t ^ (t >> 8));
 }
 
-
 //! @brief Generates a random graph with the given number of edges and vertices
 //! @param file Name of the file where the graph will be placed
 //! @param e Number of edges
@@ -36,10 +35,23 @@ void generateRandomGraph(const char* file, int e, int v)
 
 	int matrix[v][v];
 	memset(&matrix, 0, sizeof(matrix));
-	for (int i = 0; i <= e; ++i)
+
+	// First off - gaurauntee that the graph will be connected s -> t given s = 0 and t = e. This will be the worst
+	// case scenario, when BFS has to travel through every node within the graph. With the pseudo-randomly generated
+	// nodes below, and an e value greater than v, this shouldn't be an issue.
+	int previous = 0;
+	int nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
+	for (int i = 1; i < v ; ++i)
+	{
+		matrix[previous][i] = nodeWeight;
+		previous = i;
+	}	
+
+	// Randomly allot remaining edges
+	for (int i = 0; i <= e - v; ++i)
 	{
 		int x = 0, y = 0;
-		int nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
+		nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
 
 		// Brute force until edge meets requirements
 		bool alreadyExists = true, selfReferences = true, isSymmetric = true;		
@@ -47,7 +59,7 @@ void generateRandomGraph(const char* file, int e, int v)
 			x = xorshift() % v;
 			y = xorshift() % v;
 			alreadyExists 	= (matrix[x][y] != 0);	// Don't over-write an existing randomly generated edge
-			selfReferences	= (x == y);				// Prevent edges (u, u)
+			selfReferences	= (x >= y);				// Prevent edges (u, u) and keep matrix upper triangular
 			isSymmetric  	= (matrix[y][x] != 0);	// Prevent (u, v) if (v, u) exists
 		} while (alreadyExists || selfReferences || isSymmetric); 
 		matrix[x][y] = nodeWeight;
