@@ -40,6 +40,8 @@ public:
 	//!  negative minimum capacity
 	std::pair< std::vector<int>, int> breadthFirstSearch(int start, int end);
 
+	int fordFulkerson();
+
 private:
 	std::vector< std::vector<vertex> > adjacencyList; //!< Adjacency list representation of the directed graph
 	int numNodes;									  //!< Number of nodes

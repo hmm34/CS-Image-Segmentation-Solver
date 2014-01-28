@@ -171,3 +171,8 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 	*/
 	return std::make_pair(shortestPath, minCapacity);	
 }
+
+int graph::fordFulkerson()
+{
+
+}

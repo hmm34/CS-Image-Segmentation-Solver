@@ -77,6 +77,10 @@ int main(int argc, char* argv[])
 
 			// This will go to Ford Fulkerson Function
 			std::string ffInputGraphFileName = argv[optind];
+			graph ffg(ffInputGraphFileName);
+			graph resid = ffg;
+
+			ffg.print();
 		}
 
 		// Image Segmentation Option
