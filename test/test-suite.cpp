@@ -8,6 +8,11 @@
 
 #include <assert.h>
 #include <fstream>
+#include <iostream>
+#include <iomanip>
+#include "../src/graph.hpp"
+
+const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 
 //! @brief Q&D implementation of Marsaglia's xorshift random number generator. Rand() is way too slow to obtain
 //!	 random numbers rapidly and in repetition. See http://en.wikipedia.org/wiki/Xorshift
@@ -80,10 +85,42 @@ void generateRandomGraph(const char* file, int e, int v)
 	temp.close();
 }
 
+//! @param e Number of edges to randomly generate
+//! @param v Number of vertices to randomly generate
+//! @retval Time in seconds to complete the BFS
+//! @retval -1 if BFS is unsuccessful
+double timeBFS(int e, int v)
+{
+	// Read random graph as an adjacency list and perform BFS
+	generateRandomGraph(TEMP_GRAPH, e, v);
+	graph g(TEMP_GRAPH);
+	time_t start = time(0);
+	double seconds = -1;
+	std::pair< std::vector<int>, int> result = g.breadthFirstSearch(0, v-1);
+
+	// BFS had better complete...
+	if ((result.first.size() > 0) && (result.second > 0))
+		seconds = difftime(start, time(0));
+
+	// Clean up temporary graph text file created when graph was generated
+	remove(TEMP_GRAPH);
+
+	return seconds;
+}
+
 //! @brief Entry point to test suite execution
 //! @retval Error or success code
 int main()
 {
+	std::cout << "Timing metrics for breadth first search: " << std::endl;
+	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(10) << "seconds" << std::endl;
+	for (int totalVE = 100; totalVE <= 4000; totalVE += 100)
+	{
+		int edges = 2 * totalVE / 3 + 3;
+		int vertices = totalVE - edges;
+		double seconds = timeBFS(edges, vertices);
+		std::cout << std::left << std::setw(7) << totalVE << std::right << std::setw(10) << seconds << std::endl;
+	}
 
 	return 0;
 }
