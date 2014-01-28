@@ -11,6 +11,11 @@
 #include <sstream>
 #include <algorithm>
 
+graph::graph()
+{
+	
+}
+
 /* 
 @note The file should be in the format of an adjacency list. For example:
 		1 3 2 6 3 8

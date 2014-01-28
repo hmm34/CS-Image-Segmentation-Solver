@@ -22,6 +22,9 @@ class graph
 {
 public:
 	//! @brief Basic constructor
+	graph();
+
+	//! @brief Constructor with file provided
 	//! @param fileName The text file containing the graph
 	graph(std::string fileName);
 
