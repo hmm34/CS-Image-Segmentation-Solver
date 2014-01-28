@@ -12,72 +12,44 @@
 #include <algorithm>
 
 graph::graph()
-{
-	
-}
-
-/* 
-@note The file should be in the format of an adjacency list. For example:
-		1 3 2 6 3 8
-		2 2
-		3 1
- Here, we have four vertices 0-3. The first line represents the vertices that vertex 0 is connected to, with their edge 
- weights. Line 2 shows the vertices that vertex 1 is conected to, with their weights - and so on. The first line shows 
- that vertex 0 is connected to vertex 1 with edge weight 3, vertex 2 with weight 6, and vertex 3 with edge weight 8.
-*/
-graph::graph(std::string fileName)
-{
-	// Open the file containing the graph information
-	std::ifstream input;
-	input.open(fileName.c_str());
-	if (!input)
-		std::cerr << "Could not open " << fileName << "!\n";
-
-	std::set<int> totalNodes; // Unique list of all nodes added
-	std::string line;
-	int count = 0;
-	while (getline(input, line))
-	{
-		// Obtain the list of connected vertices and their edge weights
-		std::vector<vertex> connectedVertices = std::vector<vertex>();
-		std::stringstream ss(line);
-		while (ss)
-		{
-			vertex u;
-			ss >> u.id; 	// The first # is the vertex id for u
-			if (!ss) break; // If there's no second number, we're finished here
-			ss >> u.weight; // The second # is the capacity/weight from v to u
-			connectedVertices.push_back(u);
-			totalNodes.insert(u.id);
-		}
-		adjacencyList.push_back(connectedVertices);
-		totalNodes.insert(count++);
-	}
-	numNodes = totalNodes.size();
-	input.close();
-}
+{ }
 
 graph::~graph()
+{ }
+
+void graph::addNode(int id)
 {
-	adjacencyList.clear();
+	//! @note We should check to see if this node ID already exists in the list
+	std::map<int, vertex> emptyNeighbors;
+	adjList[id] = emptyNeighbors;
+	numNodes++;
+}
+
+void graph::addNeighbor(int fromID, vertex neighborNode)
+{
+	//! @note We should check to see if this neighboring node ID already exists in the list
+	adjList[fromID][neighborNode.id] = neighborNode;
 }
 
 void graph::print()
 {
-	// Traverse each vertex u in the graph
-	for (unsigned int u = 0; u < adjacencyList.size(); ++u)
+	std::map<int, std::map<int, vertex> >::iterator adjItr = adjList.begin();
+	std::map<int, std::map<int, vertex> >::iterator adjEnd = adjList.end();
+	while (adjItr != adjEnd)
 	{
-		std::cout << u; // Current vertex
-		std::vector<vertex>::iterator current = adjacencyList.at(u).begin();
-		std::vector<vertex>::iterator end     = adjacencyList.at(u).end();
-		
-		// Traverse each vertex v to which u is connected
-		while (current != end)
-		{
-			std::cout << " --(" << (*current).weight << ")--> " << (*current).id;
-			++current;
+		// Current vertex
+		std::cerr << (*adjItr).first;
+		std::map<int, vertex>::iterator neighborsItr = (*adjItr).second.begin();
+		std::map<int, vertex>::iterator neighborsEnd = (*adjItr).second.end();
+
+		// Neighboring vertices
+		while (neighborsItr != neighborsEnd)
+		{	
+			std::cerr << " --(" << (*neighborsItr).second.weight << ")--> " << (*neighborsItr).second.id;
+			++neighborsItr;
 		}
-		std::cout << std::endl;
+		std::cerr << std::endl;
+		++adjItr;
 	}
 }
 
@@ -125,9 +97,9 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 			break;
 
 		// Obtain all of the current node's neighbors. If it has no neighbors, skip to the next node in the queue
-		if (currentNode >= (int) adjacencyList.size())
+		if (currentNode >= (int) adjList.size())
 			continue;
-		std::vector<vertex> neighbors = adjacencyList.at(currentNode);
+		std::map<int, vertex> neighbors = adjList[currentNode];
 		for (unsigned int i = 0; i < neighbors.size(); ++i)
 		{
 			int neighbor = neighbors.at(i).id;

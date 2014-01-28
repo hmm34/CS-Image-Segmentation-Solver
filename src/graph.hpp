@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 //! @brief The graph is a list of connected vertices
 struct vertex
@@ -24,12 +25,17 @@ public:
 	//! @brief Basic constructor
 	graph();
 
-	//! @brief Constructor with file provided
-	//! @param fileName The text file containing the graph
-	graph(std::string fileName);
-
 	//! @brief Basic destructor
 	~graph();
+
+	//! @brief Adds a vertex (node) to the adjacency list
+	//! @param id The ID of the vertex (node)
+	void addNode(int id);
+
+	//! @brief Adds a neighboring vertex (node) to the given vertex in the adjacency list
+	//! @brief fromID The ID of the vertex whose neighbor will be added
+	//! @param neighborNode The neighboring node with an ID and weight of the connected edge
+	void addNeighbor(int fromID, vertex neighborNode);
 
 	//! @brief Prints the graph out in adjacency list format
 	void print();
@@ -46,6 +52,6 @@ public:
 	int fordFulkerson();
 
 private:
-	std::vector< std::vector<vertex> > adjacencyList; //!< Adjacency list representation of the directed graph
+	std::map<int, std::map<int, vertex> > adjList;	  //!< Adjacency list representation of the directed graph
 	int numNodes;									  //!< Number of nodes
 };

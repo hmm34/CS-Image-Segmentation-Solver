@@ -11,6 +11,7 @@
 #include <iostream>
 #include <iomanip>
 #include "../src/graph.hpp"
+#include "../src/tools.hpp"
 
 const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 
@@ -93,7 +94,8 @@ double timeBFS(int e, int v)
 {
 	// Read random graph as an adjacency list and perform BFS
 	generateRandomGraph(TEMP_GRAPH, e, v);
-	graph g(TEMP_GRAPH);
+	graph g;
+	tools::graphFromFile(TEMP_GRAPH, g);
 	time_t start = time(0);
 	double seconds = -1;
 	std::pair< std::vector<int>, int> result = g.breadthFirstSearch(0, v-1);

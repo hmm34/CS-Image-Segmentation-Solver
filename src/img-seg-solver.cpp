@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <string>
+#include "tools.hpp"
 #include "graph.hpp"
 
 //! @brief Entry point to execute the img-seg-solver program
@@ -50,6 +51,7 @@ int main(int argc, char* argv[])
 			}
 
 			// Perform the BFS on the graph created from the input file
+			/*
 			graph g(bfsInputGraphFileName);
 			for (unsigned int i = 0; i < endPoints.size(); ++i)
 			{
@@ -64,6 +66,11 @@ int main(int argc, char* argv[])
 				std::cout << "Minimum capacity is: " << minCapacity << std::endl;
 			}
 			g.print();
+			*/
+
+			graph g;
+			tools::graphFromFile( argv[optind], g );
+			g.print();
 		}
 
 		// Ford-Fulkerson Option
@@ -76,8 +83,8 @@ int main(int argc, char* argv[])
 			}
 
 			// This will go to Ford Fulkerson Function
-			std::string ffInputGraphFileName = argv[optind];
-			graph ffg(ffInputGraphFileName);
+			graph ffg;
+			tools::graphFromFile( argv[optind], ffg );
 			graph resid = ffg;
 
 			ffg.print();
