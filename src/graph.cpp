@@ -141,13 +141,13 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 
 	//! @note Used this for testing just to make sure it was correct :) This can be removed after we add test cases
 	/*
-	std::cout << "Shortest path obtained:" << std::endl;
+	std::cerr << "Shortest path obtained:" << std::endl;
 	for (unsigned int i = 0; i < shortestPath.size(); ++i)
 	{
 		if (i == shortestPath.size() - 1)
-			std::cout << shortestPath.at(i) << std::endl;
+			std::cerr << shortestPath.at(i) << std::endl;
 		else
-			std::cout << shortestPath.at(i) << " --> ";
+			std::cerr << shortestPath.at(i) << " --> ";
 	}
 	*/
 	return std::make_pair(shortestPath, minCapacity);	
