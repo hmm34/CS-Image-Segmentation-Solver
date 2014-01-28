@@ -174,5 +174,16 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 
 int graph::fordFulkerson()
 {
+	int maxFlow = 0;
 
+	while (true) {
+		std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(0, numNodes-1);
+
+		// FF is done!
+		if (bfsResult.first.empty()) {
+			break;
+		}
+	}
+
+	return maxFlow;
 }
