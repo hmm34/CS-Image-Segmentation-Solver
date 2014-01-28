@@ -19,16 +19,20 @@ graph::~graph()
 
 void graph::addNode(int id)
 {
-	//! @note We should check to see if this node ID already exists in the list
-	std::map<int, vertex> emptyNeighbors;
-	adjList[id] = emptyNeighbors;
-	numNodes++;
+	// Only add if this node ID doesn't already exists in the list
+	if (adjList.find(id) == adjList.end())
+	{
+		std::map<int, vertex> emptyNeighbors;
+		adjList[id] = emptyNeighbors;
+		numNodes++;
+	}
 }
 
 void graph::addNeighbor(int fromID, vertex neighborNode)
 {
-	//! @note We should check to see if this neighboring node ID already exists in the list
-	adjList[fromID][neighborNode.id] = neighborNode;
+	// Only add if this neighboring node ID doesn't already exists in the list
+	if (adjList[fromID].find(neighborNode.id) == adjList[fromID].end())
+		adjList[fromID][neighborNode.id] = neighborNode;
 }
 
 void graph::print()
