@@ -188,7 +188,7 @@ int graph::fordFulkerson()
 				adjList[sNode][nNode].weight = adjList[sNode][nNode].weight - bfsResult.second;
 				vertex v;
 				v.id = i;
-				v.weight = (bfsResult.second - adjList[sNode][nNode].weight) * -1;
+				v.weight = bfsResult.second;
 				adjList[nNode][sNode] = v;
 			}
 			else {
