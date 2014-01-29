@@ -170,13 +170,43 @@ int graph::fordFulkerson()
 	int maxFlow = 0;
 
 	while (true) {
-		std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(0, numNodes-1);
+
+		// This needs to be fixed
+		std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(0, 3);
 
 		// FF is done!
 		if (bfsResult.first.empty()) {
 			break;
 		}
+
+		for (unsigned int i = 0; i < bfsResult.first.size() - 1; ++i) {
+			int sNode = bfsResult.first[i];
+			int nNode = bfsResult.first[i+1];
+
+			if (adjList[sNode][nNode].weight - bfsResult.second > 0) {				
+				adjList[sNode][nNode].weight = adjList[sNode][nNode].weight - bfsResult.second;
+				vertex v;
+				v.id = i;
+				v.weight = (bfsResult.second - adjList[sNode][nNode].weight) * -1;
+				adjList[nNode][sNode] = v;
+			}
+			else {
+				vertex v;
+				v.id = sNode;
+				v.weight = adjList[sNode][nNode].weight;
+				adjList[nNode][sNode] = v;
+				adjList[sNode].erase(nNode);
+			}
+		}
+
+		maxFlow = maxFlow + bfsResult.second;
+
+		/* Debuggin to Show Graph States
+		print();
+		std::cerr << "----------\n";
+		*/
 	}
 
+	std::cerr << "Max Flow: " << maxFlow << "\n";
 	return maxFlow;
 }

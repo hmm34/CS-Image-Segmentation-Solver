@@ -82,8 +82,8 @@ int main(int argc, char* argv[])
 			graph ffg;
 			tools::graphFromFile( argv[optind], ffg );
 			graph resid = ffg;
-
-			ffg.print();
+			std::cerr << "SHOW ME THE FULKERSON!\n";
+			ffg.fordFulkerson();
 		}
 
 		// Image Segmentation Option
