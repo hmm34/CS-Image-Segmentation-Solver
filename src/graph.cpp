@@ -115,6 +115,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 		// Obtain all of the current node's neighbors. If it has no neighbors, skip to the next node in the queue
 		if (currentNode >= adjList.size())
 			continue;
+		
 		std::map<int, vertex> neighbors = adjList[currentNode];
 		for (unsigned int i = 0; i < neighbors.size(); ++i)
 		{
