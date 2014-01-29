@@ -61,9 +61,9 @@ int main(int argc, char* argv[])
 				unsigned int numEdges = shortestPath.size() - 1; 	// Edges = Nodes - 1
 
 				//! @note Again - testing purposes!
-				std::cout << "Found shortest path from " << startVertex << " to "
+				std::cerr << "Found shortest path from " << startVertex << " to "
 					<< endPoints[i] << " to be: " << numEdges << std::endl;
-				std::cout << "Minimum capacity is: " << minCapacity << std::endl;
+				std::cerr << "Minimum capacity is: " << minCapacity << std::endl;
 			}
 
 			g.print();

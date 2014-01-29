@@ -36,8 +36,11 @@ bool graph::addNeighbor(int fromID, vertex neighborNode)
 	if (adjList[fromID].find(neighborNode.id) == adjList[fromID].end())
 	{
 		adjList[fromID][neighborNode.id] = neighborNode;
+		if (adjList.find(neighborNode.id) == adjList.end())
+			numNodes++;
 		return true;
 	}
+
 	return false;
 }
 
@@ -75,7 +78,10 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 
 	// Verify that the start node and end node are within acceptable ranges
 	if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
+	{
+		print();
 		return std::make_pair(shortestPath, minCapacity);
+	}
 
 	// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity. The 
 	// edge weights within the shortest paths is contained within pathWeights.
