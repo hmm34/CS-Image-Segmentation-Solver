@@ -166,14 +166,14 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 	return std::make_pair(shortestPath, minCapacity);	
 }
 
-int graph::fordFulkerson()
+int graph::fordFulkerson(int source, int sink)
 {
 	int maxFlow = 0;
 
 	while (true) {
 
 		// This needs to be fixed
-		std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(0, 3);
+		std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(source, sink);
 
 		// FF is done!
 		if (bfsResult.first.empty()) {

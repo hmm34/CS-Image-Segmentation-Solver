@@ -83,7 +83,9 @@ int main(int argc, char* argv[])
 			tools::graphFromFile( argv[optind], ffg );
 			graph resid = ffg;
 			std::cerr << "SHOW ME THE FULKERSON!\n";
-			ffg.fordFulkerson();
+			
+			// Hard coded....will fix once number of nodes works
+			ffg.fordFulkerson(0, 3);
 		}
 
 		// Image Segmentation Option

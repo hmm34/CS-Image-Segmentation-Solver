@@ -51,7 +51,7 @@ public:
 	//!  negative minimum capacity
 	std::pair< std::vector<int>, int> breadthFirstSearch(int start, int end);
 
-	int fordFulkerson();
+	int fordFulkerson(int source, int sink);
 
 private:
 	std::map<int, std::map<int, vertex> > adjList;	  //!< Adjacency list representation of the directed graph
