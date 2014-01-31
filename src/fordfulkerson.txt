@@ -1,0 +1,104 @@
+import java.io.*;
+import java.util.*;
+/*FordFulkerson class contains BFS Method, which finds the shortest augmenting path if it exists
+and also it contains methods such as setMaxFlow(),doMinCut(),setresNetwork(),
+getUnvisitedChildGraphNode() etc.,*/
+public class fordfulkerson
+{       
+        public String fileName;
+	public int size;
+        /*Declaring Root and Sink variables of FlowNetwork*/
+	public GraphNode root, sink;
+        /*store maximum flow in the maxFlow variable*/
+	public static int maxflow;
+        /*store the minimum value of augmenting path in minsp*/
+	public int mvsp;
+        /*Array which stores GraphNodes of FlowNetwork*/
+        public List<GraphNode> graphNodes=new ArrayList<GraphNode>();
+        /*Edges will be represented by adjacency Matrix*/
+	public int[][] adjMatrix;
+        /*Edges will be represented from residual Matrix*/
+	public int[][] resNetwork;
+        /*Edges will be represented as the flow between edges*/
+	public int[][] flowGraph;
+        /*Number of Nodes in the FlowNetwork*/
+	public int sizeOfGraph;
+        /*size of the sets after minimum cut*/
+	public int sCutSize, tCutSize;
+        /*Shortest path if obtained in the residual Network is stored in it*/
+	public static int [] shortestPath;
+	/*Arrays used to store the sets S and T*/
+        public int [] sCut,tCut;
+	/*Stores all the nodes in a graph*/
+        public GraphNode [] graph_NodeList;
+	/*This method makes the graph nodes as not visited*/
+	private void makeNodesUnvisited()
+	{
+	int i=0;
+	while(i<sizeOfGraph)
+	{
+	GraphNode gn=(GraphNode)graphNodes.get(i);
+	gn.visited=false;
+	i++;
+	}
+	}
+	/*Takes the file as input to BFS which contains an adjacency matrix*/
+	public void inAdjMatrix(String inputFileName)
+        {
+	try{
+       	   FileReader fr = new FileReader(inputFileName); 
+	
+           BufferedReader input = new BufferedReader(fr); 
+	
+           String readSize = input.readLine();
+	
+           size=Integer.parseInt(readSize);
+	
+           System.out.println(" size:"+size);
+	
+           graph_NodeList=new GraphNode[size];
+	
+           adjMatrix=new int[size][size];
+	
+           resNetwork=new int[size][size];
+	
+           flowGraph=new int[size][size];
+	
+           String str =null;
+	   for(int max=0;((str=input.readLine())!=null) && max<size;max++ )
+	   {
+	    String[] spl=str.split(" ");
+	    for(int x=0;x<size;x++)
+	    {	
+	     adjMatrix[max][x]=Integer.parseInt(spl[x]);
+	    }
+	   }
+	   for(int i=0;i <size;i++)
+	   {
+	   graph_NodeList[i] = new GraphNode(i+1,i+1);
+	   }
+	   for(int i=0;i<size;i++)
+	   graphNodes.add(graph_NodeList[i]);
+	   resNetwork=adjMatrix;
+	   root=graph_NodeList[0];
+	   sink=graph_NodeList[size-1];
+	   sizeOfGraph=graphNodes.size();
+	   }
+	   catch(Exception e)
+	   {
+	   e.printStackTrace();
+	   }
+      }
+}
+//Class whose objects are nodes in a graph
+class GraphNode 
+{
+	public int nodeTag;
+	public int nodeColor;
+	public boolean visited=false;
+	public GraphNode(int nt, int nc)
+	{
+		this.nodeTag=nt;
+		this.nodeColor=nc;
+	}
+}
