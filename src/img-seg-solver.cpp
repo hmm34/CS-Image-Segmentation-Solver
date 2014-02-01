@@ -11,12 +11,7 @@
 #include "tools.hpp"
 #include "graph.hpp"
 
-//! @brief Entry point to execute the img-seg-solver program
-//! @param argc Number of arguments
-//! @param argv List of arguments
-//! @return Error or success code
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
 	if (argc < 2) {
 		std::cerr << "No options found!\n";
 		return 1;
@@ -54,8 +49,7 @@ int main(int argc, char* argv[])
 			graph g;
 			tools::graphFromFile( argv[optind], g );
 			std::cerr << "Number of nodes is: " << g.nodes() << std::endl;
-			for (unsigned int i = 0; i < endPoints.size(); ++i)
-			{
+			for (unsigned int i = 0; i < endPoints.size(); ++i) {
 				std::pair< std::vector<int>, int > searchResult = g.breadthFirstSearch(startVertex, endPoints[i]);
 				std::vector<int> shortestPath = searchResult.first;	// Shortest path p along graph G
 				int minCapacity = searchResult.second;				// Minimum capacity along p

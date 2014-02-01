@@ -9,8 +9,8 @@
 
 #include "graph.hpp"
 
-namespace tools
-{
+namespace tools {
+	
 	//! @brief Reads from a text file
 	//! @param file The name of the file to be read
 	//! @retval The adjacency list representation of the graph from the file

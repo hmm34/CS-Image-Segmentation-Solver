@@ -11,19 +11,17 @@
 #include <sstream>
 #include <algorithm>
 
-graph::graph()
-{ }
+graph::graph() { 
+}
 
-graph::~graph()
-{ }
+graph::~graph() {
+}
 
-bool graph::addNode(int id)
-{
+bool graph::addNode(int id) {
 	sNodes.insert(id);
 
 	// Only add if this node ID doesn't already exists in the list
-	if (adjList.find(id) == adjList.end())
-	{
+	if (adjList.find(id) == adjList.end()) {
 		std::map<int, vertex> emptyNeighbors;
 		adjList[id] = emptyNeighbors;
 		return true;
@@ -31,38 +29,32 @@ bool graph::addNode(int id)
 	return false;
 }
 
-bool graph::addNeighbor(int fromID, vertex neighborNode)
-{
+bool graph::addNeighbor(int fromID, vertex neighborNode) {
 	sNodes.insert(neighborNode.id);
 
 	// Only add if this neighboring node ID doesn't already exists in the list
-	if (adjList[fromID].find(neighborNode.id) == adjList[fromID].end())
-	{
+	if (adjList[fromID].find(neighborNode.id) == adjList[fromID].end()) {
 		adjList[fromID][neighborNode.id] = neighborNode;
 		return true;
 	}
 	return false;
 }
 
-int graph::nodes()
-{
+int graph::nodes() {
 	return sNodes.size();
 }
 
-void graph::print()
-{
+void graph::print() {
 	std::map<int, std::map<int, vertex> >::iterator adjItr = adjList.begin();
 	std::map<int, std::map<int, vertex> >::iterator adjEnd = adjList.end();
-	while (adjItr != adjEnd)
-	{
+	while (adjItr != adjEnd) {
 		// Current vertex
 		std::cerr << (*adjItr).first;
 		std::map<int, vertex>::iterator neighborsItr = (*adjItr).second.begin();
 		std::map<int, vertex>::iterator neighborsEnd = (*adjItr).second.end();
 
 		// Neighboring vertices
-		while (neighborsItr != neighborsEnd)
-		{	
+		while (neighborsItr != neighborsEnd) {	
 			std::cerr << " --(" << (*neighborsItr).second.weight << ")--> " << (*neighborsItr).second.id;
 			++neighborsItr;
 		}
@@ -75,16 +67,14 @@ void graph::print()
 //!	 keep essentially the same algorithm but consider the last vertex to be the maximum of all listed end vertices.
 //!	 For each given end vertex, we would reverse iterate through the list of preceding nodes. We would then have a 
 //!	 list of a list of the shortest paths to each given end vertex, for each given end vertex.
-std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
-{
+std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end) {
 	const int INFINITY = std::numeric_limits<int>::max();
 	std::vector<int> shortestPath;	// Nodes from start to end with the shortest path
 	int minCapacity = INFINITY;		// Minimum weight (capacity) along the shortest path
 
 	// Verify that the start node and end node are within acceptable ranges
 	int numNodes = sNodes.size();
-	if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
-	{
+	if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) ) {
 		print();
 		return std::make_pair(shortestPath, minCapacity);
 	}
@@ -104,8 +94,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 	//!		once the computation is complete.
 	std::queue<int> nodesToVisit; // Nodes that still need visited in the BFS
 	nodesToVisit.push(start);
-	while (true)
-	{	
+	while (true) {	
 		// If we can't find the end vertex, return an empty list
 		if (nodesToVisit.empty())
 			return std::make_pair(shortestPath, minCapacity);
@@ -123,8 +112,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 			continue;
 		
 		std::map<int, vertex> neighbors = adjList[currentNode];
-		for (unsigned int i = 0; i < neighbors.size(); ++i)
-		{
+		for (unsigned int i = 0; i < neighbors.size(); ++i) {
 			int neighbor = neighbors[i].id;
 
 			// Keep track of how we got to these neighbors for the shortest path, but DON'T OVER-WRITE if it's already 
@@ -143,8 +131,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 
 	// Find path to the end node by back-track through the paths list until we find the given start node.
 	int currentNode = end;
-	while (true)
-	{
+	while (true) {
 		// Loop has completed if we're back at the starting point
 		shortestPath.push_back(currentNode);
 		if (currentNode == start)
@@ -172,8 +159,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 	return std::make_pair(shortestPath, minCapacity);	
 }
 
-int graph::fordFulkerson(int source, int sink)
-{
+int graph::fordFulkerson(int source, int sink) {
 	int maxFlow  = 0;
 
 	while (true) {

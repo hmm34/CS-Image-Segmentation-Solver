@@ -18,8 +18,7 @@ const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 //! @brief Q&D implementation of Marsaglia's xorshift random number generator. Rand() is way too slow to obtain
 //!	 random numbers rapidly and in repetition. See http://en.wikipedia.org/wiki/Xorshift
 //! @retval Pseudo-random number that passes the diehard tests.
-uint32_t xorshift()
-{
+uint32_t xorshift() {
 	static uint32_t x = 123456789;
   	static uint32_t y = 362436069;
   	static uint32_t z = 521288629;
@@ -35,8 +34,7 @@ uint32_t xorshift()
 //! @param file Name of the file where the graph will be placed
 //! @param e Number of edges
 //! @param v Number of vertices
-void generateRandomGraph(const char* file, int e, int v)
-{
+void generateRandomGraph(const char* file, int e, int v) {
 	static const int MAX_NODE_WEIGHT = 9; // Arbitrarily chosen for simplicity
 
 	int matrix[v][v];
@@ -47,15 +45,13 @@ void generateRandomGraph(const char* file, int e, int v)
 	// nodes below, and an e value greater than v, this shouldn't be an issue.
 	int previous = 0;
 	int nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
-	for (int i = 1; i < v ; ++i)
-	{
+	for (int i = 1; i < v ; ++i) {
 		matrix[previous][i] = nodeWeight;
 		previous = i;
 	}	
 
 	// Randomly allot remaining edges
-	for (int i = 0; i <= e - v; ++i)
-	{
+	for (int i = 0; i <= e - v; ++i) {
 		int x = 0, y = 0;
 		nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
 
@@ -74,10 +70,8 @@ void generateRandomGraph(const char* file, int e, int v)
 	// Write to file
 	std::ofstream temp;
 	temp.open(file);
-	for (int i = 0; i < v; ++i)
-	{
-		for (int j = 0; j < v; ++j)
-		{
+	for (int i = 0; i < v; ++i) {
+		for (int j = 0; j < v; ++j) {
 			if (matrix[i][j] != 0)
 				temp << j << " " << matrix[i][j] << " ";
 		}
@@ -90,8 +84,7 @@ void generateRandomGraph(const char* file, int e, int v)
 //! @param v Number of vertices to randomly generate
 //! @retval Time in seconds to complete the BFS
 //! @retval -1 if BFS is unsuccessful
-double timeBFS(int e, int v)
-{
+double timeBFS(int e, int v) {
 	// Read random graph as an adjacency list and perform BFS
 	generateRandomGraph(TEMP_GRAPH, e, v);
 	graph g;
@@ -129,14 +122,12 @@ bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<
 	int minCapacityResult 							= searchResult.second;	// Minimum capacity along p
 
 	// Compare expected results to actual results
-	if (minCapacity != minCapacityResult)
-	{
+	if (minCapacity != minCapacityResult) {
 		std::cerr << "Minimum capacity was incorrect. Expected " << minCapacity 
 				  << ", but returned " << minCapacityResult << std::endl;
 		return false;
 	}
-	if (shortestPath != shortestPathResult)
-	{
+	if (shortestPath != shortestPathResult) {
 		std::cerr << "Shortest path was incorrect. Expected ";
 		for (int i = 0; i < shortestPath.size(); ++i)
 			std::cerr << shortestPath.at(i) << " ";
@@ -150,16 +141,13 @@ bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<
 	return true;
 }
 
-//! @brief Entry point to test suite execution
-//! @retval Error or success code
-int main()
-{
+int main() {
+
 	/* --------------------------------------------- Timing Metrics ------------------------------------------- */
 	// Breadth First Search
 	std::cout << "Timing metrics for breadth first search: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(10) << "seconds" << std::endl;
-	for (int totalVE = 100; totalVE <= 4000; totalVE += 100)
-	{
+	for (int totalVE = 100; totalVE <= 4000; totalVE += 100) {
 		int edges = 2 * totalVE / 3 + 3;
 		int vertices = totalVE - edges;
 		double seconds = timeBFS(edges, vertices);

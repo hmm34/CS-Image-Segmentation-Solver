@@ -13,15 +13,14 @@
 #include <map>
 
 //! @brief The graph is a list of connected vertices
-struct vertex
-{
+struct vertex {
 	int id;		//! Unique ID representing which vertex is held
 	int weight; //! The capacity or weight of this connected node
 };
 
 //! @brief Graph object to contain vertices and weighted edges in adjacency list format.
-class graph
-{
+class graph {
+	
 public:
 	//! @brief Basic constructor
 	graph();
