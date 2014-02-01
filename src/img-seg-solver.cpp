@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
 			// Perform the BFS on the graph created from the input file
 			graph g;
 			tools::graphFromFile( argv[optind], g );
+			std::cerr << "Number of nodes is: " << g.nodes() << std::endl;
 			for (unsigned int i = 0; i < endPoints.size(); ++i)
 			{
 				std::pair< std::vector<int>, int > searchResult = g.breadthFirstSearch(startVertex, endPoints[i]);

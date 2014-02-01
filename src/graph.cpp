@@ -19,12 +19,13 @@ graph::~graph()
 
 bool graph::addNode(int id)
 {
+	sNodes.insert(id);
+
 	// Only add if this node ID doesn't already exists in the list
 	if (adjList.find(id) == adjList.end())
 	{
 		std::map<int, vertex> emptyNeighbors;
 		adjList[id] = emptyNeighbors;
-		numNodes++;
 		return true;
 	}
 	return false;
@@ -32,16 +33,20 @@ bool graph::addNode(int id)
 
 bool graph::addNeighbor(int fromID, vertex neighborNode)
 {
+	sNodes.insert(neighborNode.id);
+
 	// Only add if this neighboring node ID doesn't already exists in the list
 	if (adjList[fromID].find(neighborNode.id) == adjList[fromID].end())
 	{
 		adjList[fromID][neighborNode.id] = neighborNode;
-		if (adjList.find(neighborNode.id) == adjList.end())
-			numNodes++;
 		return true;
 	}
-
 	return false;
+}
+
+int graph::nodes()
+{
+	return sNodes.size();
 }
 
 void graph::print()
@@ -77,6 +82,7 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 	int minCapacity = INFINITY;		// Minimum weight (capacity) along the shortest path
 
 	// Verify that the start node and end node are within acceptable ranges
+	int numNodes = sNodes.size();
 	if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
 	{
 		print();
@@ -168,7 +174,8 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 
 int graph::fordFulkerson(int source, int sink)
 {
-	int maxFlow = 0;
+	int maxFlow  = 0;
+	int numNodes = sNodes.size();
 
 	while (true) {
 

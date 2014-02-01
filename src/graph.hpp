@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include <map>
 
 //! @brief The graph is a list of connected vertices
@@ -39,6 +40,10 @@ public:
 	//! @retval true if successful, false if the node already exists
 	bool addNeighbor(int fromID, vertex neighborNode);
 
+	//! @brief Get the number of nodes contained within this graph
+	//! @retval The number of unique nodes in the graph
+	int nodes();
+
 	//! @brief Prints the graph out in adjacency list format
 	void print();
 
@@ -54,6 +59,7 @@ public:
 	int fordFulkerson(int source, int sink);
 
 private:
-	std::map<int, std::map<int, vertex> > adjList;	  //!< Adjacency list representation of the directed graph
-	int numNodes;									  //!< Number of nodes
+	std::map<int, std::map<int, vertex> > adjList;	//!< Adjacency list representation of the directed graph
+	std::set<int> sNodes;							//!< Unique set of all nodes
+	
 };
