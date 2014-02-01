@@ -175,7 +175,6 @@ std::pair< std::vector<int>, int> graph::breadthFirstSearch(int start, int end)
 int graph::fordFulkerson(int source, int sink)
 {
 	int maxFlow  = 0;
-	int numNodes = sNodes.size();
 
 	while (true) {
 
