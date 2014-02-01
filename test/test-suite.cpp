@@ -110,10 +110,52 @@ double timeBFS(int e, int v)
 	return seconds;
 }
 
+//! @brief Runs a breadth first search given a particular test file
+//! @param file The input text file containing the graph to perform the BFS on
+//! @param start Starting point of search
+//! @param end Ending point of search
+//! @param minCapacity The expected minimum capacity of the shortest path
+//! @param shortestPath The expected shortest path in vector format
+//! @retval true if successful, false if unsuccessful
+bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<int> shortestPath)
+{
+	// Create the graph from the given file
+	graph g;
+	tools::graphFromFile(file, g);
+
+	// Perform the search and obtain results
+	std::pair< std::vector<int>, int > searchResult = g.breadthFirstSearch(start, end);
+	std::vector<int> shortestPathResult 			= searchResult.first;	// Shortest path p along graph G
+	int minCapacityResult 							= searchResult.second;	// Minimum capacity along p
+
+	// Compare expected results to actual results
+	if (minCapacity != minCapacityResult)
+	{
+		std::cerr << "Minimum capacity was incorrect. Expected " << minCapacity 
+				  << ", but returned " << minCapacityResult << std::endl;
+		return false;
+	}
+	if (shortestPath != shortestPathResult)
+	{
+		std::cerr << "Shortest path was incorrect. Expected ";
+		for (int i = 0; i < shortestPath.size(); ++i)
+			std::cerr << shortestPath.at(i) << " ";
+		std::cerr << ", but returned ";
+		for (int i = 0; i < shortestPathResult.size(); ++i)
+			std::cerr << shortestPathResult.at(i) << " ";
+		std::cerr << std::endl;
+		return false;
+	}
+
+	return true;
+}
+
 //! @brief Entry point to test suite execution
 //! @retval Error or success code
 int main()
 {
+	/* --------------------------------------------- Timing Metrics ------------------------------------------- */
+	// Breadth First Search
 	std::cout << "Timing metrics for breadth first search: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(10) << "seconds" << std::endl;
 	for (int totalVE = 100; totalVE <= 4000; totalVE += 100)
@@ -123,6 +165,18 @@ int main()
 		double seconds = timeBFS(edges, vertices);
 		std::cout << std::left << std::setw(7) << totalVE << std::right << std::setw(10) << seconds << std::endl;
 	}
+
+	/* --------------------------------------------- Unit Testing --------------------------------------------- */
+	// Breadth First Search
+	std::cout << "Breadth first search tests: " << std::endl;
+	int expectedSP[] = {0, 3};
+	std::vector<int> expectedShortestPath(expectedSP, expectedSP + sizeof(expectedSP) / sizeof(int));
+	bool result = testBFS("test/graphs/graph.txt", 0, 3, 8, expectedShortestPath);
+	if (result)
+		std::cerr << "graph.txt - Pass" << std::endl;
+	assert(result);
+
+	
 
 	return 0;
 }
