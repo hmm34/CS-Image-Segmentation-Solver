@@ -3,6 +3,10 @@
 */
 
 #include "tools.hpp"
+#include <cmath>
+#include <vector>
+#include <stdint.h>
+#include <limits>
 
 namespace tools {
 
@@ -113,9 +117,9 @@ namespace tools {
 	//!	 For each given end vertex, we would reverse iterate through the list of preceding nodes. We would then have a 
 	//!	 list of a list of the shortest paths to each given end vertex, for each given end vertex.
 	std::pair< std::vector<int>, int> breadthFirstSearch(graph& g, int start, int end) {
-		const int INFINITY = std::numeric_limits<int>::max();
+		static int infinity = std::numeric_limits<int>::max();
 		std::vector<int> shortestPath;	// Nodes from start to end with the shortest path
-		int minCapacity = INFINITY;		// Minimum weight (capacity) along the shortest path
+		int minCapacity = infinity;		// Minimum weight (capacity) along the shortest path
 
 		// Verify that the start node and end node are within acceptable ranges
 		int numNodes = g.nodes();
@@ -128,8 +132,8 @@ namespace tools {
 		// edge weights within the shortest paths is contained within pathWeights.
 		int paths[numNodes];
 		int pathWeights[numNodes];
-		std::fill_n(paths, numNodes, INFINITY);
-		std::fill_n(pathWeights, numNodes, INFINITY);
+		std::fill_n(paths, numNodes, infinity);
+		std::fill_n(pathWeights, numNodes, infinity);
 		paths[start] = -1;
 		pathWeights[start] = 0;
 
@@ -162,7 +166,7 @@ namespace tools {
 
 				// Keep track of how we got to these neighbors for the shortest path, but DON'T OVER-WRITE if it's already 
 				// been found! This preserves the minimal path in terms of number of edges. 
-				if (paths[neighbor] == INFINITY) {
+				if (paths[neighbor] == infinity) {
 					
 					// Set the neighbor with the node that connects it, including the edge weight
 					paths[neighbor] = currentNode;
