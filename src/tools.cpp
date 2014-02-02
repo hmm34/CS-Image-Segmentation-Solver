@@ -3,10 +3,6 @@
 */
 
 #include "tools.hpp"
-#include <queue>
-#include <sstream>
-#include <fstream>
-#include <iostream>
 
 namespace tools {
 
