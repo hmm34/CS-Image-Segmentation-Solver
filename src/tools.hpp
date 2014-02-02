@@ -9,6 +9,10 @@
 
 #include "graph.hpp"
 #include <set>
+#include <queue>
+#include <sstream>
+#include <fstream>
+#include <iostream>
 
 namespace tools {
 
