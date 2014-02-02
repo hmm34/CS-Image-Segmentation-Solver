@@ -3,11 +3,16 @@
 */
 
 #include "tools.hpp"
-#include <vector>
-#include <limits>
-#include <algorithm>
 #include <cmath>
+#include <vector>
 #include <stdint.h>
+#include <limits>
+#include <set>
+#include <queue>
+#include <sstream>
+#include <fstream>
+#include <iostream>
+#include <algorithm>
 
 namespace tools {
 
@@ -282,8 +287,8 @@ namespace tools {
 		std::set<int> S; // All nodes within the set S; nodes u such that u is reachable by source s
 		std::set<int> T; // All nodes within the set T; nodes u such that u is not reachable by source s
 
-		//graph reverse = g;
-		//tools::reverse(reverse);
+		graph reverse = g;
+		tools::reverse(reverse);
 
 		//! @note We don't care about the shortest path here, so using BFS does more than we care for - but it checks
 		//!	if a path exists.
@@ -299,8 +304,8 @@ namespace tools {
 			else
 				T.insert(i);
 		}
-
-		// Used for debugging purposes
+		*/
+		/* Used for debugging purposes *//*
 		std::cerr << "Elements of S: {";
 		for (std::set<int>::iterator itr = S.begin(); itr != S.end(); ++itr)
 			std::cerr << (*itr) << ",";	
@@ -311,7 +316,8 @@ namespace tools {
 		std::cerr << "}\n";
 
 		return std::make_pair< std::set<int>, std::set<int> >(S,T);
-	}*/
+	}
+	*/
 
 	void segmentImage(const char* file, const char* cut) {
 		// Read PGM from file as a graph.
