@@ -57,7 +57,7 @@ namespace tools {
 
 	//! @brief Takes a given graph and reverses all edges
 	//! @param g The graph whose edges will be reversed
-	void reverse(graph& g);
+	//void reverse(graph& g);
 
 	//! @brief Obtains the minimum cut from a graph on which the Ford Fulkerson algorithm has already been performed
 	//! @param g The graph on which to obtain the min cut
