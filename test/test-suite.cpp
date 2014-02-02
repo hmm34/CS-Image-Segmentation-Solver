@@ -91,7 +91,7 @@ double timeBFS(int e, int v) {
 	tools::graphFromFile(TEMP_GRAPH, g);
 	time_t start = time(0);
 	double seconds = -1;
-	std::pair< std::vector<int>, int> result = g.breadthFirstSearch(0, v-1);
+	std::pair< std::vector<int>, int> result = tools::breadthFirstSearch(g, 0, v-1);
 
 	// BFS had better complete...
 	if ((result.first.size() > 0) && (result.second > 0))
@@ -117,7 +117,7 @@ bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<
 	tools::graphFromFile(file, g);
 
 	// Perform the search and obtain results
-	std::pair< std::vector<int>, int > searchResult = g.breadthFirstSearch(start, end);
+	std::pair< std::vector<int>, int > searchResult = tools::breadthFirstSearch(g, start, end);
 	std::vector<int> shortestPathResult 			= searchResult.first;	// Shortest path p along graph G
 	int minCapacityResult 							= searchResult.second;	// Minimum capacity along p
 

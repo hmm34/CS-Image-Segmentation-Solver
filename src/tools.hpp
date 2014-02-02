@@ -28,10 +28,20 @@ namespace tools {
 	*/
 	 void graphFromFile(const char* file, graph& g);
 
-	 //! @brief Ford fulkerson algorithm used to obtain the maximum flow and minimum cut
-	 //! @param g The graph on which to perform the algorithm
-	 //! @param source 
-	 //! @param sink
-	 //! @retval The maximum flow for the given graph
-	 int fordFulkerson(graph& g, int source, int sink);
+	//! @brief Ford fulkerson algorithm used to obtain the maximum flow and minimum cut
+	//! @param g The graph on which to perform the algorithm
+	//! @param source 
+	//! @param sink
+	//! @retval The maximum flow for the given graph
+	int fordFulkerson(graph& g, int source, int sink);
+
+	//! @brief Performs a breadth first search on the graph to obtain the shortest path and minimum capacity in the path
+	//! @param g The graph to perform the breadth first search on
+	//! @param start Starting node
+	//! @param end Ending node. The search will be stopped once this is reached
+	//! @retval A pair containing the shortest path (in terms of number of edges - not the weights of the edges) from
+	//!	 starting node to ending node, and the minimum capacity (weight) along that path
+	//! @retval An empty vector if the start or end nodes were invalid, or the end node could not be found, with a 
+	//!  negative minimum capacity
+	std::pair< std::vector<int>, int> breadthFirstSearch(graph& g, int start, int end);
 }

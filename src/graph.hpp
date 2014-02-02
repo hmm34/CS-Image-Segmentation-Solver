@@ -46,15 +46,6 @@ public:
 	//! @brief Prints the graph out in adjacency list format
 	void print();
 
-	//! @brief Performs a breadth first search on the graph to obtain the shortest path and minimum capacity in the path
-	//! @param start Starting node
-	//! @param end Ending node. The search will be stopped once this is reached
-	//! @retval A pair containing the shortest path (in terms of number of edges - not the weights of the edges) from
-	//!	 starting node to ending node, and the minimum capacity (weight) along that path
-	//! @retval An empty vector if the start or end nodes were invalid, or the end node could not be found, with a 
-	//!  negative minimum capacity
-	std::pair< std::vector<int>, int> breadthFirstSearch(int start, int end);
-
 	std::map<int, std::map<int, vertex> > adjList;	//!< Adjacency list representation of the directed graph
 
 private:

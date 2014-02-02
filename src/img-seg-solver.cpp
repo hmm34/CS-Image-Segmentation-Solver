@@ -50,7 +50,8 @@ int main(int argc, char* argv[]) {
 			tools::graphFromFile( argv[optind], g );
 			std::cerr << "Number of nodes is: " << g.nodes() << std::endl;
 			for (unsigned int i = 0; i < endPoints.size(); ++i) {
-				std::pair< std::vector<int>, int > searchResult = g.breadthFirstSearch(startVertex, endPoints[i]);
+				std::pair< std::vector<int>, int > searchResult;
+				searchResult = tools::breadthFirstSearch(g, startVertex, endPoints[i]);
 				std::vector<int> shortestPath = searchResult.first;	// Shortest path p along graph G
 				int minCapacity = searchResult.second;				// Minimum capacity along p
 				unsigned int numEdges = shortestPath.size() - 1; 	// Edges = Nodes - 1
