@@ -99,6 +99,7 @@ int main(int argc, char* argv[]) {
 			// This will got to the Image Segmentation Function
 			std::string inputImageFileA = argv[optind];
 			std::string inputImageFileB = argv[optind+1];
+			tools::segmentImage(argv[optind], argv[optind+1]);
 		}
 	}		
 

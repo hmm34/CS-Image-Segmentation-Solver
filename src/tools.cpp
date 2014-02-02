@@ -43,30 +43,25 @@ namespace tools {
 
 		int x = 0, y = 0, max = 0;
 		std::string line;
-
 		getline(input, line);	// "P2"
 		getline(input, line);	// "#Created by Irfan View"
-		getline(input, line);	// X, Y
-		std::stringstream ssXY(line);
-		ssXY >> x >> y;
+
+		std::stringstream ss;
+		ss << input.rdbuf();
+		ss >> x >> y;			// X, Y
+		ss >> max;				// Max
+
 		int matrix[x][y];
-
-		getline(input, line);	// Max
-		std::stringstream ssMax(line);
-		ssMax >> max;
-
-		int xPos = 0, yPos = 0;
-		while (getline(input, line)) {
-			std::stringstream ss(line);
-			for (xPos = 0; xPos < x; ++xPos)
+		for (int yPos = 0; yPos < y; ++yPos) {
+			for (int xPos = 0; xPos < x; ++xPos) {
 				ss >> matrix[xPos][yPos];
-			++yPos;
+			}
 		}
 		input.close();
 
 		// Add paths between nodes
-		for (xPos = 0; xPos < x; ++xPos) {
-			for (yPos = 0; yPos < y; ++yPos) {
+		for (int xPos = 0; xPos < x; ++xPos) {
+			for (int yPos = 0; yPos < y; ++yPos) {
 				int currentID = (x * yPos) + xPos;
 				g.addNode(currentID);
 
@@ -320,7 +315,7 @@ namespace tools {
 		// Read PGM from file as a graph.
 		graph g;
 		graphFromPGM(file, g);
-		g.print();
+		//g.print();
 
 		// Obtain the average of all path weights. For each path, accumulate the sum of the weights. Divide by the
 		//	number of paths - I think this will end up being (X - 1) * (Y - 1)
