@@ -3,10 +3,11 @@
 */
 
 #include "tools.hpp"
-#include <cmath>
 #include <vector>
-#include <stdint.h>
 #include <limits>
+#include <algorithm>
+#include <cmath>
+#include <stdint.h>
 
 namespace tools {
 
@@ -249,7 +250,7 @@ namespace tools {
 			
 		}
 
-		std::pair< std::set<int>, std::set<int> > cut = minCut(g, source, sink);
+		//std::pair< std::set<int>, std::set<int> > cut = minCut(g, source, sink);
 		return maxFlow;
 	}
 

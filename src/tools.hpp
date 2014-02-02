@@ -64,7 +64,7 @@ namespace tools {
 	//! @param source
 	//! @param sink
 	//! @retval Pair of integer sets. All nodes within S and T, respectively, after cut(S,T).
-	std::pair< std::set<int>, std::set<int> > minCut(graph& g, int source, int sink);
+	//std::pair< std::set<int>, std::set<int> > minCut(graph& g, int source, int sink);
 
 	//! @brief Solves the image segmentation problem using ford fulkerson, separating the foreground from the background
 	//! @param file The pgm image to be segmented
