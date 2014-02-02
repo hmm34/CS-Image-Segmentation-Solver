@@ -35,6 +35,77 @@ namespace tools {
 		input.close();
 	}
 
+	void graphFromPGM(const char* file, graph& g) {
+		std::ifstream input;
+		input.open(file);
+		if (!input)
+			std::cerr << "Could not open file: " << file << "\n";
+
+		int x = 0, y = 0, max = 0;
+		std::string line;
+
+		getline(input, line);	// "P2"
+		getline(input, line);	// "#Created by Irfan View"
+		getline(input, line);	// X, Y
+		std::stringstream ssXY(line);
+		ssXY >> x >> y;
+		int matrix[x][y];
+
+		getline(input, line);	// Max
+		std::stringstream ssMax(line);
+		ssMax >> max;
+
+		int xPos = 0, yPos = 0;
+		while (getline(input, line)) {
+			std::stringstream ss(line);
+			for (xPos = 0; xPos < x; ++xPos) {
+				ss >> matrix[xPos][yPos];
+				g.addNode( (x * yPos) + xPos );	// Unique ID, ranging [0, X*Y]
+			}
+			++yPos;
+		}
+		input.close();
+
+		// Add paths between nodes
+		for (xPos = 0; xPos < x; ++xPos) {
+			for (yPos = 0; yPos < y; ++yPos) {
+				int currentID = (x * yPos) + xPos;
+
+				// [xPos - 1][yPos] - Left
+				if (xPos > 0) {
+					vertex lNeighbor; 
+					lNeighbor.id 	 = (x * yPos) + (xPos - 1);
+					lNeighbor.weight = std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
+					g.addNeighbor(currentID, lNeighbor);
+				}
+
+				// [xPos + 1][yPos] - Right
+				if (xPos < (x - 1)) {
+					vertex rNeighbor;
+					rNeighbor.id 	 = (x * yPos) + (xPos + 1);
+					rNeighbor.weight = std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
+					g.addNeighbor(currentID, rNeighbor);
+				}
+
+				// [xPos][yPos - 1] - Top
+				if (yPos > 0) {
+					vertex tNeighbor; 	
+					tNeighbor.id 	 = (x * (yPos - 1) + xPos);
+					tNeighbor.weight = std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
+					g.addNeighbor(currentID, tNeighbor);
+				}
+
+				// [xPos][yPos + 1] - Bottom
+				if (yPos < (y - 1)) {
+					vertex bNeighbor;
+					bNeighbor.id 	 = (x * (yPos + 1) + xPos);
+					bNeighbor.weight = std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
+					g.addNeighbor(currentID, bNeighbor);
+				}
+			}
+		}
+	}
+
 	uint32_t xorshift() {
 		static uint32_t x = 123456789;
 	  	static uint32_t y = 362436069;
@@ -248,10 +319,9 @@ namespace tools {
 
 	void segmentImage(const char* file, const char* cut) {
 		// Read PGM from file as a graph.
-		// 	Each pixel is a node
-		//	Each node is connected to its surrounding nodes (upper, lower, left, right). Check for edge cases
-		//	The weight of the path between two nodes is the absolute value of their difference minus max value (255)
-		//		ie, Pij = abs( 255 - abs(i - j) )
+		graph g;
+		graphFromPGM(file, g);
+		g.print();
 
 		// Obtain the average of all path weights. For each path, accumulate the sum of the weights. Divide by the
 		//	number of paths - I think this will end up being (X - 1) * (Y - 1)
