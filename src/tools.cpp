@@ -187,4 +187,8 @@ namespace tools {
 		std::cerr << "Max Flow: " << maxFlow << "\n";
 		return maxFlow;
 	}
+
+	void segmentImage(const char* file, const char* cut) {
+		
+	}
 }

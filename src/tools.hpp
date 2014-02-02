@@ -42,4 +42,10 @@ namespace tools {
 	//! @param sink
 	//! @retval The maximum flow for the given graph
 	int fordFulkerson(graph& g, int source, int sink);
+
+	//! @brief Solves the image segmentation problem using ford fulkerson, separating the foreground from the background
+	//! @param file The pgm image to be segmented
+	//! @param cut The specified name of the file in pgm format that will be created as a result of this function. It
+	//!	 will contain the cut foreground with a white background
+	void segmentImage(const char* file, const char* cut);
 }
