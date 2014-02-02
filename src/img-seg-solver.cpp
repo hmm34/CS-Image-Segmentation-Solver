@@ -82,8 +82,8 @@ int main(int argc, char* argv[]) {
 			
 			// Hard coded....will fix once number of nodes works
 			int source = 0;
-			int sink   = ffg.sNodes.size() - 1;
-			int maxFlow = tools::fordFulkerson(ffg, source, sink);
+			int sink   = resid.sNodes.size() - 1;
+			int maxFlow = tools::fordFulkerson(resid, source, sink);
 			std::cerr << "Max flow is: " << maxFlow << "\n";
 		}
 
