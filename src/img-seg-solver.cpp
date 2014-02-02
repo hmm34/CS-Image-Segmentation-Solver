@@ -78,7 +78,6 @@ int main(int argc, char* argv[]) {
 			graph ffg;
 			tools::graphFromFile( argv[optind], ffg );
 			graph resid = ffg;
-			std::cerr << "SHOW ME THE FULKERSON!\n";
 			
 			// Hard coded....will fix once number of nodes works
 			int source = 0;
