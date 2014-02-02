@@ -247,7 +247,34 @@ namespace tools {
 	}
 
 	void segmentImage(const char* file, const char* cut) {
+		// Read PGM from file as a graph.
+		// 	Each pixel is a node
+		//	Each node is connected to its surrounding nodes (upper, lower, left, right). Check for edge cases
+		//	The weight of the path between two nodes is the absolute value of their difference minus max value (255)
+		//		ie, Pij = abs( 255 - abs(i - j) )
 
+		// Obtain the average of all path weights. For each path, accumulate the sum of the weights. Divide by the
+		//	number of paths - I think this will end up being (X - 1) * (Y - 1)
+		// Probability that any given pixel is within the foreground or background is how it relates to the average
+		//	of all weights
+
+		// Add source and sink
+		// 	s = 0 (source value)
+		// 	t = maximum from PGM, 255 (sink value)
+
+		// Something with ford fulkerson here ??
+
+		// Obtain min cut
+		//	Everything within S (is reachable from s) is in the foreground
+		//	Everything within T (not reachable from s) is in the background
+		//	@note - Are we checking if it's reachable from s given a minimum threshold (ie, the probability)
+
+		// Open the output file, represented by name in cut parameter
+		//	Write header PGM for X,Y,Max values
+		//	Iterate through all nodes
+		//		If that node is within S, write source value (s = 0)
+		//		Else, write sink value (t = max, 255)
+		// Close output file
 	}
 }
 
