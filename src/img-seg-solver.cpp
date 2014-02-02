@@ -5,6 +5,7 @@
 	@copyright Copyright 2014 Guarnera, Bogadamidi, Michaud. All rights reserved.
 */
 
+#include <stdlib.h>
 #include <unistd.h>
 #include <iostream>
 #include <string>
