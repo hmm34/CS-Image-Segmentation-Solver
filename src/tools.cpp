@@ -158,7 +158,7 @@ namespace tools {
 				break;
 
 			// Obtain all of the current node's neighbors. If it has no neighbors, skip to the next node in the queue
-			if (currentNode >= g.adjList.size())
+			if ((unsigned int)currentNode >= g.adjList.size())
 				continue;
 			
 			std::map<int, vertex> neighbors = g.adjList[currentNode];
