@@ -80,7 +80,8 @@ int main(int argc, char* argv[]) {
 			std::cerr << "SHOW ME THE FULKERSON!\n";
 			
 			// Hard coded....will fix once number of nodes works
-			ffg.fordFulkerson(0, 3);
+			int maxFlow = tools::fordFulkerson(ffg, 0, 3);
+			std::cerr << "Max flow is: " << maxFlow << "\n";
 		}
 
 		// Image Segmentation Option

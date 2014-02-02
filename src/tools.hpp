@@ -10,7 +10,7 @@
 #include "graph.hpp"
 
 namespace tools {
-	
+
 	//! @brief Reads from a text file
 	//! @param file The name of the file to be read
 	//! @retval The adjacency list representation of the graph from the file
@@ -27,4 +27,11 @@ namespace tools {
 	 	@note This allocates memory for the returned graph. The user must free memory after use.
 	*/
 	 void graphFromFile(const char* file, graph& g);
+
+	 //! @brief Ford fulkerson algorithm used to obtain the maximum flow and minimum cut
+	 //! @param g The graph on which to perform the algorithm
+	 //! @param source 
+	 //! @param sink
+	 //! @retval The maximum flow for the given graph
+	 int fordFulkerson(graph& g, int source, int sink);
 }

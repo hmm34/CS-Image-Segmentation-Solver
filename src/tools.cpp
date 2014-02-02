@@ -8,7 +8,7 @@
 #include <iostream>
 
 namespace tools {
-	
+
 	void graphFromFile(const char* file, graph& g) {
 	 	// Open the file containing the graph information
 		std::ifstream input;
@@ -44,5 +44,50 @@ namespace tools {
 	  	t = x ^ (x << 11);
 	  	x = y; y = z; z = w;
 	  	return w = w ^ (w >> 19) ^ (t ^ (t >> 8));
+	}
+
+	int fordFulkerson(graph& g, int source, int sink) {
+		int maxFlow  = 0;
+
+		while (true) {
+
+			// This needs to be fixed
+			std::pair< std::vector<int>, int>  bfsResult = g.breadthFirstSearch(source, sink);
+
+			// FF is done!
+			if (bfsResult.first.empty()) {
+				break;
+			}
+
+			for (unsigned int i = 0; i < bfsResult.first.size() - 1; ++i) {
+				int sNode = bfsResult.first[i];
+				int nNode = bfsResult.first[i+1];
+
+				if (g.adjList[sNode][nNode].weight - bfsResult.second > 0) {				
+					g.adjList[sNode][nNode].weight = g.adjList[sNode][nNode].weight - bfsResult.second;
+					vertex v;
+					v.id = i;
+					v.weight = bfsResult.second;
+					g.adjList[nNode][sNode] = v;
+				}
+				else {
+					vertex v;
+					v.id = sNode;
+					v.weight = g.adjList[sNode][nNode].weight;
+					g.adjList[nNode][sNode] = v;
+					g.adjList[sNode].erase(nNode);
+				}
+			}
+
+			maxFlow = maxFlow + bfsResult.second;
+
+			/* Debuggin to Show Graph States
+			print();
+			std::cerr << "----------\n";
+			*/
+		}
+
+		std::cerr << "Max Flow: " << maxFlow << "\n";
+		return maxFlow;
 	}
 }

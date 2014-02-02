@@ -20,7 +20,7 @@ struct vertex {
 
 //! @brief Graph object to contain vertices and weighted edges in adjacency list format.
 class graph {
-	
+
 public:
 	//! @brief Basic constructor
 	graph();
@@ -55,10 +55,9 @@ public:
 	//!  negative minimum capacity
 	std::pair< std::vector<int>, int> breadthFirstSearch(int start, int end);
 
-	int fordFulkerson(int source, int sink);
+	std::map<int, std::map<int, vertex> > adjList;	//!< Adjacency list representation of the directed graph
 
 private:
-	std::map<int, std::map<int, vertex> > adjList;	//!< Adjacency list representation of the directed graph
 	std::set<int> sNodes;							//!< Unique set of all nodes
 	
 };
