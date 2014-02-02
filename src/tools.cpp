@@ -58,10 +58,8 @@ namespace tools {
 		int xPos = 0, yPos = 0;
 		while (getline(input, line)) {
 			std::stringstream ss(line);
-			for (xPos = 0; xPos < x; ++xPos) {
+			for (xPos = 0; xPos < x; ++xPos)
 				ss >> matrix[xPos][yPos];
-				g.addNode( (x * yPos) + xPos );	// Unique ID, ranging [0, X*Y]
-			}
 			++yPos;
 		}
 		input.close();
@@ -70,6 +68,7 @@ namespace tools {
 		for (xPos = 0; xPos < x; ++xPos) {
 			for (yPos = 0; yPos < y; ++yPos) {
 				int currentID = (x * yPos) + xPos;
+				g.addNode(currentID);
 
 				// [xPos - 1][yPos] - Left
 				if (xPos > 0) {
