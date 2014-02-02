@@ -81,7 +81,9 @@ int main(int argc, char* argv[]) {
 			std::cerr << "SHOW ME THE FULKERSON!\n";
 			
 			// Hard coded....will fix once number of nodes works
-			int maxFlow = tools::fordFulkerson(ffg, 0, 3);
+			int source = 0;
+			int sink   = ffg.sNodes.size() - 1;
+			int maxFlow = tools::fordFulkerson(ffg, source, sink);
 			std::cerr << "Max flow is: " << maxFlow << "\n";
 		}
 

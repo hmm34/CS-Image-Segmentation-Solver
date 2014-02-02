@@ -47,8 +47,6 @@ public:
 	void print();
 
 	std::map<int, std::map<int, vertex> > adjList;	//!< Adjacency list representation of the directed graph
-
-private:
 	std::set<int> sNodes;							//!< Unique set of all nodes
-	
+
 };

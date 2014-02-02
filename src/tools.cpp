@@ -145,7 +145,6 @@ namespace tools {
 
 	int fordFulkerson(graph& g, int source, int sink) {
 		int maxFlow  = 0;
-
 		while (true) {
 
 			// This needs to be fixed
@@ -179,16 +178,76 @@ namespace tools {
 			maxFlow = maxFlow + bfsResult.second;
 
 			/* Debuggin to Show Graph States
-			print();
+			g.print();
 			std::cerr << "----------\n";
 			*/
+			
 		}
 
-		std::cerr << "Max Flow: " << maxFlow << "\n";
+		std::pair< std::set<int>, std::set<int> > cut = minCut(g, source, sink);
 		return maxFlow;
 	}
 
+	void reverse(graph& g) {
+		graph reverse;
+
+		std::map< int, std::map<int, vertex> >::iterator adjListItr = g.adjList.begin();
+		std::map< int, std::map<int, vertex> >::iterator adjListEnd = g.adjList.end();
+		while (adjListItr != adjListEnd) {
+			vertex fromNode;
+			fromNode.id = (*adjListItr).first;
+
+			std::map<int, vertex>::iterator neighborItr = (*adjListItr).second.begin();
+			std::map<int, vertex>::iterator neighborEnd = (*adjListItr).second.end();
+			while (neighborItr != neighborEnd) {
+				vertex neighbor = (*neighborItr).second;
+				fromNode.weight = neighbor.weight;
+				reverse.addNeighbor(neighbor.id, fromNode);
+				++neighborItr;
+			}
+			++adjListItr;
+		}
+		g = reverse;
+	}
+
+	std::pair< std::set<int>, std::set<int> > minCut(graph& g, int source, int sink) {
+		// Obtain the nodes within the sets S and T afer the minimum cut
+		std::set<int> S; // All nodes within the set S; nodes u such that u is reachable by source s
+		std::set<int> T; // All nodes within the set T; nodes u such that u is not reachable by source s
+
+		graph reverse = g;
+		tools::reverse(reverse);
+
+		//! @note We don't care about the shortest path here, so using BFS does more than we care for - but it checks
+		//!	if a path exists.
+		for (int i = 0; i <= reverse.sNodes.size(); ++i) {
+			if (i == source)
+				S.insert(i);
+			if (i == sink)
+				T.insert(i);
+
+			std::vector<int> shortestPath = breadthFirstSearch(reverse, source, i).first;
+			if (shortestPath.size() > 0)
+				S.insert(i);
+			else
+				T.insert(i);
+		}
+
+		/* Used for debugging purposes */
+		std::cerr << "Elements of S: {";
+		for (std::set<int>::iterator itr = S.begin(); itr != S.end(); ++itr)
+			std::cerr << (*itr) << ",";	
+		std::cerr << "}\n";
+		std::cerr << "Elements of T: {";
+		for (std::set<int>::iterator itr = T.begin(); itr != T.end(); ++itr)
+			std::cerr << (*itr) << ",";
+		std::cerr << "}\n";
+
+		return std::make_pair< std::set<int>, std::set<int> >(S,T);
+	}
+
 	void segmentImage(const char* file, const char* cut) {
-		
+
 	}
 }
+
