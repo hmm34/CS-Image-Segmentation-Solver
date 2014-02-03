@@ -218,7 +218,6 @@ namespace tools {
 		int maxFlow  = 0;
 		while (true) {
 
-			// This needs to be fixed
 			std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(g, source, sink);
 
 			// FF is done!
