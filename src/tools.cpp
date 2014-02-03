@@ -231,28 +231,31 @@ namespace tools {
 				int nNode = bfsResult.first[i+1];
 
 				if (g.adjList[sNode][nNode].weight - bfsResult.second > 0) {				
+					// perform the difference between the min capacity and the edge weight
 					g.adjList[sNode][nNode].weight = g.adjList[sNode][nNode].weight - bfsResult.second;
-					vertex v;
-					v.id = i;
-					v.weight = bfsResult.second;
-					g.adjList[nNode][sNode] = v;
+
+					// update graph back edge
+					g.adjList[nNode][sNode].id = i;
+					g.adjList[nNode][sNode].weight = g.adjList[nNode][sNode].weight + bfsResult.second;
 				}
 				else {
-					vertex v;
-					v.id = sNode;
-					v.weight = g.adjList[sNode][nNode].weight;
-					g.adjList[nNode][sNode] = v;
+
+					// update graph back edge
+					g.adjList[nNode][sNode].id = sNode;
+					g.adjList[nNode][sNode].weight = g.adjList[nNode][sNode].weight + g.adjList[sNode][nNode].weight;
+
+					// rempve the maxed out edge
 					g.adjList[sNode].erase(nNode);
 				}
 			}
 
 			maxFlow = maxFlow + bfsResult.second;
 
-			/* Debuggin to Show Graph States
+			/*
+			//Debuggin to Show Graph States
 			g.print();
-			std::cerr << "----------\n";
+			std::cout << "----------\n";
 			*/
-			
 		}
 
 		//std::pair< std::set<int>, std::set<int> > cut = minCut(g, source, sink);
