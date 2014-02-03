@@ -14,9 +14,10 @@
 #include <iostream>
 #include <algorithm>
 
-namespace tools {
-
-	void graphFromFile(const char* file, graph& g) {
+namespace tools 
+{
+	void graphFromFile(const char* file, graph& g) 
+	{
 	 	// Open the file containing the graph information
 		std::ifstream input;
 		input.open(file);
@@ -25,12 +26,14 @@ namespace tools {
 
 		std::string line;
 		int count = -1;
-		while (getline(input, line)) {
+		while (getline(input, line))
+		{
 			g.addNode(++count);
 
 			// Obtain the list of connected vertices and their edge weights
 			std::stringstream ss(line);
-			while (ss) {
+			while (ss)
+			{
 				vertex u;
 				ss >> u.id; 	// The first # is the vertex id for u
 				if (!ss) break; // If there's no second number, we're finished here
@@ -41,7 +44,8 @@ namespace tools {
 		input.close();
 	}
 
-	void graphFromPGM(const char* file, graph& g) {
+	void graphFromPGM(const char* file, graph& g)
+	{
 		std::ifstream input;
 		input.open(file);
 		if (!input)
@@ -58,21 +62,26 @@ namespace tools {
 		ss >> max;				// Max
 
 		int matrix[x][y];
-		for (int yPos = 0; yPos < y; ++yPos) {
-			for (int xPos = 0; xPos < x; ++xPos) {
+		for (int yPos = 0; yPos < y; ++yPos)
+		{
+			for (int xPos = 0; xPos < x; ++xPos)
+			{
 				ss >> matrix[xPos][yPos];
 			}
 		}
 		input.close();
 
 		// Add paths between nodes
-		for (int xPos = 0; xPos < x; ++xPos) {
-			for (int yPos = 0; yPos < y; ++yPos) {
+		for (int xPos = 0; xPos < x; ++xPos)
+		{
+			for (int yPos = 0; yPos < y; ++yPos)
+			{
 				int currentID = (x * yPos) + xPos;
 				g.addNode(currentID);
 
 				// [xPos - 1][yPos] - Left
-				if (xPos > 0) {
+				if (xPos > 0)
+				{
 					vertex lNeighbor; 
 					lNeighbor.id 	 = (x * yPos) + (xPos - 1);
 					lNeighbor.weight = std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
@@ -80,7 +89,8 @@ namespace tools {
 				}
 
 				// [xPos + 1][yPos] - Right
-				if (xPos < (x - 1)) {
+				if (xPos < (x - 1))
+				{
 					vertex rNeighbor;
 					rNeighbor.id 	 = (x * yPos) + (xPos + 1);
 					rNeighbor.weight = std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
@@ -88,7 +98,8 @@ namespace tools {
 				}
 
 				// [xPos][yPos - 1] - Top
-				if (yPos > 0) {
+				if (yPos > 0)
+				{
 					vertex tNeighbor; 	
 					tNeighbor.id 	 = (x * (yPos - 1) + xPos);
 					tNeighbor.weight = std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
@@ -96,7 +107,8 @@ namespace tools {
 				}
 
 				// [xPos][yPos + 1] - Bottom
-				if (yPos < (y - 1)) {
+				if (yPos < (y - 1))
+				{
 					vertex bNeighbor;
 					bNeighbor.id 	 = (x * (yPos + 1) + xPos);
 					bNeighbor.weight = std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
@@ -106,7 +118,8 @@ namespace tools {
 		}
 	}
 
-	uint32_t xorshift() {
+	uint32_t xorshift() 
+	{
 		static uint32_t x = 123456789;
 	  	static uint32_t y = 362436069;
 	  	static uint32_t z = 521288629;
@@ -122,14 +135,16 @@ namespace tools {
 	//!	 keep essentially the same algorithm but consider the last vertex to be the maximum of all listed end vertices.
 	//!	 For each given end vertex, we would reverse iterate through the list of preceding nodes. We would then have a 
 	//!	 list of a list of the shortest paths to each given end vertex, for each given end vertex.
-	std::pair< std::vector<int>, int> breadthFirstSearch(graph& g, int start, int end) {
+	std::pair< std::vector<int>, int> breadthFirstSearch(graph& g, int start, int end)
+	{
 		static int infinity = std::numeric_limits<int>::max();
 		std::vector<int> shortestPath;	// Nodes from start to end with the shortest path
 		int minCapacity = infinity;		// Minimum weight (capacity) along the shortest path
 
 		// Verify that the start node and end node are within acceptable ranges
 		int numNodes = g.nodes();
-		if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) ) {
+		if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
+		{
 			g.print();
 			return std::make_pair(shortestPath, minCapacity);
 		}
@@ -149,7 +164,8 @@ namespace tools {
 		//!		once the computation is complete.
 		std::queue<int> nodesToVisit; // Nodes that still need visited in the BFS
 		nodesToVisit.push(start);
-		while (true) {	
+		while (true)
+		{	
 			// If we can't find the end vertex, return an empty list
 			if (nodesToVisit.empty())
 				return std::make_pair(shortestPath, minCapacity);
@@ -167,12 +183,14 @@ namespace tools {
 				continue;
 			
 			std::map<int, vertex> neighbors = g.adjList[currentNode];
-			for (unsigned int i = 0; i < neighbors.size(); ++i) {
+			for (unsigned int i = 0; i < neighbors.size(); ++i)
+			{
 				int neighbor = neighbors[i].id;
 
 				// Keep track of how we got to these neighbors for the shortest path, but DON'T OVER-WRITE if it's already 
 				// been found! This preserves the minimal path in terms of number of edges. 
-				if (paths[neighbor] == infinity) {
+				if (paths[neighbor] == infinity)
+				{
 					
 					// Set the neighbor with the node that connects it, including the edge weight
 					paths[neighbor] = currentNode;
@@ -186,7 +204,8 @@ namespace tools {
 
 		// Find path to the end node by back-track through the paths list until we find the given start node.
 		int currentNode = end;
-		while (true) {
+		while (true)
+		{
 			// Loop has completed if we're back at the starting point
 			shortestPath.push_back(currentNode);
 			if (currentNode == start)
@@ -214,22 +233,24 @@ namespace tools {
 		return std::make_pair(shortestPath, minCapacity);	
 	}
 
-	int fordFulkerson(graph& g, int source, int sink) {
+	int fordFulkerson(graph& g, int source, int sink)
+	{
 		int maxFlow  = 0;
-		while (true) {
-
+		while (true)
+		{
 			std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(g, source, sink);
 
 			// FF is done!
-			if (bfsResult.first.empty()) {
+			if (bfsResult.first.empty())
 				break;
-			}
 
-			for (unsigned int i = 0; i < bfsResult.first.size() - 1; ++i) {
+			for (unsigned int i = 0; i < bfsResult.first.size() - 1; ++i)
+			{
 				int sNode = bfsResult.first[i];
 				int nNode = bfsResult.first[i+1];
 
-				if (g.adjList[sNode][nNode].weight - bfsResult.second > 0) {				
+				if (g.adjList[sNode][nNode].weight - bfsResult.second > 0)
+				{				
 					// perform the difference between the min capacity and the edge weight
 					g.adjList[sNode][nNode].weight = g.adjList[sNode][nNode].weight - bfsResult.second;
 
@@ -237,8 +258,8 @@ namespace tools {
 					g.adjList[nNode][sNode].id = i;
 					g.adjList[nNode][sNode].weight = g.adjList[nNode][sNode].weight + bfsResult.second;
 				}
-				else {
-
+				else
+				{
 					// update graph back edge
 					g.adjList[nNode][sNode].id = sNode;
 					g.adjList[nNode][sNode].weight = g.adjList[nNode][sNode].weight + g.adjList[sNode][nNode].weight;
@@ -321,7 +342,8 @@ namespace tools {
 	}
 	*/
 
-	void segmentImage(const char* file, const char* cut) {
+	void segmentImage(const char* file, const char* cut)
+	{
 		// Read PGM from file as a graph.
 		graph g;
 		graphFromPGM(file, g);
