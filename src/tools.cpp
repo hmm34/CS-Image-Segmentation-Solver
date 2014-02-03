@@ -236,13 +236,11 @@ namespace tools
 	int fordFulkerson(graph& g, int source, int sink)
 	{
 		int maxFlow  = 0;
-		while (true)
-		{
-			std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(g, source, sink);
 
-			// FF is done!
-			if (bfsResult.first.empty())
-				break;
+		std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(g, source, sink);
+
+		while (!bfsResult.first.empty())
+		{
 
 			for (unsigned int i = 0; i < bfsResult.first.size() - 1; ++i)
 			{
@@ -276,6 +274,8 @@ namespace tools
 			g.print();
 			std::cout << "----------\n";
 			*/
+
+			bfsResult = breadthFirstSearch(g, source, sink);
 		}
 
 		//std::pair< std::set<int>, std::set<int> > cut = minCut(g, source, sink);
