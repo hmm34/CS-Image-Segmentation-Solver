@@ -320,7 +320,7 @@ namespace tools
 				if (xPos > 0)
 				{
 					int weight = std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
-					if (weight > threshold)
+					if (weight >= threshold)
 					{
 						vertex lNeighbor; 
 						lNeighbor.id 	 = (x * yPos) + (xPos - 1);
@@ -333,7 +333,7 @@ namespace tools
 				if (xPos < (x - 1))
 				{
 					int weight = std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
-					if (weight > threshold)
+					if (weight >= threshold)
 					{
 						vertex rNeighbor;
 						rNeighbor.id 	 = (x * yPos) + (xPos + 1);
@@ -346,7 +346,7 @@ namespace tools
 				if (yPos > 0)
 				{
 					int weight = std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
-					if (weight > threshold)
+					if (weight >= threshold)
 					{
 						vertex tNeighbor; 	
 						tNeighbor.id 	 = (x * (yPos - 1) + xPos);
@@ -359,7 +359,7 @@ namespace tools
 				if (yPos < (y - 1))
 				{
 					int weight = std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
-					if (weight > threshold)
+					if (weight >= threshold)
 					{
 						vertex bNeighbor;
 						bNeighbor.id 	 = (x * (yPos + 1) + xPos);
@@ -381,7 +381,7 @@ namespace tools
 		{
 			for (int yPos = 0; yPos < y; ++yPos)
 			{
-				if (std::abs( max - matrix[xPos][yPos]) > threshold)
+				if (std::abs( max - matrix[xPos][yPos]) >= threshold)
 				{	
 					vertex fromS;
 					fromS.id = (x * yPos) + 1;
@@ -389,7 +389,7 @@ namespace tools
 					g.addNeighbor(sourceID, fromS);
 				}
 
-				if (matrix[xPos][yPos] > threshold)
+				if (matrix[xPos][yPos] >= threshold)
 				{
 					vertex toT;
 					toT.id = sinkID;
