@@ -203,8 +203,6 @@ namespace tools
 
 			bfsResult = breadthFirstSearch(g, source, sink);
 		}
-
-		//std::pair< std::set<int>, std::set<int> > cut = minCut(g, source, sink);
 		return maxFlow;
 	}
 
