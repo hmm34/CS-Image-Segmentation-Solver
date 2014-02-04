@@ -305,7 +305,7 @@ namespace tools
 				nodeSum += matrix[xPos][yPos];
 			}
 		}
-		int threshold = nodeSum / (x*y);
+		int threshold = std::abs( max - (nodeSum / (x*y)) );
 
 		// Add paths between nodes
 		graph g;
