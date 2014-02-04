@@ -344,10 +344,110 @@ namespace tools
 
 	void segmentImage(const char* file, const char* cut)
 	{
-		// Read PGM from file as a graph.
+		// Read PGM file as a graph
+		std::ifstream input;
+		input.open(file);
+		if (!input)
+			std::cerr << "Could not open file: " << file << "\n";
+
+		int x = 0, y = 0, max = 0;
+		std::string line;
+		getline(input, line);	// "P2"
+		getline(input, line);	// "#Created by Irfan View"
+
+		std::stringstream ss;
+		ss << input.rdbuf();
+		ss >> x >> y;			// X, Y
+		ss >> max;				// Max
+
+		int matrix[x][y];
+		for (int yPos = 0; yPos < y; ++yPos)
+		{
+			for (int xPos = 0; xPos < x; ++xPos)
+			{
+				ss >> matrix[xPos][yPos];
+			}
+		}
+		input.close();
+
+		// Get the average of all edges.
+		long int edgeSum = 0;
+		int edgeTotal    = 0;
+		for (int xPos = 0; xPos < x; ++xPos)
+		{
+			for (int yPos = 0; yPos < y; ++yPos)
+			{
+				
+				if (xPos > 0)		// [xPos - 1][yPos] - Left
+				{
+					edgeSum += std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
+					edgeTotal++;
+				}
+				if (xPos < (x - 1))	// [xPos + 1][yPos] - Right
+				{
+					edgeSum += std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
+					edgeTotal++;
+				}
+				if (yPos > 0)		// [xPos][yPos - 1] - Top
+				{
+					edgeSum += std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
+					edgeTotal++;
+				}
+				if (yPos < (y - 1))	// [xPos][yPos + 1] - Bottom
+				{
+					edgeSum += std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
+					edgeTotal++;
+				}
+			}
+		}
+		int threshold = edgeSum / edgeTotal;
+
+		// Add paths between nodes
 		graph g;
-		graphFromPGM(file, g);
-		//g.print();
+		for (int xPos = 0; xPos < x; ++xPos)
+		{
+			for (int yPos = 0; yPos < y; ++yPos)
+			{
+				int currentID = (x * yPos) + xPos;
+				g.addNode(currentID);
+
+				// [xPos - 1][yPos] - Left
+				if (xPos > 0)
+				{
+					vertex lNeighbor; 
+					lNeighbor.id 	 = (x * yPos) + (xPos - 1);
+					lNeighbor.weight = std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
+					g.addNeighbor(currentID, lNeighbor);
+				}
+
+				// [xPos + 1][yPos] - Right
+				if (xPos < (x - 1))
+				{
+					vertex rNeighbor;
+					rNeighbor.id 	 = (x * yPos) + (xPos + 1);
+					rNeighbor.weight = std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
+					g.addNeighbor(currentID, rNeighbor);
+				}
+
+				// [xPos][yPos - 1] - Top
+				if (yPos > 0)
+				{
+					vertex tNeighbor; 	
+					tNeighbor.id 	 = (x * (yPos - 1) + xPos);
+					tNeighbor.weight = std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
+					g.addNeighbor(currentID, tNeighbor);
+				}
+
+				// [xPos][yPos + 1] - Bottom
+				if (yPos < (y - 1))
+				{
+					vertex bNeighbor;
+					bNeighbor.id 	 = (x * (yPos + 1) + xPos);
+					bNeighbor.weight = std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
+					g.addNeighbor(currentID, bNeighbor);
+				}
+			}
+		}
 
 		// Obtain the average of all path weights. For each path, accumulate the sum of the weights. Divide by the
 		//	number of paths - I think this will end up being (X - 1) * (Y - 1)
