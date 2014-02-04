@@ -339,7 +339,7 @@ namespace tools
 		}
 
 		// Something with ford fulkerson here ??
-
+		fordFulkerson(g, sourceID, sinkID);
 
 		// Open the output file, represented by name in cut parameter
 		std::ofstream output;
