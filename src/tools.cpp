@@ -340,37 +340,53 @@ namespace tools
 				// [xPos - 1][yPos] - Left
 				if (xPos > 0)
 				{
-					vertex lNeighbor; 
-					lNeighbor.id 	 = (x * yPos) + (xPos - 1);
-					lNeighbor.weight = std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
-					g.addNeighbor(currentID, lNeighbor);
+					int weight = std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
+					if (weight > threshold)
+					{
+						vertex lNeighbor; 
+						lNeighbor.id 	 = (x * yPos) + (xPos - 1);
+						lNeighbor.weight = weight;
+						g.addNeighbor(currentID, lNeighbor);
+					}
 				}
 
 				// [xPos + 1][yPos] - Right
 				if (xPos < (x - 1))
 				{
-					vertex rNeighbor;
-					rNeighbor.id 	 = (x * yPos) + (xPos + 1);
-					rNeighbor.weight = std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
-					g.addNeighbor(currentID, rNeighbor);
+					int weight = std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
+					if (weight > threshold)
+					{
+						vertex rNeighbor;
+						rNeighbor.id 	 = (x * yPos) + (xPos + 1);
+						rNeighbor.weight = weight;
+						g.addNeighbor(currentID, rNeighbor);
+					}
 				}
 
 				// [xPos][yPos - 1] - Top
 				if (yPos > 0)
 				{
-					vertex tNeighbor; 	
-					tNeighbor.id 	 = (x * (yPos - 1) + xPos);
-					tNeighbor.weight = std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
-					g.addNeighbor(currentID, tNeighbor);
+					int weight = std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
+					if (weight > threshold)
+					{
+						vertex tNeighbor; 	
+						tNeighbor.id 	 = (x * (yPos - 1) + xPos);
+						tNeighbor.weight = weight;
+						g.addNeighbor(currentID, tNeighbor);
+					}
 				}
 
 				// [xPos][yPos + 1] - Bottom
 				if (yPos < (y - 1))
 				{
-					vertex bNeighbor;
-					bNeighbor.id 	 = (x * (yPos + 1) + xPos);
-					bNeighbor.weight = std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
-					g.addNeighbor(currentID, bNeighbor);
+					int weight = std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
+					if (weight > threshold)
+					{
+						vertex bNeighbor;
+						bNeighbor.id 	 = (x * (yPos + 1) + xPos);
+						bNeighbor.weight = weight;
+						g.addNeighbor(currentID, bNeighbor);
+					}
 				}
 			}
 		}
