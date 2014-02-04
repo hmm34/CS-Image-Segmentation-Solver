@@ -426,7 +426,16 @@ namespace tools
 		// Obtain min cut
 		//	Everything within S (is reachable from s) is in the foreground
 		//	Everything within T (not reachable from s) is in the background
-		//	@note - Are we checking if it's reachable from s given a minimum threshold (ie, the probability)
+		std::set<int> S;
+		std::set<int> T;
+		for (int id = 0; id < x * y; ++id)
+		{
+
+			if (g.adjList[sourceID].find(id) == g.adjList[sourceID].end())
+				T.insert(id);
+			else
+				S.insert(id);
+		}
 
 		// Open the output file, represented by name in cut parameter
 		//	Write header PGM for X,Y,Max values
