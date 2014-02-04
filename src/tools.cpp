@@ -70,10 +70,7 @@ namespace tools
 		// Verify that the start node and end node are within acceptable ranges
 		int numNodes = g.nodes();
 		if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
-		{
-			g.print();
 			return std::make_pair(shortestPath, minCapacity);
-		}
 
 		// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity. The 
 		// edge weights within the shortest paths is contained within pathWeights.
