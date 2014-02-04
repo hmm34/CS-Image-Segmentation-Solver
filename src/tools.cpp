@@ -425,13 +425,13 @@ namespace tools
 
 
 		// Open the output file, represented by name in cut parameter
-		std::ifstream output;
+		std::ofstream output;
 		output.open(cut);
 		if (!output)
 			std::cerr << "Could not open file: " << cut << "\n";
 
 		//	Write header PGM for X,Y,Max values
-		output << "P2\n# Created by IrfanView\n" << x <<" " << y << "\n" << max << "\n"
+		output << "P2\n# Created by IrfanView\n" << x <<" " << y << "\n" << max << "\n";
 
 		//	Iterate through all nodes
 		for (int xPos = 0; xPos < x; xPos++)
@@ -439,7 +439,7 @@ namespace tools
 			for (int yPos = 0; yPos < y; yPos++)
 			{
 				int nodeID = (x * yPos) + xPos;
-				if (g.adjList[sourceID].find(id) == g.adjList[sourceID].end())
+				if (g.adjList[sourceID].find(nodeID) == g.adjList[sourceID].end())
 				{	// That node is not reachable by S. Set it to the maximum value (t)
 					output << max << " ";
 				}
