@@ -322,7 +322,7 @@ namespace tools
 				if (std::abs( max - matrix[xPos][yPos]) >= threshold)
 				{	
 					vertex fromS;
-					fromS.id = (x * yPos) + 1;
+					fromS.id = (x * yPos) + xPos;
 					fromS.weight = std::abs( max - matrix[xPos][yPos]);
 					g.addNeighbor(sourceID, fromS);
 				}
