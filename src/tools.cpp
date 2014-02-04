@@ -356,7 +356,7 @@ namespace tools
 			for (int xPos = 0; xPos < x; xPos++)
 			{
 				int nodeID = (x * yPos) + xPos;
-				if (g.adjList[sourceID].find(nodeID) == g.adjList[sourceID].end())
+				if (g.adjList[sourceID].find(nodeID) != g.adjList[sourceID].end())
 				{	// That node is not reachable by S. Set it to the maximum value (t)
 					output << max << " ";
 				}
