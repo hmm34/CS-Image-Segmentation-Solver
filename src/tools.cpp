@@ -434,9 +434,9 @@ namespace tools
 		output << "P2\n# Created by IrfanView\n" << x <<" " << y << "\n" << max << "\n";
 
 		//	Iterate through all nodes
-		for (int xPos = 0; xPos < x; xPos++)
+		for (int yPos = 0; yPos < y; yPos++)
 		{
-			for (int yPos = 0; yPos < y; yPos++)
+			for (int xPos = 0; xPos < x; xPos++)
 			{
 				int nodeID = (x * yPos) + xPos;
 				if (g.adjList[sourceID].find(nodeID) == g.adjList[sourceID].end())
