@@ -31,13 +31,6 @@ namespace tools
 	*/
 	void graphFromFile(const char* file, graph& g);
 
-	//! @brief Reads a graph from a PGM file. Each pixel is a node. Each node is connected to its immediate surounding
-	//!	 nodes (upper, lower, left, right). The weight of the path between two nodes is the absolute value of their
-	//!	 diference minus the max value (usually 255). That is to say that Pij = abs( 255 - abs(i - j))
-	//! @param file The name of the PGM file to be read
-	//! @param g The resulting graph obtained from the image
-	void graphFromPGM(const char* file, graph& g);
-
 	//! @brief Performs a breadth first search on the graph to obtain the shortest path and minimum capacity in the path
 	//! @param g The graph to perform the breadth first search on
 	//! @param start Starting node
