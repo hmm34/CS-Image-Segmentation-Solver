@@ -297,36 +297,15 @@ namespace tools
 		input.close();
 
 		// Get the average of all edges.
-		long int edgeSum = 0;
-		int edgeTotal    = 0;
+		long int nodeSum = 0;
 		for (int xPos = 0; xPos < x; ++xPos)
 		{
 			for (int yPos = 0; yPos < y; ++yPos)
 			{
-				
-				if (xPos > 0)		// [xPos - 1][yPos] - Left
-				{
-					edgeSum += std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
-					edgeTotal++;
-				}
-				if (xPos < (x - 1))	// [xPos + 1][yPos] - Right
-				{
-					edgeSum += std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
-					edgeTotal++;
-				}
-				if (yPos > 0)		// [xPos][yPos - 1] - Top
-				{
-					edgeSum += std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
-					edgeTotal++;
-				}
-				if (yPos < (y - 1))	// [xPos][yPos + 1] - Bottom
-				{
-					edgeSum += std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
-					edgeTotal++;
-				}
+				nodeSum += matrix[xPos][yPos];
 			}
 		}
-		int threshold = edgeSum / edgeTotal;
+		int threshold = nodeSum / (x*y);
 
 		// Add paths between nodes
 		graph g;
