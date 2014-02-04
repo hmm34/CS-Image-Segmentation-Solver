@@ -391,14 +391,35 @@ namespace tools
 			}
 		}
 
-		// Obtain the average of all path weights. For each path, accumulate the sum of the weights. Divide by the
-		//	number of paths - I think this will end up being (X - 1) * (Y - 1)
-		// Probability that any given pixel is within the foreground or background is how it relates to the average
-		//	of all weights
-
 		// Add source and sink
 		// 	s = 0 (source value)
 		// 	t = maximum from PGM, 255 (sink value)
+		int sourceID = -1;
+		int sinkID   = x*y;
+		g.addNode(sourceID);
+		g.addNode(sinkID);
+		for (int xPos = 0; xPos < x; ++xPos)
+		{
+			for (int yPos = 0; yPos < y; ++yPos)
+			{
+				if (std::abs( max - matrix[xPos][yPos]) > threshold)
+				{	
+					vertex fromS;
+					fromS.id = (x * yPos) + 1;
+					fromS.weight = std::abs( max - matrix[xPos][yPos]);
+					g.addNeighbor(sourceID, fromS);
+				}
+
+				if (matrix[xPos][yPos] > threshold)
+				{
+					vertex toT;
+					toT.id = sinkID;
+					toT.weight = matrix[xPos][yPos];
+					int fromID = (x * yPos) + xPos;
+					g.addNeighbor(fromID, toT);
+				}
+			}
+		}
 
 		// Something with ford fulkerson here ??
 
