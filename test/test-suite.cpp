@@ -6,6 +6,8 @@
 	@copyright Copyright 2014 Guarnera, Bogadamidi, Michaud. All rights reserved.
 */
 
+#include <string.h>
+#include <stdint.h>
 #include <assert.h>
 #include <fstream>
 #include <iostream>
@@ -129,10 +131,10 @@ bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<
 	}
 	if (shortestPath != shortestPathResult) {
 		std::cerr << "Shortest path was incorrect. Expected ";
-		for (int i = 0; i < shortestPath.size(); ++i)
+		for (unsigned int i = 0; i < shortestPath.size(); ++i)
 			std::cerr << shortestPath.at(i) << " ";
 		std::cerr << ", but returned ";
-		for (int i = 0; i < shortestPathResult.size(); ++i)
+		for (unsigned int i = 0; i < shortestPathResult.size(); ++i)
 			std::cerr << shortestPathResult.at(i) << " ";
 		std::cerr << std::endl;
 		return false;
