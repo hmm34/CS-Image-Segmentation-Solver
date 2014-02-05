@@ -19,7 +19,10 @@ public:
 
 	//! @brief Gets the threshold for the file
 	//! @param The average of all nodes - constituting the threshold
-	int threshold();
+	int calculateThreshold();
+
+	//! @brief Add paths between all pixels
+	void addPaths();
 
 
 	int **matrix;	// Matrix constructed of all pixels
@@ -27,4 +30,5 @@ public:
 	int xMax;		// Maximum x value
 	int yMax;		// Maximum y value
 	int pixMax;		// Maximum pixel value
+	int threshold;	// Threshold value for the min cut
 };
