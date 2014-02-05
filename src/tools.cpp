@@ -138,18 +138,6 @@ namespace tools
 			currentNode = paths[currentNode];
 		}
 		std::reverse(shortestPath.begin(), shortestPath.end());
-
-		//! @note Used this for testing just to make sure it was correct :) This can be removed after we add test cases
-		/*
-		std::cerr << "Shortest path obtained:" << std::endl;
-		for (unsigned int i = 0; i < shortestPath.size(); ++i)
-		{
-			if (i == shortestPath.size() - 1)
-				std::cerr << shortestPath.at(i) << std::endl;
-			else
-				std::cerr << shortestPath.at(i) << " --> ";
-		}
-		*/
 		return std::make_pair(shortestPath, minCapacity);	
 	}
 
@@ -188,13 +176,6 @@ namespace tools
 			}
 
 			maxFlow = maxFlow + bfsResult.second;
-
-			/*
-			//Debuggin to Show Graph States
-			g.print();
-			std::cout << "----------\n";
-			*/
-
 			bfsResult = breadthFirstSearch(g, source, sink);
 		}
 		return maxFlow;
