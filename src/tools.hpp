@@ -9,10 +9,7 @@
 
 #include "graph.hpp"
 #include <set>
-#include <queue>
-#include <sstream>
-#include <fstream>
-#include <iostream>
+#include <vector>
 
 namespace tools 
 {
@@ -48,7 +45,7 @@ namespace tools
 	//! @retval The maximum flow for the given graph
 	int fordFulkerson(graph& g, int source, int sink);
 
-	//! @brief Takes a given graph and reverses all edges
+	//! @brief Takes a given graph and reverses all edges 
 	//! @param g The graph whose edges will be reversed
 	//void reverse(graph& g);
 

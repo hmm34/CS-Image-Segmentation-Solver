@@ -3,11 +3,8 @@
 */
 
 #include "tools.hpp"
-#include <cmath>
-#include <vector>
 #include <stdint.h>
 #include <limits>
-#include <set>
 #include <queue>
 #include <sstream>
 #include <fstream>
