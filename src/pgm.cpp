@@ -137,3 +137,34 @@ void pgm::addSuperNodes(int sourceID, int sinkID)
 }
 
 
+bool pgm::write(const char* file, int sourceID)
+{
+	std::ofstream output;
+	output.open(file);
+	if (!output)
+	{
+		std::cerr << "Could not open file: " << file << "\n";
+		return false;
+	}
+
+	output << "P2\n";
+	output << "# Created by IrfanView\n";
+	output << xMax << " " << yMax << "\n";
+	output << pixMax << "\n";
+
+	for (int yPos = 0; yPos < yMax; yPos++)
+	{
+		for (int xPos = 0; xPos < xMax; xPos++)
+		{
+			int nodeID = (xMax * yPos) + xPos;
+			if (g.adjList[sourceID].find(nodeID) == g.adjList[sourceID].end())
+				output << pixMax << " ";
+			else
+				output << matrix[xPos][yPos] << " ";
+		}
+		output << "\n";
+	}
+	output.close();
+	return true;
+}
+

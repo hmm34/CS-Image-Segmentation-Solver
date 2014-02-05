@@ -29,6 +29,12 @@ public:
 	//! @param sinkID	The node ID of the sink
 	void addSuperNodes(int sourceID, int sinkID);
 
+	//! @brief Write a cut PGM given a source ID to start the segmentation
+	//! @param file The path to the file that will be written to
+	//! @param sourceID The source of the PGM
+	//! @retval true if successful, false otherwise
+	bool write(const char* file, int sourceID);
+
 
 	int **matrix;	// Matrix constructed of all pixels
 	graph g;		// Graph of all nodes representing the pixels
