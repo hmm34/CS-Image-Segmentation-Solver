@@ -7,11 +7,18 @@
 #include <sstream>
 #include <iostream>
 
-pgm::pgm() : xMax(0), yMax(0), pixMax(0), threshold(0) {
-
+pgm::pgm() : xMax(0), yMax(0), pixMax(0), threshold(0) 
+{
 }
 
-pgm::~pgm() {}
+pgm::~pgm() 
+{
+	for( int index = 0 ; index < xMax ; index++ )
+	{
+	    delete [] matrix[index] ;   
+	}
+	delete [] matrix ;
+}
 
 bool pgm::fromFile(const char* file)
 {
@@ -31,6 +38,10 @@ bool pgm::fromFile(const char* file)
 	ss << input.rdbuf();
 	ss >> xMax >> yMax;		// X, Y
 	ss >> pixMax;			// Max
+
+	matrix = new int *[xMax]; 
+	for (int index = 0; index < xMax; index++)
+	    matrix[index] = new int[yMax];
 
 	for (int yPos = 0; yPos < yMax; ++yPos)
 		for (int xPos = 0; xPos < xMax; ++xPos)
