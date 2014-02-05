@@ -335,7 +335,7 @@ namespace tools
 			}
 		}
 
-		// Something with ford fulkerson here ??
+		// Run Ford Fulkerson on the pgm graph
 		fordFulkerson(g, sourceID, sinkID);
 
 		// Open the output file, represented by name in cut parameter
