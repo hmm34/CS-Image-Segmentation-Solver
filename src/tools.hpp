@@ -8,6 +8,7 @@
 #pragma once
 
 #include "graph.hpp"
+#include "pgm.hpp"
 #include <set>
 #include <vector>
 
@@ -49,5 +50,6 @@ namespace tools
 	//! @param file The pgm image to be segmented
 	//! @param cut The specified name of the file in pgm format that will be created as a result of this function. It
 	//!	 will contain the cut foreground with a white background
-	void segmentImage(const char* file, const char* cut);
+	//! @param p The PGM object to perform the operations on
+	void segmentImage(const char* file, const char* cut, pgm &p);
 }

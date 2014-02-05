@@ -10,6 +10,7 @@
 #include <iostream>
 #include "tools.hpp"
 #include "graph.hpp"
+#include "pgm.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -104,7 +105,8 @@ int main(int argc, char* argv[])
 				std::cerr << "Usage: -i [input file] [input file]\n";
 				return 1;
 			}
-			tools::segmentImage(argv[optind], argv[optind+1]);
+			pgm p;
+			tools::segmentImage(argv[optind], argv[optind+1], p);
 		}
 	}		
 

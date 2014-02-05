@@ -179,147 +179,23 @@ namespace tools
 		return maxFlow;
 	}
 
-	void segmentImage(const char* file, const char* cut)
+	void segmentImage(const char* file, const char* cut, pgm &p)
 	{
-		// Read PGM file as a graph
-		std::ifstream input;
-		input.open(file);
-		if (!input)
-			std::cerr << "Could not open file: " << file << "\n";
+		if (!p.fromFile(file))
+			return;
 
-		int x = 0, y = 0, max = 0;
-		std::string line;
-		getline(input, line);	// "P2"
-		getline(input, line);	// "#Created by Irfan View"
+		p.calculateThreshold();
+		p.addPaths();
 
-		std::stringstream ss;
-		ss << input.rdbuf();
-		ss >> x >> y;			// X, Y
-		ss >> max;				// Max
-
-		int matrix[x][y];
-		for (int yPos = 0; yPos < y; ++yPos)
-			for (int xPos = 0; xPos < x; ++xPos)
-				ss >> matrix[xPos][yPos];
-		input.close();
-
-		// Get the average of all edges.
-		long int nodeSum = 0;
-		for (int xPos = 0; xPos < x; ++xPos)
-			for (int yPos = 0; yPos < y; ++yPos)
-				nodeSum += matrix[xPos][yPos];
-		int threshold = std::abs( max - (nodeSum / (x*y)) );
-
-		// Add paths between nodes
-		graph g;
-		for (int xPos = 0; xPos < x; ++xPos)
-		{
-			for (int yPos = 0; yPos < y; ++yPos)
-			{
-				int currentID = (x * yPos) + xPos;
-				g.addNode(currentID);
-
-				if (xPos > 0)		// [xPos - 1][yPos] - Left
-				{
-					int weight = std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
-					if (weight >= threshold)
-					{
-						vertex lNeighbor; 
-						lNeighbor.id 	 = (x * yPos) + (xPos - 1);
-						lNeighbor.weight = weight;
-						g.addNeighbor(currentID, lNeighbor);
-					}
-				}
-
-				if (xPos < (x - 1))	// [xPos + 1][yPos] - Right
-				{
-					int weight = std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
-					if (weight >= threshold)
-					{
-						vertex rNeighbor;
-						rNeighbor.id 	 = (x * yPos) + (xPos + 1);
-						rNeighbor.weight = weight;
-						g.addNeighbor(currentID, rNeighbor);
-					}
-				}
-				
-				if (yPos > 0)		// [xPos][yPos - 1] - Top
-				{
-					int weight = std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
-					if (weight >= threshold)
-					{
-						vertex tNeighbor; 	
-						tNeighbor.id 	 = (x * (yPos - 1) + xPos);
-						tNeighbor.weight = weight;
-						g.addNeighbor(currentID, tNeighbor);
-					}
-				}
-
-				if (yPos < (y - 1))	// [xPos][yPos + 1] - Bottom
-				{
-					int weight = std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
-					if (weight >= threshold)
-					{
-						vertex bNeighbor;
-						bNeighbor.id 	 = (x * (yPos + 1) + xPos);
-						bNeighbor.weight = weight;
-						g.addNeighbor(currentID, bNeighbor);
-					}
-				}
-			}
-		}
-
-		// Add source and sink, where s = 0 (source value), and t = maximum from PGM, usually 255 (sink value)
 		int sourceID = -1;
-		int sinkID   = x*y;
-		g.addNode(sourceID);
-		g.addNode(sinkID);
-		for (int xPos = 0; xPos < x; ++xPos)
-		{
-			for (int yPos = 0; yPos < y; ++yPos)
-			{
-				if (std::abs( max - matrix[xPos][yPos]) >= threshold)
-				{	
-					vertex fromS;
-					fromS.id = (x * yPos) + xPos;
-					fromS.weight = std::abs( max - matrix[xPos][yPos]);
-					g.addNeighbor(sourceID, fromS);
-				}
-
-				if (matrix[xPos][yPos] >= threshold)
-				{
-					vertex toT;
-					toT.id = sinkID;
-					toT.weight = matrix[xPos][yPos];
-					int fromID = (x * yPos) + xPos;
-					g.addNeighbor(fromID, toT);
-				}
-			}
-		}
+		int sinkID   = p.xMax * p.yMax;
+		p.addSuperNodes(sourceID, sinkID);
 
 		// Run Ford Fulkerson on the pgm graph
-		fordFulkerson(g, sourceID, sinkID);
+		fordFulkerson(p.g, sourceID, sinkID);
 
 		// Write to output file
-		std::ofstream output;
-		output.open(cut);
-		if (!output)
-			std::cerr << "Could not open file: " << cut << "\n";
-
-		output << "P2\n# Created by IrfanView\n" << x <<" " << y << "\n" << max << "\n";
-		for (int yPos = 0; yPos < y; yPos++)
-		{
-			for (int xPos = 0; xPos < x; xPos++)
-			{
-				int nodeID = (x * yPos) + xPos;
-				if (g.adjList[sourceID].find(nodeID) == g.adjList[sourceID].end())
-					output << max << " ";
-				else
-					output << matrix[xPos][yPos] << " ";
-			}
-			output << "\n";
-		}
-		output.close();
+		p.write(cut, sourceID);
 	}
 }
 
