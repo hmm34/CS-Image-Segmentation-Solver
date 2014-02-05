@@ -45,17 +45,6 @@ namespace tools
 	//! @retval The maximum flow for the given graph
 	int fordFulkerson(graph& g, int source, int sink);
 
-	//! @brief Takes a given graph and reverses all edges 
-	//! @param g The graph whose edges will be reversed
-	//void reverse(graph& g);
-
-	//! @brief Obtains the minimum cut from a graph on which the Ford Fulkerson algorithm has already been performed
-	//! @param g The graph on which to obtain the min cut
-	//! @param source
-	//! @param sink
-	//! @retval Pair of integer sets. All nodes within S and T, respectively, after cut(S,T).
-	//std::pair< std::set<int>, std::set<int> > minCut(graph& g, int source, int sink);
-
 	//! @brief Solves the image segmentation problem using ford fulkerson, separating the foreground from the background
 	//! @param file The pgm image to be segmented
 	//! @param cut The specified name of the file in pgm format that will be created as a result of this function. It
