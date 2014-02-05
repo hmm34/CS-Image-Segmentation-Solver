@@ -3,6 +3,7 @@
 */
 
 #include "pgm.hpp"
+#include <cmath>
 #include <fstream>
 #include <sstream>
 #include <iostream>
