@@ -37,3 +37,13 @@ bool pgm::fromFile(const char* file)
 
 	return true;
 }
+
+int pgm::threshold()
+{
+	long int nodeSum = 0;
+	for (int xPos = 0; xPos < xMax; ++xPos)
+		for (int yPos = 0; yPos < yMax; ++yPos)
+			nodeSum += matrix[xPos][yPos];
+	
+	return std::abs( pixMax - (nodeSum / (xMax * yMax)) );
+}

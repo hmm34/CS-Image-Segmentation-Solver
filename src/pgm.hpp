@@ -17,6 +17,10 @@ public:
 	//! @retval true if successful, false otherwise
 	bool fromFile(const char* file);
 
+	//! @brief Gets the threshold for the file
+	//! @param The average of all nodes - constituting the threshold
+	int threshold();
+
 
 	int **matrix;	// Matrix constructed of all pixels
 	graph g;		// Graph of all nodes representing the pixels
