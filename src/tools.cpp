@@ -146,10 +146,8 @@ namespace tools
 		int maxFlow  = 0;
 
 		std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(g, source, sink);
-
 		while (!bfsResult.first.empty())
 		{
-
 			for (unsigned int i = 0; i < bfsResult.first.size() - 1; ++i)
 			{
 				int sNode = bfsResult.first[i];
@@ -201,23 +199,15 @@ namespace tools
 
 		int matrix[x][y];
 		for (int yPos = 0; yPos < y; ++yPos)
-		{
 			for (int xPos = 0; xPos < x; ++xPos)
-			{
 				ss >> matrix[xPos][yPos];
-			}
-		}
 		input.close();
 
 		// Get the average of all edges.
 		long int nodeSum = 0;
 		for (int xPos = 0; xPos < x; ++xPos)
-		{
 			for (int yPos = 0; yPos < y; ++yPos)
-			{
 				nodeSum += matrix[xPos][yPos];
-			}
-		}
 		int threshold = std::abs( max - (nodeSum / (x*y)) );
 
 		// Add paths between nodes
@@ -229,8 +219,7 @@ namespace tools
 				int currentID = (x * yPos) + xPos;
 				g.addNode(currentID);
 
-				// [xPos - 1][yPos] - Left
-				if (xPos > 0)
+				if (xPos > 0)		// [xPos - 1][yPos] - Left
 				{
 					int weight = std::abs( max - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
 					if (weight >= threshold)
@@ -242,8 +231,7 @@ namespace tools
 					}
 				}
 
-				// [xPos + 1][yPos] - Right
-				if (xPos < (x - 1))
+				if (xPos < (x - 1))	// [xPos + 1][yPos] - Right
 				{
 					int weight = std::abs( max - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
 					if (weight >= threshold)
@@ -254,9 +242,8 @@ namespace tools
 						g.addNeighbor(currentID, rNeighbor);
 					}
 				}
-
-				// [xPos][yPos - 1] - Top
-				if (yPos > 0)
+				
+				if (yPos > 0)		// [xPos][yPos - 1] - Top
 				{
 					int weight = std::abs( max - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
 					if (weight >= threshold)
@@ -268,8 +255,7 @@ namespace tools
 					}
 				}
 
-				// [xPos][yPos + 1] - Bottom
-				if (yPos < (y - 1))
+				if (yPos < (y - 1))	// [xPos][yPos + 1] - Bottom
 				{
 					int weight = std::abs( max - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
 					if (weight >= threshold)
@@ -283,9 +269,7 @@ namespace tools
 			}
 		}
 
-		// Add source and sink
-		// 	s = 0 (source value)
-		// 	t = maximum from PGM, 255 (sink value)
+		// Add source and sink, where s = 0 (source value), and t = maximum from PGM, usually 255 (sink value)
 		int sourceID = -1;
 		int sinkID   = x*y;
 		g.addNode(sourceID);
@@ -316,34 +300,25 @@ namespace tools
 		// Run Ford Fulkerson on the pgm graph
 		fordFulkerson(g, sourceID, sinkID);
 
-		// Open the output file, represented by name in cut parameter
+		// Write to output file
 		std::ofstream output;
 		output.open(cut);
 		if (!output)
 			std::cerr << "Could not open file: " << cut << "\n";
 
-		//	Write header PGM for X,Y,Max values
 		output << "P2\n# Created by IrfanView\n" << x <<" " << y << "\n" << max << "\n";
-
-		//	Iterate through all nodes
 		for (int yPos = 0; yPos < y; yPos++)
 		{
 			for (int xPos = 0; xPos < x; xPos++)
 			{
 				int nodeID = (x * yPos) + xPos;
 				if (g.adjList[sourceID].find(nodeID) == g.adjList[sourceID].end())
-				{	// That node is not reachable by S. Set it to the maximum value (t)
 					output << max << " ";
-				}
 				else
-				{	// That node is reachable by S. Keep the value.
 					output << matrix[xPos][yPos] << " ";
-				}
 			}
 			output << "\n";
 		}
-
-		// Close output file
 		output.close();
 	}
 }
