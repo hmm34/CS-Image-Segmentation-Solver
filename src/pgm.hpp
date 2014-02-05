@@ -24,6 +24,11 @@ public:
 	//! @brief Add paths between all pixels
 	void addPaths();
 
+	//! @brief Adds super source and super sink
+	//! @param sourceID The node ID of the source
+	//! @param sinkID	The node ID of the sink
+	void addSuperNodes(int sourceID, int sinkID);
+
 
 	int **matrix;	// Matrix constructed of all pixels
 	graph g;		// Graph of all nodes representing the pixels

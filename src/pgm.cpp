@@ -107,3 +107,33 @@ void pgm::addPaths()
 		}
 	}
 }
+
+void pgm::addSuperNodes(int sourceID, int sinkID)
+{
+	g.addNode(sourceID);
+	g.addNode(sinkID);
+	for (int xPos = 0; xPos < xMax; ++xPos)
+	{
+		for (int yPos = 0; yPos < yMax; ++yPos)
+		{
+			if (std::abs( pixMax - matrix[xPos][yPos]) >= threshold)
+			{	
+				vertex fromS;
+				fromS.id = (xMax * yPos) + xPos;
+				fromS.weight = std::abs( pixMax - matrix[xPos][yPos]);
+				g.addNeighbor(sourceID, fromS);
+			}
+
+			if (matrix[xPos][yPos] >= threshold)
+			{
+				vertex toT;
+				toT.id = sinkID;
+				toT.weight = matrix[xPos][yPos];
+				int fromID = (xMax * yPos) + xPos;
+				g.addNeighbor(fromID, toT);
+			}
+		}
+	}
+}
+
+
