@@ -173,16 +173,16 @@ int main() {
 
 	// Expected max flow for each of the testcase#[1-10].pgm
 	std::pair<std::string, int> testcases[] = {	
-				std::make_pair<std::string, int>( "testcase1.txt", 14 ),
-				std::make_pair<std::string, int>( "testcase2.txt", 23 ),
-				std::make_pair<std::string, int>( "testcase3.txt", 28 ),
-				std::make_pair<std::string, int>( "testcase4.txt", 14 ),
-				std::make_pair<std::string, int>( "testcase5.txt", 200 ),
-				std::make_pair<std::string, int>( "testcase6.txt", 23 ),
-				std::make_pair<std::string, int>( "testcase7.txt", 40 ),
-				std::make_pair<std::string, int>( "testcase8.txt", 19 ),
-				std::make_pair<std::string, int>( "testcase9.txt", 65 ),
-				std::make_pair<std::string, int>( "testcase10.txt", 50 ) };
+				std::make_pair<std::string, int>( "test/graphs/testcase1.txt", 14 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase2.txt", 23 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase3.txt", 28 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase4.txt", 14 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase5.txt", 200 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase6.txt", 23 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase7.txt", 40 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase8.txt", 19 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase9.txt", 65 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase10.txt", 50 ) };
 
 	int numTestCases = 10;
 	for (int i = 0; i < numTestCases; ++i) {
