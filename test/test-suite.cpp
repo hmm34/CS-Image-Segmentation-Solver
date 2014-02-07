@@ -189,7 +189,14 @@ int main() {
 		graph g;
 		tools::graphFromFile( testcases[i].first.c_str() , g );
 		int resultMaxFlow = tools::fordFulkerson( g, 0, g.sNodes.size() - 1 );
-		assert( resultMaxFlow == testcases[i].second );
+
+		std::cerr << testcases[i].first << "... ";
+		if (resultMaxFlow != testcases[i].second )
+		{
+			std::cerr << "Expected: " << testcases[i].second << ", Received: " << resultMaxFlow << "\n";
+			assert( false );
+		}
+		std::cerr << std::endl;
 	}
 
 	
