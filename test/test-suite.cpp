@@ -183,7 +183,10 @@ int main() {
 
 	int numTestCases = 10;
 	for (int i = 0; i < numTestCases; ++i) {
-
+		graph g;
+		tools::graphFromFile( testcases[i].first.c_str() , g );
+		int resultMaxFlow = tools::fordFulkerson( g, 0, g.sNodes.size() - 1 );
+		assert( resultMaxFlow == testcases[i].second );
 	}
 
 	
