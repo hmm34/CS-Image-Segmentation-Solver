@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 			if (optind + 2 >= argc)
 			{
 				std::cerr << "Invalid use of option -b\n";
-				std::cerr << "Usage: -b [input file] [start vertex] [end vertex 1] [end vertex 2] ...\n";
+				std::cerr << "Usage: -b [input file] [start vertex] [end vertex]\n";
 				return 1;
 			}
 		
@@ -44,30 +44,23 @@ int main(int argc, char* argv[])
 
 			// Obtain the potential multiple end points specified
 			int optOffset = 2;
-			std::vector<int> endPoints;
-			while((optind + optOffset) < argc)
-			{
-				endPoints.push_back(atoi(argv[optind + optOffset]));
-				++optOffset;
-			}
-
-			// Perform the BFS on the graph created from the input file
+			int endPoint = atoi(argv[optind + optOffset]);
+			
 			graph g;
+
+			// Generate graph from file
 			tools::graphFromFile( argv[optind], g );
 			std::cerr << "Number of nodes is: " << g.nodes() << std::endl;
-			for (unsigned int i = 0; i < endPoints.size(); ++i)
-			{
-				std::pair< std::vector<int>, int > searchResult;
-				searchResult = tools::breadthFirstSearch(g, startVertex, endPoints[i]);
-				std::vector<int> shortestPath = searchResult.first;	// Shortest path p along graph G
-				int minCapacity = searchResult.second;				// Minimum capacity along p
-				unsigned int numEdges = shortestPath.size() - 1; 	// Edges = Nodes - 1
+			
+			std::pair< std::vector<int>, int > searchResult = tools::breadthFirstSearch(g, startVertex, endPoint);
+			std::vector<int> shortestPath = searchResult.first;	// Shortest path p along graph G
+			int minCapacity = searchResult.second;				// Minimum capacity along p
+			unsigned int numEdges = shortestPath.size() - 1; 	// Edges = Nodes - 1
 
-				//! @note Again - testing purposes!
-				std::cerr << "Found shortest path from " << startVertex << " to "
-					<< endPoints[i] << " to be: " << numEdges << std::endl;
-				std::cerr << "Minimum capacity is: " << minCapacity << std::endl;
-			}
+			//! @note Again - testing purposes!
+			std::cerr << "Found shortest path from " << startVertex << " to "
+				<< endPoint << " to be: " << numEdges << std::endl;
+			std::cerr << "Minimum capacity is: " << minCapacity << std::endl;
 
 			g.print();
 		}
