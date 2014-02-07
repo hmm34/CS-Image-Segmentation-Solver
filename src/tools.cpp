@@ -69,6 +69,13 @@ namespace tools
 		if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
 			return std::make_pair(shortestPath, minCapacity);
 
+		// Start and end node are the same.
+		// 	Capacity is zero and shortest path is itself.
+		if ( start == end) {
+			shortestPath.push_back(start);
+			return std::make_pair(shortestPath, 0);
+		}
+
 		// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity. The 
 		// edge weights within the shortest paths is contained within pathWeights.
 		int paths[numNodes];
