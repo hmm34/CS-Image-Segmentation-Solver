@@ -81,7 +81,6 @@ int main(int argc, char* argv[])
 			tools::graphFromFile( argv[optind], ffg );
 			graph resid = ffg;
 			
-			// Hard coded....will fix once number of nodes works
 			int source = 0;
 			int sink   = resid.sNodes.size() - 1;
 			int maxFlow = tools::fordFulkerson(resid, source, sink);

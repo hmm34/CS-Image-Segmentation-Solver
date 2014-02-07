@@ -150,37 +150,51 @@ namespace tools
 
 	int fordFulkerson(graph& g, int source, int sink)
 	{
+		// Starting flow is zero.
 		int maxFlow  = 0;
 
+		// Get shortest path for processing with Forf Fulkerson.
+		// 	Loop until a shortest path cannot be found.
 		std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(g, source, sink);
+		
+		// Empty indicates no shortest path from S to T (source to Sink)
 		while (!bfsResult.first.empty())
 		{
+			// Examine each node in the path and adjust the edges of the residual graph
 			for (unsigned int i = 0; i < bfsResult.first.size() - 1; ++i)
 			{
-				int sNode = bfsResult.first[i];
-				int nNode = bfsResult.first[i+1];
+				// Take nodes in pairs to adjust the edges between them.
+				int startNode = bfsResult.first[i]; // start node in pair
+				int endNode = bfsResult.first[i+1]; // end node in pair
 
-				if (g.adjList[sNode][nNode].weight - bfsResult.second > 0)
+				std::cerr << "Node value: " << startNode << "\n";
+				std::cerr << "I value: " << i << "\n";
+
+				if (g.adjList[startNode][endNode].weight - bfsResult.second > 0)
 				{				
 					// perform the difference between the min capacity and the edge weight
-					g.adjList[sNode][nNode].weight = g.adjList[sNode][nNode].weight - bfsResult.second;
+					// 	update the weight with the result
+					g.adjList[startNode][endNode].weight = g.adjList[startNode][endNode].weight - bfsResult.second;
 
-					// update graph back edge
-					g.adjList[nNode][sNode].id = i;
-					g.adjList[nNode][sNode].weight = g.adjList[nNode][sNode].weight + bfsResult.second;
+					// add/update graph back edge
+					g.adjList[endNode][startNode].id = i;
+					g.adjList[endNode][startNode].weight = g.adjList[endNode][startNode].weight + bfsResult.second;
 				}
 				else
 				{
-					// update graph back edge
-					g.adjList[nNode][sNode].id = sNode;
-					g.adjList[nNode][sNode].weight = g.adjList[nNode][sNode].weight + g.adjList[sNode][nNode].weight;
+					// add/update graph back edge
+					g.adjList[endNode][startNode].id = startNode;
+					g.adjList[endNode][startNode].weight = g.adjList[endNode][startNode].weight + g.adjList[startNode][endNode].weight;
 
 					// rempve the maxed out edge
-					g.adjList[sNode].erase(nNode);
+					g.adjList[startNode].erase(endNode);
 				}
 			}
 
+			// Accumulate the flow to return the maximum flow
 			maxFlow = maxFlow + bfsResult.second;
+
+			// Perform next BFS operation to find next shortest path in the residual graph
 			bfsResult = breadthFirstSearch(g, source, sink);
 		}
 		return maxFlow;
