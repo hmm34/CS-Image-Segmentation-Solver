@@ -14,6 +14,8 @@
 
 int main(int argc, char* argv[])
 {
+	graph inputGraph;
+
 	if (argc < 2)
 	{
 		std::cerr << "No options found!\n";
@@ -45,14 +47,12 @@ int main(int argc, char* argv[])
 			// Obtain the potential multiple end points specified
 			int optOffset = 2;
 			int endPoint = atoi(argv[optind + optOffset]);
-			
-			graph g;
 
 			// Generate graph from file
-			tools::graphFromFile( argv[optind], g );
-			std::cerr << "Number of nodes is: " << g.nodes() << std::endl;
+			tools::graphFromFile(argv[optind], inputGraph);
+			std::cerr << "Number of nodes is: " << inputGraph.nodes() << std::endl;
 			
-			std::pair< std::vector<int>, int > searchResult = tools::breadthFirstSearch(g, startVertex, endPoint);
+			std::pair< std::vector<int>, int > searchResult = tools::breadthFirstSearch(inputGraph, startVertex, endPoint);
 			std::vector<int> shortestPath = searchResult.first;	// Shortest path p along graph G
 			int minCapacity = searchResult.second;				// Minimum capacity along p
 			unsigned int numEdges = shortestPath.size() - 1; 	// Edges = Nodes - 1
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 				<< endPoint << " to be: " << numEdges << std::endl;
 			std::cerr << "Minimum capacity is: " << minCapacity << std::endl;
 
-			g.print();
+			inputGraph.print();
 		}
 
 		// Ford-Fulkerson Option
@@ -77,13 +77,11 @@ int main(int argc, char* argv[])
 			}
 
 			// This will go to Ford Fulkerson Function
-			graph ffg;
-			tools::graphFromFile( argv[optind], ffg );
-			graph resid = ffg;
-			
+			tools::graphFromFile(argv[optind], inputGraph);
+
 			int source = 0;
-			int sink   = resid.sNodes.size() - 1;
-			int maxFlow = tools::fordFulkerson(resid, source, sink);
+			int sink   = inputGraph.sNodes.size() - 1;
+			int maxFlow = tools::fordFulkerson(inputGraph, source, sink);
 			std::cerr << "Max flow is: " << maxFlow << "\n";
 		}
 
@@ -100,6 +98,5 @@ int main(int argc, char* argv[])
 			tools::segmentImage(argv[optind], argv[optind+1]);
 		}
 	}		
-
 	return 0;
 }
