@@ -173,8 +173,10 @@ namespace tools
 		return maxFlow;
 	}
 
-	void segmentImage(const char* file, const char* cut, pgm &p)
+	void segmentImage(const char* file, const char* cut)
 	{
+		pgm p;
+
 		if (!p.fromFile(file))
 			return;
 
