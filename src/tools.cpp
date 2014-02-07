@@ -41,19 +41,6 @@ namespace tools
 		input.close();
 	}
 
-	uint32_t xorshift() 
-	{
-		static uint32_t x = 123456789;
-	  	static uint32_t y = 362436069;
-	  	static uint32_t z = 521288629;
-	  	static uint32_t w = 88675123;
-	  	uint32_t t;
-	 
-	  	t = x ^ (x << 11);
-	  	x = y; y = z; z = w;
-	  	return w = w ^ (w >> 19) ^ (t ^ (t >> 8));
-	}
-
 	//! @note Right now this is taking only one end vertex. If we want to enable multiple end vertices, we could still
 	//!	 keep essentially the same algorithm but consider the last vertex to be the maximum of all listed end vertices.
 	//!	 For each given end vertex, we would reverse iterate through the list of preceding nodes. We would then have a 
