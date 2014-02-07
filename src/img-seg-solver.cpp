@@ -59,8 +59,8 @@ int main(int argc, char* argv[])
 
 			//! @note Again - testing purposes!
 			std::cerr << "Found shortest path from " << startVertex << " to "
-				<< endPoint << " to be: " << numEdges << std::endl;
-			std::cerr << "Minimum capacity is: " << minCapacity << std::endl;
+				<< endPoint << " to be: " << numEdges << "\n";
+			std::cerr << "Minimum capacity is: " << minCapacity << "\n";
 
 			inputGraph.print();
 		}
