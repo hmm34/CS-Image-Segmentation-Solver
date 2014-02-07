@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 		int option = getopt(argc,argv, "bif");
 
 		if (option == -1)
-			break;
+			return 1;
 
 		// BFS Option
 		if (option == 'b')
@@ -50,7 +50,6 @@ int main(int argc, char* argv[])
 
 			// Generate graph from file
 			tools::graphFromFile(argv[optind], inputGraph);
-			std::cerr << "Number of nodes is: " << inputGraph.nodes() << std::endl;
 			
 			std::pair< std::vector<int>, int > searchResult = tools::breadthFirstSearch(inputGraph, startVertex, endPoint);
 			std::vector<int> shortestPath = searchResult.first;	// Shortest path p along graph G
@@ -58,6 +57,7 @@ int main(int argc, char* argv[])
 			unsigned int numEdges = shortestPath.size() - 1; 	// Edges = Nodes - 1
 
 			//! @note Again - testing purposes!
+			std::cerr << "Number of nodes is: " << inputGraph.nodes() << std::endl;
 			std::cerr << "Found shortest path from " << startVertex << " to "
 				<< endPoint << " to be: " << numEdges << "\n";
 			std::cerr << "Minimum capacity is: " << minCapacity << "\n";
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
 			if (optind + 1 >= argc)
 			{
 				std::cerr << "Invalid use of option -i\n";
-				std::cerr << "Usage: -i [input file] [input file]\n";
+				std::cerr << "Usage: -i [input file] [ouput file]\n";
 				return 1;
 			}
 			tools::segmentImage(argv[optind], argv[optind+1]);
