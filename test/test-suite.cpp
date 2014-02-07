@@ -169,33 +169,23 @@ int main() {
 	assert(result);
 
 	// Expected max flow for each of the testcase#[1-10].pgm
-	std::string testcase[] = {	"testcase1.txt", 
-								"testcase2.txt", 
-								"testcase3.txt",
-								"testcase4.txt",
-								"testcase5.txt",
-								"testcase6.txt",
-								"testcase7.txt",
-								"testcase8.txt",
-								"testcase9.txt",
-								"testcase10.txt" };
+	std::pair<std::string, int> testcases[] = {	
+				std::make_pair<std::string, int>( "testcase1.txt", 14 ),
+				std::make_pair<std::string, int>( "testcase2.txt", 23 ),
+				std::make_pair<std::string, int>( "testcase3.txt", 28 ),
+				std::make_pair<std::string, int>( "testcase4.txt", 14 ),
+				std::make_pair<std::string, int>( "testcase5.txt", 200 ),
+				std::make_pair<std::string, int>( "testcase6.txt", 23 ),
+				std::make_pair<std::string, int>( "testcase7.txt", 40 ),
+				std::make_pair<std::string, int>( "testcase8.txt", 19 ),
+				std::make_pair<std::string, int>( "testcase9.txt", 65 ),
+				std::make_pair<std::string, int>( "testcase10.txt", 50 ) };
 
-	// Their predetermined max flow by manual calculation							
-	int expectedMaxFlow[] = {	14,
-								23,
-								28,
-								14,
-								200,
-								23,
-								40,
-								19,
-								65,
-								50 };
+	int numTestCases = 10;
+	for (int i = 0; i < numTestCases; ++i) {
 
-
-
+	}
 
 	
-
 	return 0;
 }
