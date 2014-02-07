@@ -14,6 +14,7 @@
 #include <iomanip>
 #include "../src/graph.hpp"
 #include "../src/tools.hpp"
+#include "../src/pgm.hpp"
 
 const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 
@@ -143,6 +144,7 @@ bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<
 	return true;
 }
 
+
 int main() {
 
 	/* --------------------------------------------- Timing Metrics ------------------------------------------- */
@@ -159,14 +161,44 @@ int main() {
 	/* --------------------------------------------- Unit Testing --------------------------------------------- */
 	// Breadth First Search
 	std::cout << "Breadth first search tests: " << std::endl;
+
+	/*
 	int expectedSP[] = {0, 3};
 	std::vector<int> expectedShortestPath(expectedSP, expectedSP + sizeof(expectedSP) / sizeof(int));
 	bool result = testBFS("test/graphs/graph.txt", 0, 3, 8, expectedShortestPath);
 	if (result)
 		std::cerr << "graph.txt - Pass" << std::endl;
 	assert(result);
+	*/
+
+	// Expected max flow for each of the testcase#[1-10].pgm
+	std::pair<std::string, int> testcases[] = {	
+				std::make_pair<std::string, int>( "test/graphs/testcase1.txt", 14 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase2.txt", 23 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase3.txt", 29 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase4.txt", 14 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase5.txt", 200 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase6.txt", 23 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase7.txt", 40 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase8.txt", 19 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase9.txt", 65 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase10.txt", 16 ) };
+
+	int numTestCases = 10;
+	for (int i = 0; i < numTestCases; ++i) {
+		graph g;
+		tools::graphFromFile( testcases[i].first.c_str() , g );
+		int resultMaxFlow = tools::fordFulkerson( g, 0, g.sNodes.size() - 1 );
+
+		std::cerr << testcases[i].first << "... ";
+		if (resultMaxFlow != testcases[i].second )
+		{
+			std::cerr << "Expected: " << testcases[i].second << ", Received: " << resultMaxFlow << "\n";
+			assert( false );
+		}
+		std::cerr << std::endl;
+	}
 
 	
-
 	return 0;
 }
