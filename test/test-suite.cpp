@@ -14,6 +14,7 @@
 #include <iomanip>
 #include "../src/graph.hpp"
 #include "../src/tools.hpp"
+#include "../src/pgm.hpp"
 
 const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 
@@ -165,6 +166,20 @@ int main() {
 	if (result)
 		std::cerr << "graph.txt - Pass" << std::endl;
 	assert(result);
+
+	// Expected max flow for each of the testcase#[1-10].pgm
+	int expectedMaxFlow1 = 14;
+	int expectedMaxFlow2 = 23;
+	int expectedMaxFlow3 = 28;
+	int expectedMaxFlow4 = 14;
+	int expectedMaxFlow5 = 200;
+	int expectedMaxFlow6 = 23;
+	int expectedMaxFlow7 = 40;
+	int expectedMaxFlow8 = 19;
+	int expectedMaxFlow9 = 65;
+	int expectedMaxFlow10 = 50;
+
+
 
 	
 
