@@ -144,6 +144,7 @@ bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<
 	return true;
 }
 
+
 int main() {
 
 	/* --------------------------------------------- Timing Metrics ------------------------------------------- */
@@ -168,16 +169,29 @@ int main() {
 	assert(result);
 
 	// Expected max flow for each of the testcase#[1-10].pgm
-	int expectedMaxFlow1 = 14;
-	int expectedMaxFlow2 = 23;
-	int expectedMaxFlow3 = 28;
-	int expectedMaxFlow4 = 14;
-	int expectedMaxFlow5 = 200;
-	int expectedMaxFlow6 = 23;
-	int expectedMaxFlow7 = 40;
-	int expectedMaxFlow8 = 19;
-	int expectedMaxFlow9 = 65;
-	int expectedMaxFlow10 = 50;
+	std::string testcase[] = {	"testcase1.txt", 
+								"testcase2.txt", 
+								"testcase3.txt",
+								"testcase4.txt",
+								"testcase5.txt",
+								"testcase6.txt",
+								"testcase7.txt",
+								"testcase8.txt",
+								"testcase9.txt",
+								"testcase10.txt" };
+
+	// Their predetermined max flow by manual calculation							
+	int expectedMaxFlow[] = {	14,
+								23,
+								28,
+								14,
+								200,
+								23,
+								40,
+								19,
+								65,
+								50 };
+
 
 
 
