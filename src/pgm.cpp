@@ -2,17 +2,17 @@
 	@copydoc pgm.hpp
 */
 
-#include "pgm.hpp"
+#include "Pgm.hpp"
 #include <cmath>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
-pgm::pgm() : xMax(0), yMax(0), pixMax(0), threshold(0) 
+Pgm::Pgm() : xMax(0), yMax(0), pixMax(0), threshold(0) 
 {
 }
 
-pgm::~pgm() 
+Pgm::~Pgm() 
 {
 	for( int index = 0 ; index < xMax ; index++ )
 	{
@@ -21,7 +21,7 @@ pgm::~pgm()
 	delete [] matrix ;
 }
 
-bool pgm::fromFile(const char* file)
+bool Pgm::fromFile(const char* file)
 {
 	std::ifstream input;
 	input.open(file);
@@ -52,7 +52,7 @@ bool pgm::fromFile(const char* file)
 	return true;
 }
 
-int pgm::calculateThreshold()
+int Pgm::calculateThreshold()
 {
 	long int nodeSum = 0;
 	for (int xPos = 0; xPos < xMax; ++xPos)
@@ -63,7 +63,7 @@ int pgm::calculateThreshold()
 	return threshold;
 }
 
-void pgm::addPaths()
+void Pgm::addPaths()
 {
 	for (int xPos = 0; xPos < xMax; ++xPos)
 	{
@@ -120,7 +120,7 @@ void pgm::addPaths()
 	}
 }
 
-void pgm::addSuperNodes(int sourceID, int sinkID)
+void Pgm::addSuperNodes(int sourceID, int sinkID)
 {
 	g.addNode(sourceID);
 	g.addNode(sinkID);
@@ -149,7 +149,7 @@ void pgm::addSuperNodes(int sourceID, int sinkID)
 }
 
 
-bool pgm::write(const char* file, int sourceID)
+bool Pgm::write(const char* file, int sourceID)
 {
 	std::ofstream output;
 	output.open(file);

@@ -2,7 +2,7 @@
 	@copydoc tools.hpp
 */
 
-#include "tools.hpp"
+#include "Tools.hpp"
 #include <stdint.h>
 #include <limits>
 #include <queue>
@@ -11,9 +11,9 @@
 #include <iostream>
 #include <algorithm>
 
-namespace tools 
+namespace Tools 
 {
-	void graphFromFile(const char* file, graph& g) 
+	void graphFromFile(const char* file, Graph& g) 
 	{
 	 	// Open the file containing the graph information
 		std::ifstream input;
@@ -45,7 +45,7 @@ namespace tools
 	//!	 keep essentially the same algorithm but consider the last vertex to be the maximum of all listed end vertices.
 	//!	 For each given end vertex, we would reverse iterate through the list of preceding nodes. We would then have a 
 	//!	 list of a list of the shortest paths to each given end vertex, for each given end vertex.
-	std::pair< std::vector<int>, int> breadthFirstSearch(graph& g, int start, int end)
+	std::pair< std::vector<int>, int> breadthFirstSearch(Graph& g, int start, int end)
 	{
 		static int infinity = std::numeric_limits<int>::max();
 		std::vector<int> shortestPath;	// Nodes from start to end with the shortest path
@@ -135,7 +135,7 @@ namespace tools
 		return std::make_pair(shortestPath, minCapacity);	
 	}
 
-	int fordFulkerson(graph& g, int source, int sink)
+	int fordFulkerson(Graph& g, int source, int sink)
 	{
 		// Starting flow is zero.
 		int maxFlow  = 0;
