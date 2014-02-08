@@ -275,7 +275,7 @@ int main() {
 					"test/pgm/x31_f18.ascii.pgm"
 	};
 
-	int numIsegTestCases = 46;
+	int numIsegTestCases = 45;
 	for (int i = 0; i < numIsegTestCases; ++i)
 	{
 		std::cout << iSegTestCases[i] << "...\n";
@@ -287,7 +287,6 @@ int main() {
 		std::string line;		// Ignore first two lines.
 		getline(input, line);	// "P2"
 		getline(input, line);	// "#Created by Irfan View"
-		if (line[0] == '#')
 
 		std::stringstream ss;
 		ss << input.rdbuf();
