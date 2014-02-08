@@ -227,7 +227,54 @@ int main() {
 
 	std::cout << "Timing metrics for Image Segmentation: \n";
 
-	
+	std::string isegTestCases[] = {
+					"test/pgm/2DGel-2.pgm",
+					"test/pgm/FEEP.pgm",
+					"test/pgm/apollonian_gasket.ascii.pgm",
+					"test/pgm/baboon.ascii.pgm",
+					"test/pgm/balloons.ascii.pgm",
+					"test/pgm/balloons_noisy.ascii.pgm",
+					"test/pgm/barbara.ascii.pgm",
+					"test/pgm/body1.ascii.pgm",
+					"test/pgm/body2.ascii.pgm",
+					"test/pgm/body3.ascii.pgm",
+					"test/pgm/brain_398.ascii.pgm",
+					"test/pgm/brain_492.ascii.pgm",
+					"test/pgm/brain_508.ascii.pgm",
+					"test/pgm/brain_604.ascii.pgm",
+					"test/pgm/casablanca.ascii.pgm",
+					"test/pgm/coins.ascii.pgm",
+					"test/pgm/columns.ascii.pgm",
+					"test/pgm/columns.pgm",
+					"test/pgm/dla.ascii.pgm",
+					"test/pgm/dragon.ascii.pgm",
+					"test/pgm/example",
+					"test/pgm/f14.ascii.pgm",
+					"test/pgm/feep.ascii.pgm",
+					"test/pgm/fractal_tree.ascii.pgm",
+					"test/pgm/gator.ascii.pgm",
+					"test/pgm/glassware_noisy.ascii.pgm",
+					"test/pgm/hands.ascii.pgm",
+					"test/pgm/handsmat.ascii.pgm",
+					"test/pgm/lena.ascii.pgm",
+					"test/pgm/marcie.ascii.pgm",
+					"test/pgm/mona_lisa.ascii.pgm",
+					"test/pgm/mother_daughter.ascii.pgm",
+					"test/pgm/mountain.ascii.pgm",
+					"test/pgm/pbmlib.ascii.pgm",
+					"test/pgm/pepper.ascii.pgm",
+					"test/pgm/roi_14.ascii.pgm",
+					"test/pgm/saturn.ascii.pgm",
+					"test/pgm/screws.ascii.pgm",
+					"test/pgm/snap.ascii.pgm",
+					"test/pgm/surf.ascii.pgm",
+					"test/pgm/totem.ascii.pgm",
+					"test/pgm/tracks.ascii.pgm",
+					"test/pgm/tracks.pgm",
+					"test/pgm/venus1.ascii.pgm",
+					"test/pgm/venus2.ascii.pgm",
+					"test/pgm/x31_f18.ascii.pgm"
+	}
 
 
 	/* -------------------------------------------------------------------------------------------------------- */
