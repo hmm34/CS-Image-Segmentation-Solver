@@ -195,6 +195,7 @@ int main() {
 	/* -------------------------------------------------------------------------------------------------------- */
 	std::cout << "Breadth first search tests: " << std::endl;
 
+	int numBfsTestCases = 10;
 	std::string bfsTestCases[] = {
 				"test/graphs/testcase1.txt",
 				"test/graphs/testcase2.txt",
@@ -205,7 +206,8 @@ int main() {
 				"test/graphs/testcase7.txt",
 				"test/graphs/testcase8.txt",
 				"test/graphs/testcase9.txt",
-				"test/graphs/testcase9.txt"  };
+				"test/graphs/testcase9.txt",
+				"test/graphs/testcase10.txt"  };
 
 	int expectedSP1[] = {0, 1, 5};	// or {0, 2 5}
 	std::vector<int> expectedShortestPath1(expectedSP1, expectedSP1 + sizeof(expectedSP1) / sizeof(int));
@@ -222,7 +224,7 @@ int main() {
 						12 		// or 4
 					};
 
-	for (int i = 0; i < 1; ++i)
+	for (int i = 0; i < numBfsTestCases; ++i)
 	{
 		std::string nameOfFile = bfsTestCases[i];
 		std::cerr << nameOfFile << "...";
