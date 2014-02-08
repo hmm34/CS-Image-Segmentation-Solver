@@ -288,6 +288,7 @@ int main() {
 		std::string line;		// Ignore first two lines.
 		getline(input, line);	// "P2"
 		getline(input, line);	// "#Created by Irfan View"
+		if (line[0] == '#')
 
 		std::stringstream ss;
 		ss << input.rdbuf();
