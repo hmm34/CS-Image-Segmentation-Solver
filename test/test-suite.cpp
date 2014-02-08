@@ -146,20 +146,47 @@ bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<
 
 
 int main() {
-
+	/* -------------------------------------------------------------------------------------------------------- */
 	/* --------------------------------------------- Timing Metrics ------------------------------------------- */
+	/* -------------------------------------------------------------------------------------------------------- */
+
+
+	/* ---------------------------------- Timing Metrics: Breadth First Search -------------------------------- */
+	/* -------------------------------------------------------------------------------------------------------- */
 	// Breadth First Search
 	std::cout << "Timing metrics for breadth first search: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(10) << "seconds" << std::endl;
 	for (int totalVE = 100; totalVE <= 4000; totalVE += 100) {
 		int edges = 2 * totalVE / 3 + 3;
 		int vertices = totalVE - edges;
-		double seconds = timeBFS(edges, vertices);
+		//double seconds = timeBFS(edges, vertices);
+
+		generateRandomGraph(TEMP_GRAPH, edges, vertices);
+		Graph g;
+		Tools::graphFromFile(TEMP_GRAPH, g);
+		time_t start = time(0);
+		double seconds = -1;
+		std::pair< std::vector<int>, int> result = Tools::breadthFirstSearch(g, 0, vertices-1);
+
+		if ((result.first.size() > 0) && (result.second > 0))
+			seconds = difftime(start, time(0));
+
+		// Clean up temporary graph text file created when graph was generated
+		remove(TEMP_GRAPH);
+
 		std::cout << std::left << std::setw(7) << totalVE << std::right << std::setw(10) << seconds << std::endl;
 	}
 
+	/* ------------------------------------- Timing Metrics: Ford Fulkerson ----------------------------------- */
+	/* -------------------------------------------------------------------------------------------------------- */
+
+
+	/* -------------------------------------------------------------------------------------------------------- */
 	/* --------------------------------------------- Unit Testing --------------------------------------------- */
-	/* --------------------------------------------- Unit Testing: Breadth First Search ----------------------- */
+	/* -------------------------------------------------------------------------------------------------------- */
+
+	/* ------------------------------------ Unit Testing: Breadth First Search -------------------------------- */
+	/* -------------------------------------------------------------------------------------------------------- */
 	std::cout << "Breadth first search tests: " << std::endl;
 
 	std::string bfsTestCases[] = {
@@ -226,7 +253,8 @@ int main() {
 		std::cerr << "\n";
 	}
 
-	/* --------------------------------------------- Unit Testing: Ford Fulkerson ----------------------------- */
+	/* -------------------------------------- Unit Testing: Ford Fulkerson ------------------------------------ */
+	/* -------------------------------------------------------------------------------------------------------- */
 	// Ford Fulkerson - Expected max flow for each of the testcase#[1-10].pgm
 	std::cerr << "Ford Fulkerson tests: " << std::endl;
 	std::pair<std::string, int> maxFlowTestCases[] = {	
