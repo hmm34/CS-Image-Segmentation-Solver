@@ -7,6 +7,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
 
 Pgm::Pgm() : xMax(0), yMax(0), pixMax(0), threshold(0) 
 {

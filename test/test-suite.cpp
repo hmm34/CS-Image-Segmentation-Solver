@@ -113,8 +113,8 @@ void runIsegTimingMetrics()
 
 	std::cout << "Timing metrics for Image Segmentation: \n";
 	std::string iSegTestCases[] = {
-					"test/pgm/2DGel-2.pgm",
 					"test/pgm/FEEP.pgm",
+					"test/pgm/2DGel-2.pgm",
 					"test/pgm/apollonian_gasket.ascii.pgm",
 					"test/pgm/baboon.ascii.pgm",
 					"test/pgm/balloons.ascii.pgm",
@@ -160,7 +160,7 @@ void runIsegTimingMetrics()
 					"test/pgm/x31_f18.ascii.pgm"
 	};
 
-	int numIsegTestCases = 45;
+	int numIsegTestCases = 10;
 	for (int i = 0; i < numIsegTestCases; ++i)
 	{
 		std::ifstream input;
@@ -347,12 +347,12 @@ void runFfUnitTests()
 
 int main() {
 
-	runBfsTimingMetrics();
-	runFfTimingMetrics();
+	//runBfsTimingMetrics();
+	//runFfTimingMetrics();
 	runIsegTimingMetrics();
 
-	runBfsUnitTests();
-	runFfUnitTests();
+	//runBfsUnitTests();
+	//runFfUnitTests();
 
 	return 0;
 }
