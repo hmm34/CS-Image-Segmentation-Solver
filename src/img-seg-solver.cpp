@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 		int option = getopt(argc,argv, "bif");
 
 		if (option == -1)
-			return 1;
+			return 0;
 
 		// BFS Option
 		if (option == 'b')
