@@ -47,6 +47,8 @@ int main() {
 	/* -------------------------------------------------------------------------------------------------------- */
 	std::ofstream bfsTimingOutput;
 	bfsTimingOutput.open("test/results/bfs-timing-metrics.csv");
+	bfsTimingOutput << "total vertices and edges, number of vertices, number of edges, millseconds to complete\n";
+
 	std::cout << "Timing metrics for breadth first search: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
 	for (int totalVE = 100; totalVE <= 2000; totalVE += 50) {
@@ -65,14 +67,18 @@ int main() {
 			double milliseconds =  1000.0 * (end - start) / CLOCKS_PER_SEC;
 			std::cout << std::left << std::setw(7) << totalVE << std::right << std::setw(20) 
 				  << std::fixed << std::setprecision(6) << milliseconds << std::endl;
+			bfsTimingOutput << totalVE << ", " << vertices << ", " << edges << ", " << milliseconds << "\n";
 		}
-
-		// Clean up temporary graph text file created when graph was generated
 		remove(TEMP_GRAPH);
 	}
+	bfsTimingOutput.close();
 
 	/* ------------------------------------- Timing Metrics: Ford Fulkerson ----------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
+	std::ofstream ffTimingOutput;
+	ffTimingOutput.open("test/results/ff-timing-metrics.csv");
+	ffTimingOutput << "total vertices and edges, number of vertices, number of edges, milliseconds to complete\n";
+
 	std::cout << "Timing metrics for Ford Fulkerson: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
 	for (int totalVE = 100; totalVE <= 2000; totalVE += 50) {
@@ -91,20 +97,23 @@ int main() {
 			double milliseconds =  1000.0 * (end - start) / CLOCKS_PER_SEC;
 			std::cout << std::left << std::setw(7) << totalVE << std::right << std::setw(20) 
 				  << std::fixed << std::setprecision(6) << milliseconds << std::endl;
+			ffTimingOutput << totalVE << ", " << vertices << ", " << edges << ", " << milliseconds << "\n";
 		}
 		else
 		{
 			std::cerr << "Couldn't find. Result = " << result << "\n";
 		}
-
-		// Clean up temporary graph text file created when graph was generated
 		remove(TEMP_GRAPH);
 	}
+	ffTimingOutput.close();
 
 	/* --------------------------------- Timing Metrics: Image Segmentation ----------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
-	std::cout << "Timing metrics for Image Segmentation: \n";
+	std::ofstream isegTimingOutput;
+	isegTimingOutput.open("test/results/iseg-timing-metrics.csv");
+	isegTimingOutput << "total pixels, number of columns, number of rows, milliseconds to complete\n";
 
+	std::cout << "Timing metrics for Image Segmentation: \n";
 	std::string iSegTestCases[] = {
 					"test/pgm/2DGel-2.pgm",
 					"test/pgm/FEEP.pgm",
@@ -156,7 +165,6 @@ int main() {
 	int numIsegTestCases = 45;
 	for (int i = 0; i < numIsegTestCases; ++i)
 	{
-		std::cout << iSegTestCases[i] << "...\n";
 		std::ifstream input;
 		input.open(iSegTestCases[i].c_str());
 		assert (input);
@@ -178,15 +186,13 @@ int main() {
 		std::clock_t end   = std::clock();
 		input.close();
 
-		// Print out results of how long it took, and also the numColumns & numRows (X & Y). We could hard-code
-		// this in, like we did above - or we could ultimately end up writing this to a CSV file and then sorting
-		// it in excel. That way we don't have to sort it ourselves based on how large the PGM is. I have no
-		// preference here - what ever is easier.
 		double milliseconds =  1000.0 * (end - start) / CLOCKS_PER_SEC;
-		std::cout << iSegTestCases[i].substr(iSegTestCases[i].find("pgm/")+4) << "\n";
+		std::cout << std::left << std::setw(35) << iSegTestCases[i].substr(iSegTestCases[i].find("pgm/")+4);
 		std::cout << std::left << std::setw(7) << numColumns << std::right << std::setw(5) << numRows << std::right << std::setw(20) 
 			  << std::fixed << std::setprecision(6) << milliseconds << std::endl;
+		isegTimingOutput << numColumns * numRows << ", " << numColumns << ", " << numRows << ", " << milliseconds << "\n";
 	}
+	isegTimingOutput.close();
 
 	/* -------------------------------------------------------------------------------------------------------- */
 	/* --------------------------------------------- Unit Testing --------------------------------------------- */
