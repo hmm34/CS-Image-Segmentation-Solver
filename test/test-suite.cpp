@@ -13,6 +13,7 @@
 #include <iostream>
 #include <iomanip>
 #include <ctime>
+#include <rand>
 #include "../src/Graph.hpp"
 #include "../src/Tools.hpp"
 #include "../src/Pgm.hpp"
@@ -162,13 +163,11 @@ int main() {
 
 	/* ---------------------------------- Timing Metrics: Breadth First Search -------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
-	// Breadth First Search
 	std::cout << "Timing metrics for breadth first search: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
 	for (int totalVE = 100; totalVE <= 2000; totalVE += 100) {
-		int edges = 2 * totalVE / 3 + 3;
+		int edges = 1.5 * totalVE / 3;
 		int vertices = totalVE - edges;
-		//double seconds = timeBFS(edges, vertices);
 
 		generateRandomGraph(TEMP_GRAPH, edges, vertices);
 		Graph g;
@@ -190,7 +189,37 @@ int main() {
 
 	/* ------------------------------------- Timing Metrics: Ford Fulkerson ----------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
+	/*std::cout << "Timing metrics for Ford Fulkerson: " << std::endl;
+	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
+	for (int totalVE = 10; totalVE <= 200; totalVE += 30) {
+		int edges = 2 * totalVE / 3;
+		int vertices = totalVE - edges;
 
+		std::cerr << "Before generate random graph\n";
+		generateRandomGraph(TEMP_GRAPH, edges, vertices);
+		std::cerr << "After generate random graph\n";
+		Graph g;
+		Tools::graphFromFile(TEMP_GRAPH, g);
+		std::clock_t start = std::clock();
+		std::cerr << "Before fulkerson\n";
+		int result = Tools::fordFulkerson(g, 0, vertices - 1);
+		std::cerr << "After fulkerson\n";
+		std::clock_t end   = std::clock();
+
+		if (result > 0)
+		{
+			double milliseconds =  1000.0 * (end - start) / CLOCKS_PER_SEC;
+			std::cout << std::left << std::setw(7) << totalVE << std::right << std::setw(20) 
+				  << std::fixed << std::setprecision(6) << milliseconds << std::endl;
+		}
+		else
+		{
+			std::cerr << "Couldn't find\n";
+		}
+
+		// Clean up temporary graph text file created when graph was generated
+		remove(TEMP_GRAPH);
+	}*/
 
 	/* -------------------------------------------------------------------------------------------------------- */
 	/* --------------------------------------------- Unit Testing --------------------------------------------- */
