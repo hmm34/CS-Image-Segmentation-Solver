@@ -248,7 +248,6 @@ int main() {
 					"test/pgm/columns.pgm",
 					"test/pgm/dla.ascii.pgm",
 					"test/pgm/dragon.ascii.pgm",
-					"test/pgm/example",
 					"test/pgm/f14.ascii.pgm",
 					"test/pgm/feep.ascii.pgm",
 					"test/pgm/fractal_tree.ascii.pgm",
