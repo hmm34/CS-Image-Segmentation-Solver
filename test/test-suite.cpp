@@ -40,8 +40,10 @@ uint32_t xorshift() {
 void generateRandomGraph(const char* file, int e, int v) {
 	static const int MAX_NODE_WEIGHT = 9; // Arbitrarily chosen for simplicity
 
-	int matrix[v][v];
-	memset(&matrix, 0, sizeof(matrix));
+	int **matrix;
+	matrix = new int *[v]; 
+	for (int index = 0; index < v; index++)
+	    matrix[index] = new int[v];
 
 	// First off - gaurauntee that the graph will be connected s -> t given s = 0 and t = e. This will be the worst
 	// case scenario, when BFS has to travel through every node within the graph. With the pseudo-randomly generated
@@ -81,6 +83,12 @@ void generateRandomGraph(const char* file, int e, int v) {
 		temp << std::endl;
 	}
 	temp.close();
+
+	for( int index = 0 ; index < v ; index++ )
+	{
+	    delete [] matrix[index] ;   
+	}
+	delete [] matrix ;
 }
 
 //! @param e Number of edges to randomly generate
