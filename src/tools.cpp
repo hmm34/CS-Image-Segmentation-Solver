@@ -145,7 +145,7 @@ namespace Tools
 		std::pair< std::vector<int>, int>  bfsResult = breadthFirstSearch(g, source, sink);
 		
 		// Empty indicates no shortest path from S to T (source to Sink)
-		while (!bfsResult.first.empty())
+		while (!bfsResult.first.empty() && bfsResult.second != std::numeric_limits<int>::max())
 		{
 			// Examine each node in the path and adjust the edges of the residual graph
 			for (unsigned int i = 0; i < bfsResult.first.size() - 1; ++i)

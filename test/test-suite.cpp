@@ -194,14 +194,14 @@ int main() {
 	std::cout << "Timing metrics for Ford Fulkerson: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
 	for (int totalVE = 10; totalVE <= 200; totalVE += 30) {
-		int edges = 2 * totalVE / 3;
+		int edges = 5 * totalVE / 8;
 		int vertices = totalVE - edges;
 
 		generateRandomGraph(TEMP_GRAPH, edges, vertices);
 		Graph g;
 		Tools::graphFromFile(TEMP_GRAPH, g);
 		std::clock_t start = std::clock();
-		int result = Tools::fordFulkerson(g, 0, vertices - 1);
+		int result = Tools::fordFulkerson(g, 0, vertices - 3);
 		std::clock_t end   = std::clock();
 
 		if (result > 0)
@@ -212,7 +212,7 @@ int main() {
 		}
 		else
 		{
-			std::cerr << "Couldn't find\n";
+			std::cerr << "Couldn't find. Result = " << result << "\n";
 		}
 
 		// Clean up temporary graph text file created when graph was generated
