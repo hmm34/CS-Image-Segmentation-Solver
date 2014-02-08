@@ -14,6 +14,8 @@
 #include <iomanip>
 #include <ctime>
 #include <sstream>
+#include <stdlib.h>
+#include <stdio.h>
 #include "../src/Graph.hpp"
 #include "../src/Tools.hpp"
 #include "../src/Pgm.hpp"
@@ -63,14 +65,14 @@ void generateRandomGraph(const char* file, int e, int v) {
 		nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
 
 		// Brute force until edge meets requirements
-		bool alreadyExists = true, selfReferences = true, isSymmetric = true;		
+		bool alreadyExists = true, selfReferences = true;
 		do {
 			x = xorshift() % v;
 			y = xorshift() % v;
 			alreadyExists 	= (matrix[x][y] != 0);	// Don't over-write an existing randomly generated edge
-			selfReferences	= (x >= y);				// Prevent edges (u, u) and keep matrix upper triangular
-			isSymmetric  	= (matrix[y][x] != 0);	// Prevent (u, v) if (v, u) exists
-		} while (alreadyExists || selfReferences || isSymmetric); 
+			selfReferences	= (x == y);				// Prevent edges (u, u)
+		} while (alreadyExists || selfReferences); 
+
 		matrix[x][y] = nodeWeight;
 	}
 
@@ -189,21 +191,17 @@ int main() {
 
 	/* ------------------------------------- Timing Metrics: Ford Fulkerson ----------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
-	/*std::cout << "Timing metrics for Ford Fulkerson: " << std::endl;
+	std::cout << "Timing metrics for Ford Fulkerson: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
 	for (int totalVE = 10; totalVE <= 200; totalVE += 30) {
 		int edges = 2 * totalVE / 3;
 		int vertices = totalVE - edges;
 
-		std::cerr << "Before generate random graph\n";
 		generateRandomGraph(TEMP_GRAPH, edges, vertices);
-		std::cerr << "After generate random graph\n";
 		Graph g;
 		Tools::graphFromFile(TEMP_GRAPH, g);
 		std::clock_t start = std::clock();
-		std::cerr << "Before fulkerson\n";
 		int result = Tools::fordFulkerson(g, 0, vertices - 1);
-		std::cerr << "After fulkerson\n";
 		std::clock_t end   = std::clock();
 
 		if (result > 0)
@@ -219,7 +217,7 @@ int main() {
 
 		// Clean up temporary graph text file created when graph was generated
 		remove(TEMP_GRAPH);
-	}*/
+	}
 
 
 	/* --------------------------------- Timing Metrics: Image Segmentation ----------------------------------- */
