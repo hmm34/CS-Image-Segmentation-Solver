@@ -1,16 +1,16 @@
 /*
-	@copydoc graph.hpp
+	@copydoc Graph.hpp
 */
 
-#include "graph.hpp"
+#include "Graph.hpp"
 #include <iostream>
 #include <sstream>
 
-graph::graph() {}
+Graph::Graph() {}
 
-graph::~graph() {}
+Graph::~Graph() {}
 
-bool graph::addNode(int id)
+bool Graph::addNode(int id)
 {
 	sNodes.insert(id);
 
@@ -24,7 +24,7 @@ bool graph::addNode(int id)
 	return false;
 }
 
-bool graph::addNeighbor(int fromID, vertex neighborNode)
+bool Graph::addNeighbor(int fromID, vertex neighborNode)
 {
 	sNodes.insert(neighborNode.id);
 
@@ -37,12 +37,12 @@ bool graph::addNeighbor(int fromID, vertex neighborNode)
 	return false;
 }
 
-int graph::nodes()
+int Graph::nodes()
 {
 	return sNodes.size();
 }
 
-void graph::print()
+void Graph::print()
 {
 	std::map<int, std::map<int, vertex> >::iterator adjItr = adjList.begin();
 	std::map<int, std::map<int, vertex> >::iterator adjEnd = adjList.end();
