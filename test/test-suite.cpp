@@ -22,81 +22,11 @@
 
 const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 
-//! @brief Q&D implementation of Marsaglia's xorshift random number generator. Rand() is way too slow to obtain
-//!	 random numbers rapidly and in repetition. See http://en.wikipedia.org/wiki/Xorshift
-//! @retval Pseudo-random number that passes the diehard tests.
-uint32_t xorshift() {
-	static uint32_t x = 123456789;
-  	static uint32_t y = 362436069;
-  	static uint32_t z = 521288629;
-  	static uint32_t w = 88675123;
-  	uint32_t t;
- 
-  	t = x ^ (x << 11);
-  	x = y; y = z; z = w;
-  	return w = w ^ (w >> 19) ^ (t ^ (t >> 8));
-}
-
 //! @brief Generates a random graph with the given number of edges and vertices
 //! @param file Name of the file where the graph will be placed
 //! @param e Number of edges
 //! @param v Number of vertices
 void generateRandomGraph(const char* file, int e, int v) {
-	
-	/*
-	static const int MAX_NODE_WEIGHT = 9; // Arbitrarily chosen for simplicity
-
-	int **matrix;
-	matrix = new int *[v]; 
-	for (int index = 0; index < v; index++)
-	    matrix[index] = new int[v];
-
-	// First off - gaurauntee that the graph will be connected s -> t given s = 0 and t = e. This will be the worst
-	// case scenario, when BFS has to travel through every node within the graph. With the pseudo-randomly generated
-	// nodes below, and an e value greater than v, this shouldn't be an issue.
-	int previous = 0;
-	unsigned int nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
-	for (int i = 1; i < v ; ++i) {
-		matrix[previous][i] = nodeWeight;
-		previous = i;
-	}	
-
-	// Randomly allot remaining edges
-	for (int i = 0; i <= e - v; ++i) {
-		int x = 0, y = 0;
-		nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
-
-		// Brute force until edge meets requirements
-		bool alreadyExists = true, selfReferences = true;
-		do {
-			x = xorshift() % v;
-			y = xorshift() % v;
-			alreadyExists 	= (matrix[x][y] != 0);	// Don't over-write an existing randomly generated edge
-			selfReferences	= (x <= y);				// Prevent edges (u, u)
-		} while (alreadyExists || selfReferences); 
-
-		matrix[x][y] = nodeWeight;
-	}
-
-	// Write to file
-	std::ofstream temp;
-	temp.open(file);
-	for (int i = 0; i < v; ++i) {
-		for (int j = 0; j < v; ++j) {
-			if (matrix[i][j] > 0)
-				temp << j << " " << matrix[i][j] << " ";
-		}
-		temp << std::endl;
-	}
-	temp.close();
-
-	for( int index = 0 ; index < v ; index++ )
-	{
-	    delete [] matrix[index] ;   
-	}
-	delete [] matrix ; */
-
-	// Why is random graph generation so hard right now???? :'(
 	std::ofstream temp;
 	temp.open(file);
 	for (int vertexNo = 1; vertexNo <= v; ++vertexNo)
@@ -104,67 +34,6 @@ void generateRandomGraph(const char* file, int e, int v) {
 		temp << vertexNo << " 1 \n";
 	}
 	temp.close();
-}
-
-//! @param e Number of edges to randomly generate
-//! @param v Number of vertices to randomly generate
-//! @retval Time in seconds to complete the BFS
-//! @retval -1 if BFS is unsuccessful
-double timeBFS(int e, int v) {
-	// Read random Graph as an adjacency list and perform BFS
-	generateRandomGraph(TEMP_GRAPH, e, v);
-	Graph g;
-	Tools::graphFromFile(TEMP_GRAPH, g);
-	time_t start = time(0);
-	double seconds = -1;
-	std::pair< std::vector<int>, int> result = Tools::breadthFirstSearch(g, 0, v-1);
-
-	// BFS had better complete...
-	if ((result.first.size() > 0) && (result.second > 0))
-		seconds = difftime(start, time(0));
-
-	// Clean up temporary graph text file created when graph was generated
-	remove(TEMP_GRAPH);
-
-	return seconds;
-}
-
-//! @brief Runs a breadth first search given a particular test file
-//! @param file The input text file containing the Graph to perform the BFS on
-//! @param start Starting point of search
-//! @param end Ending point of search
-//! @param minCapacity The expected minimum capacity of the shortest path
-//! @param shortestPath The expected shortest path in vector format
-//! @retval true if successful, false if unsuccessful
-bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<int> shortestPath)
-{
-	// Create the graph from the given file
-	Graph g;
-	Tools::graphFromFile(file, g);
-
-	// Perform the search and obtain results
-	std::pair< std::vector<int>, int > searchResult = Tools::breadthFirstSearch(g, start, end);
-	std::vector<int> shortestPathResult 			= searchResult.first;	// Shortest path p along graph G
-	int minCapacityResult 							= searchResult.second;	// Minimum capacity along p
-
-	// Compare expected results to actual results
-	if (minCapacity != minCapacityResult) {
-		std::cerr << "Minimum capacity was incorrect. Expected " << minCapacity 
-				  << ", but returned " << minCapacityResult << std::endl;
-		return false;
-	}
-	if (shortestPath != shortestPathResult) {
-		std::cerr << "Shortest path was incorrect. Expected ";
-		for (unsigned int i = 0; i < shortestPath.size(); ++i)
-			std::cerr << shortestPath.at(i) << " ";
-		std::cerr << ", but returned ";
-		for (unsigned int i = 0; i < shortestPathResult.size(); ++i)
-			std::cerr << shortestPathResult.at(i) << " ";
-		std::cerr << std::endl;
-		return false;
-	}
-
-	return true;
 }
 
 
