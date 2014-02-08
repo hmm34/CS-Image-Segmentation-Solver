@@ -13,7 +13,7 @@
 #include <iostream>
 #include <iomanip>
 #include <ctime>
-#include <rand>
+#include <sstream>
 #include "../src/Graph.hpp"
 #include "../src/Tools.hpp"
 #include "../src/Pgm.hpp"
@@ -227,7 +227,7 @@ int main() {
 
 	std::cout << "Timing metrics for Image Segmentation: \n";
 
-	std::string isegTestCases[] = {
+	std::string iSegTestCases[] = {
 					"test/pgm/2DGel-2.pgm",
 					"test/pgm/FEEP.pgm",
 					"test/pgm/apollonian_gasket.ascii.pgm",
@@ -274,6 +274,34 @@ int main() {
 					"test/pgm/venus1.ascii.pgm",
 					"test/pgm/venus2.ascii.pgm",
 					"test/pgm/x31_f18.ascii.pgm"
+	};
+
+	int numIsegTestCases = 46;
+	for (int i = 0; i < numIsegTestCases; ++i)
+	{
+		std::cout << iSegTestCases[i] << "...\n";
+		std::ifstream input;
+		input.open(iSegTestCases[i].c_str());
+		assert (input);
+
+		int numColumns = 0, numRows = 0;
+		std::string line;		// Ignore first two lines.
+		getline(input, line);	// "P2"
+		getline(input, line);	// "#Created by Irfan View"
+
+		std::stringstream ss;
+		ss << input.rdbuf();
+		ss >> numColumns >> numRows;	// X, Y
+
+		//! @todo
+		// Use std::clock to start time
+		// call BFS on file
+		// Use std::clock to end time and get difference. See above.
+
+		// Print out results of how long it took, and also the numColumns & numRows (X & Y). We could hard-code
+		// this in, like we did above - or we could ultimately end up writing this to a CSV file and then sorting
+		// it in excel. That way we don't have to sort it ourselves based on how large the PGM is. I have no
+		// preference here - what ever is easier.
 	}
 
 
