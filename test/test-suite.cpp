@@ -169,16 +169,22 @@ int main() {
 		ss << input.rdbuf();
 		ss >> numColumns >> numRows;	// X, Y
 
-		//! @todo
-		// std::cerr << iSegTestCases[i].substr(iSegTestCases[i].find("pgm/")+4) << "\n";
-		// Use std::clock to start time
-		// call BFS on file
-		// Use std::clock to end time and get difference. See above.
+		std::string filename = iSegTestCases[i].substr(iSegTestCases[i].find("pgm/")+4);
+		filename.insert(0, "test/pgm/CUT_");
+
+		std::clock_t start = std::clock();
+		Tools::segmentImage(iSegTestCases[i].c_str(), filename.c_str());
+		std::clock_t end   = std::clock();
+		input.close();
 
 		// Print out results of how long it took, and also the numColumns & numRows (X & Y). We could hard-code
 		// this in, like we did above - or we could ultimately end up writing this to a CSV file and then sorting
 		// it in excel. That way we don't have to sort it ourselves based on how large the PGM is. I have no
 		// preference here - what ever is easier.
+		double milliseconds =  1000.0 * (end - start) / CLOCKS_PER_SEC;
+		std::cout << iSegTestCases[i].substr(iSegTestCases[i].find("pgm/")+4) << "\n";
+		std::cout << std::left << std::setw(7) << numColumns << std::right << std::setw(5) << numRows << std::right << std::setw(20) 
+			  << std::fixed << std::setprecision(6) << milliseconds << std::endl;
 	}
 
 	/* -------------------------------------------------------------------------------------------------------- */
