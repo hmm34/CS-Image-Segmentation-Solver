@@ -154,9 +154,6 @@ namespace Tools
 				int startNode = bfsResult.first[i]; // start node in pair
 				int endNode = bfsResult.first[i+1]; // end node in pair
 
-				std::cerr << "Node value: " << startNode << "\n";
-				std::cerr << "I value: " << i << "\n";
-
 				if (g.adjList[startNode][endNode].weight - bfsResult.second > 0)
 				{				
 					// perform the difference between the min capacity and the edge weight
