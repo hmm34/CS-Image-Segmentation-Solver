@@ -196,12 +196,12 @@ namespace Tools
 		p.calculateThreshold();
 		p.addPaths();
 
-		int sourceID = -1;
-		int sinkID   = p.xMax * p.yMax;
+		int sourceID = 0;
+		int sinkID   = p.xMax * p.yMax + 1;
 		p.addSuperNodes(sourceID, sinkID);
 
 		// Run Ford Fulkerson on the pgm graph
-		fordFulkerson(p.g, sourceID, sinkID);
+		//fordFulkerson(p.g, sourceID, sinkID);
 
 		// Write to output file
 		p.write(cut, sourceID);
