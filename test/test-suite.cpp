@@ -293,6 +293,7 @@ int main() {
 		ss >> numColumns >> numRows;	// X, Y
 
 		//! @todo
+		// std::cerr << iSegTestCases[i].substr(iSegTestCases[i].find("pgm/")+4) << "\n";
 		// Use std::clock to start time
 		// call BFS on file
 		// Use std::clock to end time and get difference. See above.
