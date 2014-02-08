@@ -1,16 +1,16 @@
 #pragma once
 
-#include "graph.hpp"
+#include "Graph.hpp"
 
 //! @brief Container for a PGM image
-class pgm
+class Pgm
 {
 public:
 	//! @brief Basic constructor
-	pgm();
+	Pgm();
 
 	//! @brief Basic destructor
-	~pgm();
+	~Pgm();
 
 	//! @brief Construct from a file
 	//! @param file Path to the PGM file
@@ -37,7 +37,7 @@ public:
 
 
 	int **matrix;	// Matrix constructed of all pixels
-	graph g;		// Graph of all nodes representing the pixels
+	Graph g;		// Graph of all nodes representing the pixels
 	int xMax;		// Maximum x value
 	int yMax;		// Maximum y value
 	int pixMax;		// Maximum pixel value
