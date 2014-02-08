@@ -18,8 +18,10 @@ namespace Tools
 	 	// Open the file containing the graph information
 		std::ifstream input;
 		input.open(file);
-		if (!input)
+		if (!input) {
 			std::cerr << "Could not open file: " << file << "\n";
+			exit(1);
+		}
 
 		std::string line;
 		int count = -1;
