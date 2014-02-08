@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <ctime>
 #include "../src/Graph.hpp"
 #include "../src/Tools.hpp"
 #include "../src/Pgm.hpp"
@@ -163,8 +164,8 @@ int main() {
 	/* -------------------------------------------------------------------------------------------------------- */
 	// Breadth First Search
 	std::cout << "Timing metrics for breadth first search: " << std::endl;
-	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(10) << "seconds" << std::endl;
-	for (int totalVE = 100; totalVE <= 4000; totalVE += 100) {
+	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
+	for (int totalVE = 100; totalVE <= 2000; totalVE += 100) {
 		int edges = 2 * totalVE / 3 + 3;
 		int vertices = totalVE - edges;
 		//double seconds = timeBFS(edges, vertices);
@@ -172,17 +173,19 @@ int main() {
 		generateRandomGraph(TEMP_GRAPH, edges, vertices);
 		Graph g;
 		Tools::graphFromFile(TEMP_GRAPH, g);
-		time_t start = time(0);
-		double seconds = -1;
+		std::clock_t start = std::clock();
 		std::pair< std::vector<int>, int> result = Tools::breadthFirstSearch(g, 0, vertices-1);
+		std::clock_t end   = std::clock();
 
 		if ((result.first.size() > 0) && (result.second > 0))
-			seconds = difftime(start, time(0));
+		{
+			double milliseconds =  1000.0 * (end - start) / CLOCKS_PER_SEC;
+			std::cout << std::left << std::setw(7) << totalVE << std::right << std::setw(20) 
+				  << std::fixed << std::setprecision(6) << milliseconds << std::endl;
+		}
 
 		// Clean up temporary graph text file created when graph was generated
 		remove(TEMP_GRAPH);
-
-		std::cout << std::left << std::setw(7) << totalVE << std::right << std::setw(10) << seconds << std::endl;
 	}
 
 	/* ------------------------------------- Timing Metrics: Ford Fulkerson ----------------------------------- */
