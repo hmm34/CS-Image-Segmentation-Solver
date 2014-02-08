@@ -165,7 +165,7 @@ int main() {
 
 	/* ---------------------------------- Timing Metrics: Breadth First Search -------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
-	/*std::cout << "Timing metrics for breadth first search: " << std::endl;
+	std::cout << "Timing metrics for breadth first search: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
 	for (int totalVE = 100; totalVE <= 2000; totalVE += 100) {
 		int edges = 1.5 * totalVE / 3;
@@ -188,7 +188,7 @@ int main() {
 		// Clean up temporary graph text file created when graph was generated
 		remove(TEMP_GRAPH);
 	}
-	*/
+
 	/* ------------------------------------- Timing Metrics: Ford Fulkerson ----------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
 	std::cout << "Timing metrics for Ford Fulkerson: " << std::endl;
@@ -200,10 +200,7 @@ int main() {
 		generateRandomGraph(TEMP_GRAPH, edges, vertices);
 		Graph g;
 		Tools::graphFromFile(TEMP_GRAPH, g);
-		std::cout << "starting graph\n";
-		g.print();
 		std::clock_t start = std::clock();
-		std::cout << "START FF from " << 0 << " to " << vertices - 3 << "\n";
 		int result = Tools::fordFulkerson(g, 0, vertices - 3);
 		std::clock_t end   = std::clock();
 
@@ -215,7 +212,7 @@ int main() {
 		}
 		else
 		{
-			std::cout << "Couldn't find. Result = " << result << "\n";
+			std::cerr << "Couldn't find. Result = " << result << "\n";
 		}
 
 		// Clean up temporary graph text file created when graph was generated
@@ -225,7 +222,6 @@ int main() {
 
 	/* --------------------------------- Timing Metrics: Image Segmentation ----------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
-	/*
 	std::cout << "Timing metrics for Image Segmentation: \n";
 
 	std::string iSegTestCases[] = {
@@ -304,7 +300,6 @@ int main() {
 		// it in excel. That way we don't have to sort it ourselves based on how large the PGM is. I have no
 		// preference here - what ever is easier.
 	}
-	*/
 
 	/* -------------------------------------------------------------------------------------------------------- */
 	/* --------------------------------------------- Unit Testing --------------------------------------------- */
@@ -312,7 +307,7 @@ int main() {
 
 	/* ------------------------------------ Unit Testing: Breadth First Search -------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
-	/*std::cout << "Breadth first search tests: " << std::endl;
+	std::cout << "Breadth first search tests: " << std::endl;
 
 	std::string bfsTestCases[] = {
 				"test/graphs/testcase1.txt",
@@ -377,10 +372,9 @@ int main() {
 
 		std::cerr << "\n";
 	}
-	*/
+
 	/* -------------------------------------- Unit Testing: Ford Fulkerson ------------------------------------ */
 	/* -------------------------------------------------------------------------------------------------------- */
-	/*
 	// Ford Fulkerson - Expected max flow for each of the testcase#[1-10].pgm
 	std::cerr << "Ford Fulkerson tests: " << std::endl;
 	std::pair<std::string, int> maxFlowTestCases[] = {	
@@ -409,7 +403,5 @@ int main() {
 		}
 		std::cerr << std::endl;
 	}
-
-	*/
 	return 0;
 }
