@@ -12,9 +12,9 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
-#include "../src/graph.hpp"
-#include "../src/tools.hpp"
-#include "../src/pgm.hpp"
+#include "../src/Graph.hpp"
+#include "../src/Tools.hpp"
+#include "../src/Pgm.hpp"
 
 const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 
@@ -88,13 +88,13 @@ void generateRandomGraph(const char* file, int e, int v) {
 //! @retval Time in seconds to complete the BFS
 //! @retval -1 if BFS is unsuccessful
 double timeBFS(int e, int v) {
-	// Read random graph as an adjacency list and perform BFS
+	// Read random Graph as an adjacency list and perform BFS
 	generateRandomGraph(TEMP_GRAPH, e, v);
-	graph g;
-	tools::graphFromFile(TEMP_GRAPH, g);
+	Graph g;
+	Tools::graphFromFile(TEMP_GRAPH, g);
 	time_t start = time(0);
 	double seconds = -1;
-	std::pair< std::vector<int>, int> result = tools::breadthFirstSearch(g, 0, v-1);
+	std::pair< std::vector<int>, int> result = Tools::breadthFirstSearch(g, 0, v-1);
 
 	// BFS had better complete...
 	if ((result.first.size() > 0) && (result.second > 0))
@@ -107,7 +107,7 @@ double timeBFS(int e, int v) {
 }
 
 //! @brief Runs a breadth first search given a particular test file
-//! @param file The input text file containing the graph to perform the BFS on
+//! @param file The input text file containing the Graph to perform the BFS on
 //! @param start Starting point of search
 //! @param end Ending point of search
 //! @param minCapacity The expected minimum capacity of the shortest path
@@ -116,11 +116,11 @@ double timeBFS(int e, int v) {
 bool testBFS(const char* file, int start, int end, int minCapacity, std::vector<int> shortestPath)
 {
 	// Create the graph from the given file
-	graph g;
-	tools::graphFromFile(file, g);
+	Graph g;
+	Tools::graphFromFile(file, g);
 
 	// Perform the search and obtain results
-	std::pair< std::vector<int>, int > searchResult = tools::breadthFirstSearch(g, start, end);
+	std::pair< std::vector<int>, int > searchResult = Tools::breadthFirstSearch(g, start, end);
 	std::vector<int> shortestPathResult 			= searchResult.first;	// Shortest path p along graph G
 	int minCapacityResult 							= searchResult.second;	// Minimum capacity along p
 
@@ -194,12 +194,12 @@ int main() {
 	for (int i = 0; i < 1; ++i)
 	{
 		std::string nameOfFile = bfsTestCases[i];
-		graph bfsTestCase;
-		tools::graphFromFile(nameOfFile.c_str(), bfsTestCase);
+		Graph bfsTestCase;
+		Tools::graphFromFile(nameOfFile.c_str(), bfsTestCase);
 
 		int start = 0;
 		int end   = bfsTestCase.sNodes.size() - 1;
-		std::pair< std::vector<int>, int > searchResult = tools::breadthFirstSearch(bfsTestCase, start, end);
+		std::pair< std::vector<int>, int > searchResult = Tools::breadthFirstSearch(bfsTestCase, start, end);
 
 
 	}
@@ -230,9 +230,9 @@ int main() {
 
 	int numTestCases = 10;
 	for (int i = 0; i < numTestCases; ++i) {
-		graph g;
-		tools::graphFromFile( maxFlowTestCases[i].first.c_str() , g );
-		int resultMaxFlow = tools::fordFulkerson( g, 0, g.sNodes.size() - 1 );
+		Graph g;
+		Tools::graphFromFile( maxFlowTestCases[i].first.c_str() , g );
+		int resultMaxFlow = Tools::fordFulkerson( g, 0, g.sNodes.size() - 1 );
 
 		std::cerr << maxFlowTestCases[i].first << "... ";
 		if (resultMaxFlow != maxFlowTestCases[i].second )
