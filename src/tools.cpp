@@ -189,7 +189,7 @@ namespace Tools
 
 	void segmentImage(const char* file, const char* cut)
 	{
-		pgm p;
+		Pgm p;
 
 		if (!p.fromFile(file))
 			return;
