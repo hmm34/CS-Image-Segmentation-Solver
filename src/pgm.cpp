@@ -69,7 +69,7 @@ void Pgm::addPaths()
 	{
 		for (int yPos = 0; yPos < yMax; ++yPos)
 		{
-			int currentID = (xMax * yPos) + xPos;
+			int currentID = (xMax * yPos) + xPos + 1;
 			g.addNode(currentID);
 
 			if (xPos > 0)		// [xPos - 1][yPos] - Left
@@ -78,7 +78,7 @@ void Pgm::addPaths()
 				if (weight >= threshold)
 				{
 					vertex lNeighbor; 
-					lNeighbor.id 	 = (xMax * yPos) + (xPos - 1);
+					lNeighbor.id 	 = (xMax * yPos) + (xPos - 1) + 1;
 					lNeighbor.weight = weight;
 					g.addNeighbor(currentID, lNeighbor);
 				}
@@ -89,7 +89,7 @@ void Pgm::addPaths()
 				if (weight >= threshold)
 				{
 					vertex rNeighbor;
-					rNeighbor.id 	 = (xMax * yPos) + (xPos + 1);
+					rNeighbor.id 	 = (xMax * yPos) + (xPos + 1) + 1;
 					rNeighbor.weight = weight;
 					g.addNeighbor(currentID, rNeighbor);
 				}
@@ -100,7 +100,7 @@ void Pgm::addPaths()
 				if (weight >= threshold)
 				{
 					vertex tNeighbor; 	
-					tNeighbor.id 	 = (xMax * (yPos - 1) + xPos);
+					tNeighbor.id 	 = (xMax * (yPos - 1) + xPos) + 1;
 					tNeighbor.weight = weight;
 					g.addNeighbor(currentID, tNeighbor);
 				}
@@ -111,7 +111,7 @@ void Pgm::addPaths()
 				if (weight >= threshold)
 				{
 					vertex bNeighbor;
-					bNeighbor.id 	 = (xMax * (yPos + 1) + xPos);
+					bNeighbor.id 	 = (xMax * (yPos + 1) + xPos) + 1;
 					bNeighbor.weight = weight;
 					g.addNeighbor(currentID, bNeighbor);
 				}
@@ -131,7 +131,7 @@ void Pgm::addSuperNodes(int sourceID, int sinkID)
 			if (std::abs( pixMax - matrix[xPos][yPos]) >= threshold)
 			{	
 				vertex fromS;
-				fromS.id = (xMax * yPos) + xPos;
+				fromS.id = (xMax * yPos) + xPos + 1;
 				fromS.weight = std::abs( pixMax - matrix[xPos][yPos]);
 				g.addNeighbor(sourceID, fromS);
 			}
@@ -141,7 +141,7 @@ void Pgm::addSuperNodes(int sourceID, int sinkID)
 				vertex toT;
 				toT.id = sinkID;
 				toT.weight = matrix[xPos][yPos];
-				int fromID = (xMax * yPos) + xPos;
+				int fromID = (xMax * yPos) + xPos + 1;
 				g.addNeighbor(fromID, toT);
 			}
 		}
@@ -168,7 +168,7 @@ bool Pgm::write(const char* file, int sourceID)
 	{
 		for (int xPos = 0; xPos < xMax; xPos++)
 		{
-			int nodeID = (xMax * yPos) + xPos;
+			int nodeID = (xMax * yPos) + xPos + 1;
 			if (g.adjList[sourceID].find(nodeID) == g.adjList[sourceID].end())
 				output << pixMax << " ";
 			else
