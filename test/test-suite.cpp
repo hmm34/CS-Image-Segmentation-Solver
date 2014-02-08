@@ -26,7 +26,7 @@ const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 //! @param file Name of the file where the graph will be placed
 //! @param e Number of edges
 //! @param v Number of vertices
-void generateRandomGraph(const char* file, int e, int v) {
+void generateGraph(const char* file, int e, int v) {
 	std::ofstream temp;
 	temp.open(file);
 	for (int vertexNo = 1; vertexNo <= v; ++vertexNo)
@@ -45,13 +45,15 @@ int main() {
 
 	/* ---------------------------------- Timing Metrics: Breadth First Search -------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
+	std::ofstream bfsTimingOutput;
+	bfsTimingOutput.open("test/results/bfs-timing-metrics.csv");
 	std::cout << "Timing metrics for breadth first search: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
 	for (int totalVE = 100; totalVE <= 2000; totalVE += 50) {
-		int edges = 1.5 * totalVE / 3;
-		int vertices = totalVE - edges;
+		int vertices = (totalVE / 2) + 1;
+		int edges = vertices - 1;
 
-		generateRandomGraph(TEMP_GRAPH, edges, vertices);
+		generateGraph(TEMP_GRAPH, edges, vertices);
 		Graph g;
 		Tools::graphFromFile(TEMP_GRAPH, g);
 		std::clock_t start = std::clock();
@@ -74,10 +76,10 @@ int main() {
 	std::cout << "Timing metrics for Ford Fulkerson: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
 	for (int totalVE = 100; totalVE <= 2000; totalVE += 50) {
-		int edges = 5 * totalVE / 8;
-		int vertices = totalVE - edges;
+		int vertices = (totalVE / 2) + 1;
+		int edges = vertices - 1;
 
-		generateRandomGraph(TEMP_GRAPH, edges, vertices);
+		generateGraph(TEMP_GRAPH, edges, vertices);
 		Graph g;
 		Tools::graphFromFile(TEMP_GRAPH, g);
 		std::clock_t start = std::clock();
