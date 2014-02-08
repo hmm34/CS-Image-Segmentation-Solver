@@ -49,17 +49,17 @@ void Graph::print()
 	while (adjItr != adjEnd)
 	{
 		// Current vertex
-		std::cerr << (*adjItr).first;
+		std::cout << (*adjItr).first;
 		std::map<int, vertex>::iterator neighborsItr = (*adjItr).second.begin();
 		std::map<int, vertex>::iterator neighborsEnd = (*adjItr).second.end();
 
 		// Neighboring vertices
 		while (neighborsItr != neighborsEnd)
 		{	
-			std::cerr << " --(" << (*neighborsItr).second.weight << ")--> " << (*neighborsItr).second.id;
+			std::cout << " --(" << (*neighborsItr).second.weight << ")--> " << (*neighborsItr).second.id;
 			++neighborsItr;
 		}
-		std::cerr << std::endl;
+		std::cout << std::endl;
 		++adjItr;
 	}
 }

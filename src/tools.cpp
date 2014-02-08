@@ -179,7 +179,9 @@ namespace Tools
 			maxFlow = maxFlow + bfsResult.second;
 
 			// Perform next BFS operation to find next shortest path in the residual graph
-			bfsResult = breadthFirstSearch(g, source, sink);
+			bfsResult  = breadthFirstSearch(g, source, sink);
+			std::cout << "FF RESID\n";
+			g.print();
 		}
 		return maxFlow;
 	}
