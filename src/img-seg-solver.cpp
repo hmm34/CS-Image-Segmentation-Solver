@@ -8,13 +8,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <iostream>
-#include "tools.hpp"
-#include "graph.hpp"
-#include "pgm.hpp"
+#include "Tools.hpp"
+#include "Graph.hpp"
+#include "Pgm.hpp"
 
 int main(int argc, char* argv[])
 {
-	graph inputGraph;
+	Graph inputGraph;
 
 	if (argc < 2)
 	{
@@ -49,9 +49,9 @@ int main(int argc, char* argv[])
 			int endPoint = atoi(argv[optind + optOffset]);
 
 			// Generate graph from file
-			tools::graphFromFile(argv[optind], inputGraph);
+			Tools::graphFromFile(argv[optind], inputGraph);
 			
-			std::pair< std::vector<int>, int > searchResult = tools::breadthFirstSearch(inputGraph, startVertex, endPoint);
+			std::pair< std::vector<int>, int > searchResult = Tools::breadthFirstSearch(inputGraph, startVertex, endPoint);
 			std::vector<int> shortestPath = searchResult.first;	// Shortest path p along graph G
 			int minCapacity = searchResult.second;				// Minimum capacity along p
 			unsigned int numEdges = shortestPath.size() - 1; 	// Edges = Nodes - 1
@@ -77,11 +77,11 @@ int main(int argc, char* argv[])
 			}
 
 			// This will go to Ford Fulkerson Function
-			tools::graphFromFile(argv[optind], inputGraph);
+			Tools::graphFromFile(argv[optind], inputGraph);
 
 			int source = 0;
 			int sink   = inputGraph.sNodes.size() - 1;
-			int maxFlow = tools::fordFulkerson(inputGraph, source, sink);
+			int maxFlow = Tools::fordFulkerson(inputGraph, source, sink);
 			std::cerr << "Max flow is: " << maxFlow << "\n";
 		}
 
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
 				std::cerr << "Usage: -i [input file] [ouput file]\n";
 				return 1;
 			}
-			tools::segmentImage(argv[optind], argv[optind+1]);
+			Tools::segmentImage(argv[optind], argv[optind+1]);
 		}
 	}		
 	return 0;
