@@ -162,6 +162,49 @@ int main() {
 	// Breadth First Search
 	std::cout << "Breadth first search tests: " << std::endl;
 
+	std::string bfsTestCases[] = {
+				"test/graphs/testcase1.txt",
+				"test/graphs/testcase2.txt",
+				"test/graphs/testcase3.txt",
+				"test/graphs/testcase4.txt",
+				"test/graphs/testcase5.txt",
+				"test/graphs/testcase6.txt",
+				"test/graphs/testcase7.txt",
+				"test/graphs/testcase8.txt",
+				"test/graphs/testcase9.txt",
+				"test/graphs/testcase9.txt"  };
+
+	int expectedSP1[] = {0, 1, 5};	// or {0, 2 5}
+	int expectedMinCapacity1 = 5;	// or 3
+	std::vector<int> expectedShortestPath1(expectedSP1, expectedSP1 + sizeof(expectedSP1) / sizeof(int));
+
+	int expectedSP2[] = {0, 1, 3, 5};	// or {0, 2, 4, 5}
+	int expectedMinCapacity2 = 12;		// or 4
+	std::vector<int> expectedShortestPath2(expectedSP2, expectedSP2 + sizeof(expectedSP2) / sizeof(int));
+
+	std::vector< std::vector<int> > expectedShortestPaths;
+	expectedShortestPaths.push_back(expectedShortestPath1);
+	expectedShortestPaths.push_back(expectedShortestPath2);
+
+	int expectedMinCapacities[] = {
+						5,		// or 3
+						12 		// or 4
+					};
+
+	for (int i = 0; i < 1; ++i)
+	{
+		std::string nameOfFile = bfsTestCases[i];
+		graph bfsTestCase;
+		tools::graphFromFile(nameOfFile.c_str(), bfsTestCase);
+
+		int start = 0;
+		int end   = bfsTestCase.sNodes.size() - 1;
+		std::pair< std::vector<int>, int > searchResult = tools::breadthFirstSearch(bfsTestCase, start, end);
+
+
+	}
+
+
 	/*
 	int expectedSP[] = {0, 3};
 	std::vector<int> expectedShortestPath(expectedSP, expectedSP + sizeof(expectedSP) / sizeof(int));
@@ -171,8 +214,9 @@ int main() {
 	assert(result);
 	*/
 
-	// Expected max flow for each of the testcase#[1-10].pgm
-	std::pair<std::string, int> testcases[] = {	
+	// Ford Fulkerson - Expected max flow for each of the testcase#[1-10].pgm
+	std::cerr << "Ford Fulkerson tests: " << std::endl;
+	std::pair<std::string, int> maxFlowTestCases[] = {	
 				std::make_pair<std::string, int>( "test/graphs/testcase1.txt", 14 ),
 				std::make_pair<std::string, int>( "test/graphs/testcase2.txt", 23 ),
 				std::make_pair<std::string, int>( "test/graphs/testcase3.txt", 29 ),
@@ -187,13 +231,13 @@ int main() {
 	int numTestCases = 10;
 	for (int i = 0; i < numTestCases; ++i) {
 		graph g;
-		tools::graphFromFile( testcases[i].first.c_str() , g );
+		tools::graphFromFile( maxFlowTestCases[i].first.c_str() , g );
 		int resultMaxFlow = tools::fordFulkerson( g, 0, g.sNodes.size() - 1 );
 
-		std::cerr << testcases[i].first << "... ";
-		if (resultMaxFlow != testcases[i].second )
+		std::cerr << maxFlowTestCases[i].first << "... ";
+		if (resultMaxFlow != maxFlowTestCases[i].second )
 		{
-			std::cerr << "Expected: " << testcases[i].second << ", Received: " << resultMaxFlow << "\n";
+			std::cerr << "Expected: " << maxFlowTestCases[i].second << ", Received: " << resultMaxFlow << "\n";
 			assert( false );
 		}
 		std::cerr << std::endl;
