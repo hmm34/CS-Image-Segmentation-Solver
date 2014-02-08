@@ -1,5 +1,5 @@
 /*
-	@brief Graph object G = (V,E) to contain vertices, weighted edges, and perform operations on those objects.
+	@brief graph object G = (V,E) to contain vertices, weighted edges, and perform operations on those objects.
 	@author Drew Guarnera, Bharath Bogadamidi, Heather Michaud
 	@version 0.9
 	@copyright Copyright 2014 Guarnera, Bogadamidi, Michaud. All rights reserved.
@@ -18,15 +18,15 @@ struct vertex
 };
 
 //! @brief Graph object to contain vertices and weighted edges in adjacency list format.
-class graph
+class Graph
 {
 
 	public:
 		//! @brief Basic constructor
-		graph();
+		Graph();
 
 		//! @brief Basic destructor
-		~graph();
+		~Graph();
 
 		//! @brief Adds a vertex (node) to the adjacency list
 		//! @param id The ID of the vertex (node)
