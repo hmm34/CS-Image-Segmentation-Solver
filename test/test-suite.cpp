@@ -175,11 +175,9 @@ int main() {
 				"test/graphs/testcase9.txt"  };
 
 	int expectedSP1[] = {0, 1, 5};	// or {0, 2 5}
-	int expectedMinCapacity1 = 5;	// or 3
 	std::vector<int> expectedShortestPath1(expectedSP1, expectedSP1 + sizeof(expectedSP1) / sizeof(int));
 
 	int expectedSP2[] = {0, 1, 3, 5};	// or {0, 2, 4, 5}
-	int expectedMinCapacity2 = 12;		// or 4
 	std::vector<int> expectedShortestPath2(expectedSP2, expectedSP2 + sizeof(expectedSP2) / sizeof(int));
 
 	std::vector< std::vector<int> > expectedShortestPaths;
@@ -194,6 +192,7 @@ int main() {
 	for (int i = 0; i < 1; ++i)
 	{
 		std::string nameOfFile = bfsTestCases[i];
+		std::cerr << nameOfFile << "...";
 		Graph bfsTestCase;
 		Tools::graphFromFile(nameOfFile.c_str(), bfsTestCase);
 
@@ -201,7 +200,30 @@ int main() {
 		int end   = bfsTestCase.sNodes.size() - 1;
 		std::pair< std::vector<int>, int > searchResult = Tools::breadthFirstSearch(bfsTestCase, start, end);
 
+		std::vector<int> expectedShortestPath = expectedShortestPaths.at(i);
+		int expectedMinCapacity = expectedMinCapacities[i];
 
+		if (searchResult.first != expectedShortestPath)
+		{
+			std::cerr << "Expected shortest path: ";
+			for (int j = 0; j < expectedShortestPath.size(); ++j)
+				std::cerr << expectedShortestPath.at(i) << ", ";
+
+			std::cerr << "Received shortest path: ";
+			for (int j = 0; j < searchResult.first.size(); ++j)
+				std::cerr << searchResult.first.at(j) << ", ";
+
+			assert(false);
+		}
+
+		if (searchResult.second != expectedMinCapacity)
+		{
+			std::cerr << "Expected minimum capacity: " << expectedMinCapacity << ", ";
+			std::cerr << "Received minimum capacity: " << searchResult.second << "\n";
+			assert (false);
+		}
+
+		std::cerr << "\n";
 	}
 
 
