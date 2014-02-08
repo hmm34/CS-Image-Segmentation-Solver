@@ -99,7 +99,6 @@ int main() {
 		remove(TEMP_GRAPH);
 	}
 
-
 	/* --------------------------------- Timing Metrics: Image Segmentation ----------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------- */
 	std::cout << "Timing metrics for Image Segmentation: \n";
@@ -206,23 +205,71 @@ int main() {
 				"test/graphs/testcase7.txt",
 				"test/graphs/testcase8.txt",
 				"test/graphs/testcase9.txt",
-				"test/graphs/testcase9.txt",
 				"test/graphs/testcase10.txt"  };
 
 	int expectedSP1[] = {0, 1, 5};	// or {0, 2 5}
+	int minCapacity1  = 5;			// or 3
 	std::vector<int> expectedShortestPath1(expectedSP1, expectedSP1 + sizeof(expectedSP1) / sizeof(int));
 
 	int expectedSP2[] = {0, 1, 3, 5};	// or {0, 2, 4, 5}
+	int minCapacity2  = 12;				// or 4
 	std::vector<int> expectedShortestPath2(expectedSP2, expectedSP2 + sizeof(expectedSP2) / sizeof(int));
+
+	int expectedSP3[] = {0, 1, 4, 7}; 	// or {0, 1, 6, 7},	{0, 2, 5, 7},	{0, 3, 6, 7}
+	int minCapacity3  = 9;				// or 10,			5, 				10
+	std::vector<int> expectedShortestPath3(expectedSP3, expectedSP3 + sizeof(expectedSP3) / sizeof(int));
+
+	int expectedSP4[] = {0, 1, 3, 5};	// or {0, 2, 4, 5},	{0, 2, 3, 5}
+	int minCapacity4  = 4;				// or 4, 			10
+	std::vector<int> expectedShortestPath4(expectedSP4, expectedSP4 + sizeof(expectedSP4) / sizeof(int));
+	
+	int expectedSP5[] = {0, 1, 3};	// or {0, 2, 3}
+	int minCapacity5  = 100;			// or 100
+	std::vector<int> expectedShortestPath5(expectedSP5, expectedSP5 + sizeof(expectedSP5) / sizeof(int));
+
+	int expectedSP6[] = {0, 1, 3, 5};	// or {0, 2, 4, 5}
+	int minCapacity6  = 12;				// or 4
+	std::vector<int> expectedShortestPath6(expectedSP6, expectedSP6 + sizeof(expectedSP6) / sizeof(int));
+
+	int expectedSP7[] = {0, 1, 3, 5, 7};	// or {0, 2, 3, 5, 7}, 	{0, 2, 4, 6, 7}
+	int minCapacity7  = 20;					// or 10, 				10
+	std::vector<int> expectedShortestPath7(expectedSP7, expectedSP7 + sizeof(expectedSP7) / sizeof(int));
+
+	int expectedSP8[] = {0, 1, 3, 5};	// or {0, 1, 4, 5}, 	{0, 2, 4, 5}
+	int minCapacity8  = 4;				// or 8,				9
+	std::vector<int> expectedShortestPath8(expectedSP8, expectedSP8 + sizeof(expectedSP8) / sizeof(int));
+
+	int expectedSP9[] = {0,1,6,9,11};	// or {0,2,6,9,11}, {0,3,6,9,11}, {0,3,7,9,11}, {0,3,8,10,11}, {0,4,8,10,11}, {0,5,8,10,11}
+	int minCapacity9  = 5;				// or 20, 		    10, 		  10, 	   	     10  			20 			  10
+	std::vector<int> expectedShortestPath9(expectedSP9, expectedSP9 + sizeof(expectedSP9) / sizeof(int));
+
+	int expectedSP10[] = {0,1,6,10,13}; // or {0,2,6,10,13}, {0,2,7,10,13}, {0,3,7,10,13}
+	int minCapacity10  = 3;
+	std::vector<int> expectedShortestPath10(expectedSP10, expectedSP10 + sizeof(expectedSP10) / sizeof(int));
 
 	std::vector< std::vector<int> > expectedShortestPaths;
 	expectedShortestPaths.push_back(expectedShortestPath1);
 	expectedShortestPaths.push_back(expectedShortestPath2);
+	expectedShortestPaths.push_back(expectedShortestPath3);
+	expectedShortestPaths.push_back(expectedShortestPath4);
+	expectedShortestPaths.push_back(expectedShortestPath5);
+	expectedShortestPaths.push_back(expectedShortestPath6);
+	expectedShortestPaths.push_back(expectedShortestPath7);
+	expectedShortestPaths.push_back(expectedShortestPath8);
+	expectedShortestPaths.push_back(expectedShortestPath9);
+	expectedShortestPaths.push_back(expectedShortestPath10);
 
 	int expectedMinCapacities[] = {
-						5,		// or 3
-						12 		// or 4
-					};
+						minCapacity1,
+						minCapacity2,
+						minCapacity3,
+						minCapacity4,
+						minCapacity5,
+						minCapacity6,
+						minCapacity7,
+						minCapacity8,
+						minCapacity9,
+						minCapacity10 };
 
 	for (int i = 0; i < numBfsTestCases; ++i)
 	{
