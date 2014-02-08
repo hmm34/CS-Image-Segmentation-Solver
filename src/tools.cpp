@@ -55,7 +55,7 @@ namespace Tools
 
 		// Verify that the start node and end node are within acceptable ranges
 		int numNodes = g.nodes();
-		if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
+		if ( (start > numNodes) || (end > numNodes) )
 			return std::make_pair(shortestPath, minCapacity);
 
 		// Start and end node are the same.
