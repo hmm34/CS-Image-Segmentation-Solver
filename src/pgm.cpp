@@ -75,7 +75,7 @@ void Pgm::addPaths()
 			if (xPos > 0)		// [xPos - 1][yPos] - Left
 			{
 				int weight = std::abs( pixMax - std::abs( matrix[xPos - 1][yPos] - matrix[xPos][yPos]) );
-	//			if (weight >= threshold)
+				if (weight >= threshold)
 				{
 					vertex lNeighbor; 
 					lNeighbor.id 	 = (xMax * yPos) + (xPos - 1);
@@ -86,7 +86,7 @@ void Pgm::addPaths()
 			if (xPos < (xMax - 1))	// [xPos + 1][yPos] - Right
 			{
 				int weight = std::abs( pixMax - std::abs( matrix[xPos + 1][yPos] - matrix[xPos][yPos]) );
-	//			if (weight >= threshold)
+				if (weight >= threshold)
 				{
 					vertex rNeighbor;
 					rNeighbor.id 	 = (xMax * yPos) + (xPos + 1);
@@ -97,7 +97,7 @@ void Pgm::addPaths()
 			if (yPos > 0)		// [xPos][yPos - 1] - Top
 			{
 				int weight = std::abs( pixMax - std::abs( matrix[xPos][yPos - 1] - matrix[xPos][yPos]) );
-	//			if (weight >= threshold)
+				if (weight >= threshold)
 				{
 					vertex tNeighbor; 	
 					tNeighbor.id 	 = (xMax * (yPos - 1) + xPos);
@@ -108,7 +108,7 @@ void Pgm::addPaths()
 			if (yPos < (yMax - 1))	// [xPos][yPos + 1] - Bottom
 			{
 				int weight = std::abs( pixMax - std::abs( matrix[xPos][yPos + 1] - matrix[xPos][yPos]) );
-	//			if (weight >= threshold)
+				if (weight >= threshold)
 				{
 					vertex bNeighbor;
 					bNeighbor.id 	 = (xMax * (yPos + 1) + xPos);
@@ -128,7 +128,7 @@ void Pgm::addSuperNodes(int sourceID, int sinkID)
 	{
 		for (int yPos = 0; yPos < yMax; ++yPos)
 		{
-	//		if (std::abs( pixMax - matrix[xPos][yPos]) >= threshold)
+			if (std::abs( pixMax - matrix[xPos][yPos]) >= threshold)
 			{	
 				vertex fromS;
 				fromS.id = (xMax * yPos) + xPos;
@@ -136,7 +136,7 @@ void Pgm::addSuperNodes(int sourceID, int sinkID)
 				g.addNeighbor(sourceID, fromS);
 			}
 
-	//		if (matrix[xPos][yPos] >= threshold)
+			if (matrix[xPos][yPos] >= threshold)
 			{
 				vertex toT;
 				toT.id = sinkID;
