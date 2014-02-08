@@ -22,7 +22,7 @@
 
 const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 
-//! @brief Generates a random graph with the given number of edges and vertices
+//! @brief Generates a graph with the given number of edges and vertices
 //! @param file Name of the file where the graph will be placed
 //! @param e Number of edges
 //! @param v Number of vertices
@@ -36,15 +36,9 @@ void generateGraph(const char* file, int e, int v) {
 	temp.close();
 }
 
-
-int main() {
-	/* -------------------------------------------------------------------------------------------------------- */
-	/* --------------------------------------------- Timing Metrics ------------------------------------------- */
-	/* -------------------------------------------------------------------------------------------------------- */
-
-
-	/* ---------------------------------- Timing Metrics: Breadth First Search -------------------------------- */
-	/* -------------------------------------------------------------------------------------------------------- */
+//! @brief Executes the timing metrics for breadth first search algorithm
+void runBfsTimingMetrics()
+{
 	std::ofstream bfsTimingOutput;
 	bfsTimingOutput.open("test/results/bfs-timing-metrics.csv");
 	bfsTimingOutput << "total vertices and edges, number of vertices, number of edges, millseconds to complete\n";
@@ -72,9 +66,11 @@ int main() {
 		remove(TEMP_GRAPH);
 	}
 	bfsTimingOutput.close();
+}
 
-	/* ------------------------------------- Timing Metrics: Ford Fulkerson ----------------------------------- */
-	/* -------------------------------------------------------------------------------------------------------- */
+//! @brief Executes the timing metrics for ford fulkerson algorithm
+void runFfTimingMetrics()
+{
 	std::ofstream ffTimingOutput;
 	ffTimingOutput.open("test/results/ff-timing-metrics.csv");
 	ffTimingOutput << "total vertices and edges, number of vertices, number of edges, milliseconds to complete\n";
@@ -106,9 +102,11 @@ int main() {
 		remove(TEMP_GRAPH);
 	}
 	ffTimingOutput.close();
+}
 
-	/* --------------------------------- Timing Metrics: Image Segmentation ----------------------------------- */
-	/* -------------------------------------------------------------------------------------------------------- */
+//! @brief Executes the timing metrics for the image segmentation algorithm
+void runIsegTimingMetrics()
+{
 	std::ofstream isegTimingOutput;
 	isegTimingOutput.open("test/results/iseg-timing-metrics.csv");
 	isegTimingOutput << "total pixels, number of columns, number of rows, milliseconds to complete\n";
@@ -193,13 +191,11 @@ int main() {
 		isegTimingOutput << numColumns * numRows << ", " << numColumns << ", " << numRows << ", " << milliseconds << "\n";
 	}
 	isegTimingOutput.close();
+}
 
-	/* -------------------------------------------------------------------------------------------------------- */
-	/* --------------------------------------------- Unit Testing --------------------------------------------- */
-	/* -------------------------------------------------------------------------------------------------------- */
-
-	/* ------------------------------------ Unit Testing: Breadth First Search -------------------------------- */
-	/* -------------------------------------------------------------------------------------------------------- */
+//! @brief Executes the unit tests for breadth first search algorithm
+void runBfsUnitTests()
+{
 	std::cout << "Breadth first search tests: " << std::endl;
 
 	int numBfsTestCases = 10;
@@ -315,10 +311,11 @@ int main() {
 
 		std::cerr << "\n";
 	}
+}
 
-	/* -------------------------------------- Unit Testing: Ford Fulkerson ------------------------------------ */
-	/* -------------------------------------------------------------------------------------------------------- */
-	// Ford Fulkerson - Expected max flow for each of the testcase#[1-10].pgm
+//! @brief Executes the unit tests for ford fulkerson algorithm
+void runFfUnitTests()
+{
 	std::cerr << "Ford Fulkerson tests: " << std::endl;
 	std::pair<std::string, int> maxFlowTestCases[] = {	
 				std::make_pair<std::string, int>( "test/graphs/testcase1.txt", 14 ),
@@ -346,5 +343,16 @@ int main() {
 		}
 		std::cerr << std::endl;
 	}
+}
+
+int main() {
+
+	runBfsTimingMetrics();
+	runFfTimingMetrics();
+	runIsegTimingMetrics();
+
+	runBfsUnitTests();
+	runFfUnitTests();
+
 	return 0;
 }
