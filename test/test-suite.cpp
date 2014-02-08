@@ -159,7 +159,7 @@ int main() {
 	}
 
 	/* --------------------------------------------- Unit Testing --------------------------------------------- */
-	// Breadth First Search
+	/* --------------------------------------------- Unit Testing: Breadth First Search ----------------------- */
 	std::cout << "Breadth first search tests: " << std::endl;
 
 	std::string bfsTestCases[] = {
@@ -226,16 +226,7 @@ int main() {
 		std::cerr << "\n";
 	}
 
-
-	/*
-	int expectedSP[] = {0, 3};
-	std::vector<int> expectedShortestPath(expectedSP, expectedSP + sizeof(expectedSP) / sizeof(int));
-	bool result = testBFS("test/graphs/graph.txt", 0, 3, 8, expectedShortestPath);
-	if (result)
-		std::cerr << "graph.txt - Pass" << std::endl;
-	assert(result);
-	*/
-
+	/* --------------------------------------------- Unit Testing: Ford Fulkerson ----------------------------- */
 	// Ford Fulkerson - Expected max flow for each of the testcase#[1-10].pgm
 	std::cerr << "Ford Fulkerson tests: " << std::endl;
 	std::pair<std::string, int> maxFlowTestCases[] = {	
