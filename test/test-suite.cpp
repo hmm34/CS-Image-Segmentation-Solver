@@ -42,6 +42,8 @@ uint32_t xorshift() {
 //! @param e Number of edges
 //! @param v Number of vertices
 void generateRandomGraph(const char* file, int e, int v) {
+	
+	/*
 	static const int MAX_NODE_WEIGHT = 9; // Arbitrarily chosen for simplicity
 
 	int **matrix;
@@ -53,7 +55,7 @@ void generateRandomGraph(const char* file, int e, int v) {
 	// case scenario, when BFS has to travel through every node within the graph. With the pseudo-randomly generated
 	// nodes below, and an e value greater than v, this shouldn't be an issue.
 	int previous = 0;
-	int nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
+	unsigned int nodeWeight = (xorshift() % MAX_NODE_WEIGHT) + 1;
 	for (int i = 1; i < v ; ++i) {
 		matrix[previous][i] = nodeWeight;
 		previous = i;
@@ -70,7 +72,7 @@ void generateRandomGraph(const char* file, int e, int v) {
 			x = xorshift() % v;
 			y = xorshift() % v;
 			alreadyExists 	= (matrix[x][y] != 0);	// Don't over-write an existing randomly generated edge
-			selfReferences	= (x == y);				// Prevent edges (u, u)
+			selfReferences	= (x <= y);				// Prevent edges (u, u)
 		} while (alreadyExists || selfReferences); 
 
 		matrix[x][y] = nodeWeight;
@@ -81,7 +83,7 @@ void generateRandomGraph(const char* file, int e, int v) {
 	temp.open(file);
 	for (int i = 0; i < v; ++i) {
 		for (int j = 0; j < v; ++j) {
-			if (matrix[i][j] != 0)
+			if (matrix[i][j] > 0)
 				temp << j << " " << matrix[i][j] << " ";
 		}
 		temp << std::endl;
@@ -92,7 +94,16 @@ void generateRandomGraph(const char* file, int e, int v) {
 	{
 	    delete [] matrix[index] ;   
 	}
-	delete [] matrix ;
+	delete [] matrix ; */
+
+	// Why is random graph generation so hard right now???? :'(
+	std::ofstream temp;
+	temp.open(file);
+	for (int vertexNo = 1; vertexNo <= v; ++vertexNo)
+	{
+		temp << vertexNo << " 1 \n";
+	}
+	temp.close();
 }
 
 //! @param e Number of edges to randomly generate
@@ -167,7 +178,7 @@ int main() {
 	/* -------------------------------------------------------------------------------------------------------- */
 	std::cout << "Timing metrics for breadth first search: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
-	for (int totalVE = 100; totalVE <= 2000; totalVE += 100) {
+	for (int totalVE = 100; totalVE <= 2000; totalVE += 50) {
 		int edges = 1.5 * totalVE / 3;
 		int vertices = totalVE - edges;
 
@@ -193,7 +204,7 @@ int main() {
 	/* -------------------------------------------------------------------------------------------------------- */
 	std::cout << "Timing metrics for Ford Fulkerson: " << std::endl;
 	std::cout << std::left << std::setw(7) << "V + E" << std::right << std::setw(20) << "milliseconds" << std::endl;
-	for (int totalVE = 10; totalVE <= 200; totalVE += 30) {
+	for (int totalVE = 100; totalVE <= 2000; totalVE += 50) {
 		int edges = 5 * totalVE / 8;
 		int vertices = totalVE - edges;
 
