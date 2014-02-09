@@ -29,7 +29,7 @@ Image Segmentation
 `./bin/iseg -i input file ouput file`
 
 ### Test Suite:
-`./bin/test-suite`
+Full test suite `./bin/test-suite`
 
 ### Test Cases:
 Text Based Graphs
