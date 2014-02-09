@@ -11,3 +11,20 @@ parts (foreground and background) using the algorithm.
 
 See the <a href="http://www.cs.uakron.edu/~zduan/class/635/projects/project1/project1.htm">program
 instructions</a> for more details.
+
+## Compilation
+Enter project root directory and run:
+[make]
+
+Binaries are located in bin directory.
+
+CLI Client:
+===========
+Breadth First Search
+[./bin/iseg -b input file start vertex end vertex]
+
+Ford-Fulkerson
+[./bin/iseg -f input file]
+
+Image Segmentation
+[./bin/iseg -i input file ouput file]
