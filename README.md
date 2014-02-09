@@ -38,4 +38,4 @@ test/graphs/*
 PGMs
 test/pgm/*
 
-Developed and Tested on OSX Mavericks 64-bit
+### Developed and Tested on OSX Mavericks 64-bit
