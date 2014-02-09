@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 			int source = 0;
 			int sink   = inputGraph.sNodes.size() - 1;
 			int maxFlow = Tools::fordFulkerson(inputGraph, source, sink);
-			std::cerr << "Max flow is: " << maxFlow << "\n";
+			std::cerr << "Max flow is " << maxFlow << "\n";
 		}
 
 		// Image Segmentation Option
