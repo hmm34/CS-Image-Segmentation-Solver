@@ -49,29 +49,20 @@ namespace Tools
 	//!	 list of a list of the shortest paths to each given end vertex, for each given end vertex.
 	std::pair< std::vector<int>, int> breadthFirstSearch(Graph& g, int start, int end)
 	{
-		//std::cerr << "in BFS\n";
-		//g.print();
-		//std::cout << "==========================================================\n";
-
-		//std::cout << "start = " << start << "\n";
-		//std::cout << "end   = " << end << "\n";
-
-
 		static int infinity = std::numeric_limits<int>::max();
 		std::vector<int> shortestPath;	// Nodes from start to end with the shortest path
 		int minCapacity = infinity;		// Minimum weight (capacity) along the shortest path
-
-		/* TIMING WTF??? */
-		//std::clock_t start1 = std::clock();
-
 		int numNodes = g.nodes();
 
-		// Start and end node are the same.
-		// 	Capacity is zero and shortest path is itself.
+		// Start and end node are the same? Capacity is zero and shortest path is itself.
 		if ( start == end) {
 			shortestPath.push_back(start);
 			return std::make_pair(shortestPath, 0);
 		}
+
+		// Verify valid start and end is given
+		if ( ((start < 0) || (start > numNodes)) || ((end < 0) || (end > numNodes)) )
+  			return std::make_pair(shortestPath, minCapacity);
 
 		// Assign the shortest distance predecessor for all nodes (except our starting point - source) to be infinity. The 
 		// edge weights within the shortest paths is contained within pathWeights.
@@ -82,15 +73,10 @@ namespace Tools
 		paths[start] = -1;
 		pathWeights[start] = 0;
 
-		/* TIMING WTF??? */
-		//std::clock_t end1 = std::clock();
-		//std::cerr << "\tinitialization = " << 1000.0 * (end1 - start1) / CLOCKS_PER_SEC << "\n";
-
 		// Use breadth first search to find the end vertex with the shortest path
 		//! @note Chose a queue for the nodes that still need visited in order to use the FIFO behavior of BFS.
 		//! @note Chose a vector for the return value (path from shortest to end) in order to easily reverse the order
 		//!		once the computation is complete.
-		//std::clock_t start2 = std::clock();
 		std::queue<int> nodesToVisit; // Nodes that still need visited in the BFS
 		nodesToVisit.push(start);
 
@@ -102,20 +88,12 @@ namespace Tools
 
 			// Get the top-most element from the queue
 			int currentNode = nodesToVisit.front();
-
-			//std::cerr << "\t\tvisiting node: " << currentNode << "\n";
-
 			nodesToVisit.pop();
 
 			// Stop searching if the desired end vertex has been found
 			if (currentNode == end)
 				break;
-
-			// Obtain all of the current node's neighbors. If it has no neighbors, skip to the next node in the queue
-			//if ((unsigned int)currentNode >= g.adjList.size())
-			//	continue;
 			
-			std::clock_t start4 = std::clock();
 			std::map<int, vertex> neighbors = g.adjList[currentNode];
 			std::map<int, vertex>::iterator neighborsItr = neighbors.begin();
 			std::map<int, vertex>::iterator neighborsEnd = neighbors.end();
@@ -124,7 +102,6 @@ namespace Tools
 				int neighbor = (*neighborsItr).first;
 				if (paths[neighbor] == infinity)
 				{
-					
 					// Set the neighbor with the node that connects it, including the edge weight
 					paths[neighbor] = currentNode;
 					pathWeights[neighbor] = (*neighborsItr).second.weight;
@@ -136,14 +113,7 @@ namespace Tools
 			}
 		}
 
-		//std::cerr << "\tBegan first while loop: " << skippedWhile << " times.\n";
-		//std::cerr << "\tCompleted that loop: " << whileCount << " times.\n";
-
-		//std::clock_t end2 = std::clock();
-		//std::cerr << "\tfirst while = " <<  1000.0 * (end2 - start2) / CLOCKS_PER_SEC << "\n";
-
 		// Find path to the end node by back-track through the paths list until we find the given start node.
-		//std::clock_t start3 = std::clock();
 		int currentNode = end;
 		while (true)
 		{
@@ -159,15 +129,11 @@ namespace Tools
 			currentNode = paths[currentNode];
 		}
 		std::reverse(shortestPath.begin(), shortestPath.end());
-		//std::clock_t end3 = std::clock();
-		///std::cerr << "\tsecond while = " << 1000.0 * (end3 - start3) / CLOCKS_PER_SEC << "\n";
-
 		return std::make_pair(shortestPath, minCapacity);	
 	}
 
 	int fordFulkerson(Graph& g, int source, int sink)
 	{
-		std::cerr << "in FF\n";
 		// Starting flow is zero.
 		int maxFlow  = 0;
 
@@ -178,7 +144,6 @@ namespace Tools
 		// Empty indicates no shortest path from S to T (source to Sink)
 		while (!bfsResult.first.empty() && bfsResult.second != std::numeric_limits<int>::max())
 		{
-			//std::cerr << "in FF while loop\n";
 			// Examine each node in the path and adjust the edges of the residual graph
 			for (unsigned int i = 0; i < bfsResult.first.size() - 1; ++i)
 			{
@@ -226,14 +191,12 @@ namespace Tools
 		p.calculateThreshold();
 		p.addPaths();
 
-		int sourceID = 0;
-		int sinkID   = p.xMax * p.yMax + 1;
+		int sourceID = -1;
+		int sinkID   = p.xMax * p.yMax;
 		p.addSuperNodes(sourceID, sinkID);
 
 		// Run Ford Fulkerson on the pgm graph
-		std::cerr << "Before ford fulkerson\n";
 		fordFulkerson(p.g, sourceID, sinkID);
-		std::cerr << "After ford fulkerson\n";
 
 		// Write to output file
 		p.write(cut, sourceID);

@@ -160,7 +160,7 @@ void runIsegTimingMetrics()
 					"test/pgm/x31_f18.ascii.pgm"
 	};
 
-	int numIsegTestCases = 10;
+	int numIsegTestCases = 45;
 	for (int i = 0; i < numIsegTestCases; ++i)
 	{
 		std::ifstream input;
@@ -320,7 +320,7 @@ void runFfUnitTests()
 	std::pair<std::string, int> maxFlowTestCases[] = {	
 				std::make_pair<std::string, int>( "test/graphs/testcase1.txt", 14 ),
 				std::make_pair<std::string, int>( "test/graphs/testcase2.txt", 23 ),
-				std::make_pair<std::string, int>( "test/graphs/testcase3.txt", 29 ),
+				std::make_pair<std::string, int>( "test/graphs/testcase3.txt", 28 ),
 				std::make_pair<std::string, int>( "test/graphs/testcase4.txt", 14 ),
 				std::make_pair<std::string, int>( "test/graphs/testcase5.txt", 200 ),
 				std::make_pair<std::string, int>( "test/graphs/testcase6.txt", 23 ),
@@ -347,12 +347,12 @@ void runFfUnitTests()
 
 int main() {
 
-	//runBfsTimingMetrics();
-	//runFfTimingMetrics();
+	runBfsTimingMetrics();
+	runFfTimingMetrics();
 	runIsegTimingMetrics();
 
-	//runBfsUnitTests();
-	//runFfUnitTests();
+	runBfsUnitTests();
+	runFfUnitTests();
 
 	return 0;
 }
