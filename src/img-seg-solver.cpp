@@ -53,16 +53,22 @@ int main(int argc, char* argv[])
 			
 			std::pair< std::vector<int>, int > searchResult = Tools::breadthFirstSearch(inputGraph, startVertex, endPoint);
 			std::vector<int> shortestPath = searchResult.first;	// Shortest path p along graph G
-			int minCapacity = searchResult.second;				// Minimum capacity along p
 			unsigned int numEdges = shortestPath.size() - 1; 	// Edges = Nodes - 1
 
-			//! @note Again - testing purposes!
-			std::cerr << "Number of nodes is: " << inputGraph.nodes() << std::endl;
+			// Output
 			std::cerr << "Found shortest path from " << startVertex << " to "
-				<< endPoint << " to be: " << numEdges << "\n";
-			std::cerr << "Minimum capacity is: " << minCapacity << "\n";
+				<< endPoint << " to be: " << numEdges << " edge(s).\n";
 
-			inputGraph.print();
+			std::cout << "Path: ";
+			for (unsigned int i = 0; i < shortestPath.size(); ++i)
+			{
+				std::cout << shortestPath[i];
+
+				if (i + i < shortestPath.size())
+					std::cout << " --> ";
+			}
+
+			std::cout << "\n";
 		}
 
 		// Ford-Fulkerson Option
