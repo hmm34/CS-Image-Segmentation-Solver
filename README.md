@@ -13,29 +13,30 @@ See the <a href="http://www.cs.uakron.edu/~zduan/class/635/projects/project1/pro
 instructions</a> for more details.
 
 ### Compilation
-Enter project root directory and run:
+Enter project root directory and run - 
 `make`
 
 Binaries are located in bin directory.
 
 ### CLI Client Command Usage:
-Breadth First Search
+Breadth First Search - 
 `./bin/iseg -b input file start vertex end vertex`
 
-Ford-Fulkerson
+Ford-Fulkerson - 
 `./bin/iseg -f input file`
 
-Image Segmentation
+Image Segmentation -
 `./bin/iseg -i input file ouput file`
 
 ### Test Suite:
-Full test suite `./bin/test-suite`
+Full test suite - 
+`./bin/test-suite`
 
 ### Test Cases:
-Text Based Graphs
+Text Based Graphs - 
 test/graphs/*
 
-PGMs
+PGM files - 
 test/pgm/*
 
 ### Developed and Tested on OSX Mavericks 64-bit
