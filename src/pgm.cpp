@@ -2,7 +2,7 @@
 	@copydoc pgm.hpp
 */
 
-#include "Pgm.hpp"
+#include "pgm.hpp"
 #include <cmath>
 #include <fstream>
 #include <sstream>

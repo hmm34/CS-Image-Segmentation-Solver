@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "Graph.hpp"
-#include "Pgm.hpp"
+#include "graph.hpp"
+#include "pgm.hpp"
 #include <set>
 #include <vector>
 

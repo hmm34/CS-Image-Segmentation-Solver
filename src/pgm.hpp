@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graph.hpp"
+#include "graph.hpp"
 
 //! @brief Container for a PGM image
 class Pgm

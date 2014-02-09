@@ -8,9 +8,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <iostream>
-#include "Tools.hpp"
-#include "Graph.hpp"
-#include "Pgm.hpp"
+#include "tools.hpp"
+#include "graph.hpp"
+#include "pgm.hpp"
 
 int main(int argc, char* argv[])
 {

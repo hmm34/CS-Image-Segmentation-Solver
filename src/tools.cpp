@@ -2,7 +2,7 @@
 	@copydoc tools.hpp
 */
 
-#include "Tools.hpp"
+#include "tools.hpp"
 #include <stdint.h>
 #include <limits>
 #include <queue>

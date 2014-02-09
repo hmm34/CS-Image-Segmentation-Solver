@@ -16,9 +16,9 @@
 #include <sstream>
 #include <stdlib.h>
 #include <stdio.h>
-#include "../src/Graph.hpp"
-#include "../src/Tools.hpp"
-#include "../src/Pgm.hpp"
+#include "../src/graph.hpp"
+#include "../src/tools.hpp"
+#include "../src/pgm.hpp"
 
 const char* TEMP_GRAPH = "test/graphs/temp.txt"; // Location of temp graph file
 
@@ -292,11 +292,11 @@ void runBfsUnitTests()
 		if (searchResult.first != expectedShortestPath)
 		{
 			std::cerr << "Expected shortest path: ";
-			for (int j = 0; j < expectedShortestPath.size(); ++j)
+			for (unsigned int j = 0; j < expectedShortestPath.size(); ++j)
 				std::cerr << expectedShortestPath.at(i) << ", ";
 
 			std::cerr << "Received shortest path: ";
-			for (int j = 0; j < searchResult.first.size(); ++j)
+			for (unsigned int j = 0; j < searchResult.first.size(); ++j)
 				std::cerr << searchResult.first.at(j) << ", ";
 
 			assert(false);
