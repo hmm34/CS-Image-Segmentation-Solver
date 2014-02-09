@@ -20,13 +20,13 @@ Binaries are located in bin directory.
 
 ### CLI Client Command Usage:
 Breadth First Search - 
-`./bin/iseg -b input file start vertex end vertex`
+`./bin/iseg -b [input file] [start vertex] [end vertex]`
 
 Ford-Fulkerson - 
-`./bin/iseg -f input file`
+`./bin/iseg -f [input file]`
 
 Image Segmentation -
-`./bin/iseg -i input file ouput file`
+`./bin/iseg -i [input file] [ouput file]`
 
 ### Test Suite:
 Full test suite - 
