@@ -13,7 +13,7 @@ See the <a href="http://www.cs.uakron.edu/~zduan/class/635/projects/project1/pro
 instructions</a> for more details.
 
 ### Compilation
-Enter project root directory and run:
+Enter project root directory and run
 make
 
 Binaries are located in bin directory.
@@ -37,3 +37,5 @@ test/graphs/*
 
 PGMs
 test/pgm/*
+
+Developed and Tested on OSX Mavericks 64-bit
